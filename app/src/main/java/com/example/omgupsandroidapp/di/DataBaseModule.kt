@@ -2,6 +2,7 @@ package com.omgupsapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.omgupsandroidapp.data.local.Room.Cookie.CookieDao
 import com.omgupsapp.data.local.Room.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -22,5 +23,11 @@ object DataBaseModule {
             context = context,
             AppDatabase::class.java, "database-name"
         ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCookieJar(appDatabase: AppDatabase): CookieDao{
+        return appDatabase.cookieDao()
     }
 }

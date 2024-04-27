@@ -1,5 +1,7 @@
 package com.omgupsapp.di
 
+import com.example.omgupsandroidapp.data.local.Room.Cookie.CookieDao
+import com.example.omgupsandroidapp.data.local.Room.Cookie.MyCookieJar
 import com.omgupsapp.common.Constants
 import com.omgupsapp.data.local.DataStore.DataStoreManager
 import com.omgupsapp.data.remote.Retrofit.AuthApi
@@ -27,15 +29,15 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMyCookieJar(appDatabase: AppDatabase): MyCookieJar {
-        return MyCookieJar(appDatabase)
+    fun provideMyCookieJar(cookieDao: CookieDao): MyCookieJar {
+        return MyCookieJar(cookieDao)
     }
 
     @Provides
     @Singleton
     fun provideOkHttpClient(cookieJar: MyCookieJar): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .cookieJar(cookieJar)
             .build()
     }
@@ -43,16 +45,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun retrofit(appDatabase: AppDatabase): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient
+        ): Retrofit {
         return Retrofit.Builder().baseUrl(Constants.BASE_URL)
-            .client(provideOkHttpClient(provideMyCookieJar(appDatabase)))
+            .client(okHttpClient)
             .addConverterFactory(ScalarsConverterFactory.create()).build()
     }
 
     @Provides
     @Singleton
-    fun authApi(appDatabase: AppDatabase): AuthApi {
-        return retrofit(appDatabase).create(AuthApi::class.java)
+    fun authApi(retrofit: Retrofit): AuthApi {
+        return retrofit.create(AuthApi::class.java)
     }
 
 
@@ -67,18 +71,17 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun logoutApi(appDatabase: AppDatabase): LogoutApi {
-        return retrofit(appDatabase).create(LogoutApi::class.java)
+    fun logoutApi(retrofit: Retrofit): LogoutApi {
+        return retrofit.create(LogoutApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideLogoutRepository(
         api: LogoutApi,
-        dataStoreManager: DataStoreManager
+        dataStoreManager: DataStoreManager,
+        cookieDao: CookieDao
     ): LogoutRepository {
-        return LogoutRepositoryImpl(api = api, dataStoreManager = dataStoreManager)
+        return LogoutRepositoryImpl(api = api, dataStoreManager = dataStoreManager, cookieDao = cookieDao)
     }
-
-
 }

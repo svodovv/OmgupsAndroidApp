@@ -1,5 +1,6 @@
 package com.omgupsapp.presentation.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +13,7 @@ import com.omgupsapp.data.local.DataStore.DataStoreManager
 import com.omgupsapp.presentation.NavigationGroup
 import com.omgupsapp.presentation.Screen
 import com.omgupsapp.presentation.ui.LoginScreen.components.AuthScreen
-import com.omgupsapp.presentation.ui.SettingsScreen.LogoutScreen
+import com.omgupsapp.presentation.ui.SettingsScreen.SettingsScreen
 import com.omgupsapp.presentation.ui.SheduleScreen.ScheduleScreen
 import com.omgupsapp.presentation.ui.homeScreen.components.HomeScreen
 import com.omgupsapp.presentation.ui.userProfileScreen.composable.UserProfileScreen
@@ -22,6 +23,7 @@ import com.omgupsapp.presentation.ui.userProfileScreen.composable.UserProfileScr
 fun NavHostComposable(
     navController: NavHostController,
     dataStoreManager: DataStoreManager,
+    paddingValues: PaddingValues
 ) {
 
     val isLoggedIn = remember {
@@ -57,10 +59,12 @@ fun NavHostComposable(
              */
         }
         navigation(
-            startDestination = Screen.HomeScreen.route, route = NavigationGroup.HomeScreens.route
+            startDestination = Screen.ScheduleScreen.route,
+            route = NavigationGroup.HomeScreens.route
         ) {
             composable(route = Screen.LogOutScreen.route) {
-                LogoutScreen(navController = navController)
+                SettingsScreen(
+                    navController = navController,)
             }
             composable(route = Screen.HomeScreen.route) {
                 HomeScreen(navController = navController)
@@ -71,7 +75,6 @@ fun NavHostComposable(
             composable(route = Screen.UserProfileScreen.route) {
                 UserProfileScreen(navController = navController)
             }
-
         }
     }
 }

@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LogoutViewModel @Inject constructor(
+class SettingsViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
 ) : ViewModel() {
 

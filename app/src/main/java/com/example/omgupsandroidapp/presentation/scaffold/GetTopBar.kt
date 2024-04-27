@@ -10,7 +10,8 @@ fun GetTopBar(
     route: String,
     selectedTitle: String
 ) {
-    if (route == Screen.AuthScreen.route) {
+    if (route == Screen.AuthScreen.route
+        || route == Screen.LogOutScreen.route) {
         /* Пустой @Composable */
     } else {
         TopAppBarComposable(

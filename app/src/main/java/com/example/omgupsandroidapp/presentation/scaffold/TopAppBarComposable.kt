@@ -28,7 +28,7 @@ fun TopAppBarComposable(
         navigationIcon = {
             IconButton(onClick = { /* НАВИГАЦИЯ ДО УВЕДОМЛЕНИЯ*/ }) {
                 Icon(
-                    painterResource(id = R.drawable.sharp_android_30),
+                    painterResource(id = R.drawable.logo_text),
                     contentDescription = "Notifications button"
                 )
             }

@@ -2,8 +2,6 @@ package com.omgupsapp.presentation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavHostController
 import com.example.omgupsandroidapp.R
 import com.omgupsapp.data.local.DataStore.DataStoreManager
@@ -24,21 +22,21 @@ fun App(dataStoreManager: DataStoreManager, navController: NavHostController) {
 
     val itemsBottomBar = listOf(
         BottomNavigationItem(
-            tittle = "Главная",
+            tittle = "Сервисы",
             route = Screen.HomeScreen.route,
-            selectedIcon = R.drawable.outline_home_app_logo_30,
+            selectedIcon = R.drawable.ic_services,
             hasNews = false,
         ),
         BottomNavigationItem(
             tittle = "Профиль",
             route = Screen.UserProfileScreen.route,
-            selectedIcon = R.drawable.round_person_30,
+            selectedIcon = R.drawable.ic_outilineprofile,
             hasNews = false,
         ),
         BottomNavigationItem(
             tittle = "Расписание",
             route = Screen.ScheduleScreen.route,
-            selectedIcon = R.drawable.outline_menu_30,
+            selectedIcon = R.drawable.ic_outline_schedule,
             hasNews = false,
         ),
     )
@@ -50,6 +48,7 @@ fun App(dataStoreManager: DataStoreManager, navController: NavHostController) {
         NavHostComposable(
             navController = navController,
             dataStoreManager = dataStoreManager,
+            paddingValues = it
         )
     }
 

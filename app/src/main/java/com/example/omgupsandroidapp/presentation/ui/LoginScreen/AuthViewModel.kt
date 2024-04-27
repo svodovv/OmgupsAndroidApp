@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.omgupsandroidapp.presentation.ui.LoginScreen.AuthenticationState
 import com.omgupsapp.common.Resource
 import com.omgupsapp.domain.use_case.login.GetCsrfTokenUseCase
 import com.omgupsapp.domain.use_case.login.AuthenticationUseCase

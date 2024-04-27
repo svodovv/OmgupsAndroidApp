@@ -20,7 +20,6 @@ class AuthRepositoryImpl @Inject constructor(
             csrfToken = response.body()?.let {
                 parseMetaDataInHtmlDoc(it, "csrf-token")
             }
-            Log.i("TOKEN", csrfToken ?: "TOKEN IS NULL")
             csrfToken != null
         } else {
             Log.e(TAG, "repository did not receive a token")

@@ -25,14 +25,6 @@ fun TopAppBarComposable(
                 style = MaterialTheme.typography.displayMedium
             )
         },
-        navigationIcon = {
-            IconButton(onClick = { /* НАВИГАЦИЯ ДО УВЕДОМЛЕНИЯ*/ }) {
-                Icon(
-                    painterResource(id = R.drawable.logo_text),
-                    contentDescription = "Notifications button"
-                )
-            }
-        },
         actions = {
             IconButton(onClick = { navController.navigate(Screen.LogOutScreen.route) }) {
                 Icon(

@@ -13,7 +13,7 @@ import com.omgupsapp.data.local.DataStore.DataStoreManager
 import com.omgupsapp.presentation.NavigationGroup
 import com.omgupsapp.presentation.Screen
 import com.omgupsapp.presentation.ui.LoginScreen.components.AuthScreen
-import com.omgupsapp.presentation.ui.SettingsScreen.SettingsScreen
+import com.example.omgupsandroidapp.presentation.ui.SettingsScreen.copmposable.SettingsScreen
 import com.omgupsapp.presentation.ui.SheduleScreen.ScheduleScreen
 import com.omgupsapp.presentation.ui.homeScreen.components.HomeScreen
 import com.omgupsapp.presentation.ui.userProfileScreen.composable.UserProfileScreen
@@ -48,7 +48,7 @@ fun NavHostComposable(
 
         navigation(
             startDestination = Screen.AuthScreen.route,
-             route = NavigationGroup.AuthGroup.route
+            route = NavigationGroup.AuthGroup.route
 
         ) {
             composable(route = Screen.AuthScreen.route) {
@@ -64,16 +64,27 @@ fun NavHostComposable(
         ) {
             composable(route = Screen.LogOutScreen.route) {
                 SettingsScreen(
-                    navController = navController,)
+                    navController = navController,
+                    paddingValues = paddingValues
+                )
             }
             composable(route = Screen.HomeScreen.route) {
-                HomeScreen(navController = navController)
+                HomeScreen(
+                    navController = navController,
+                    paddingValues = paddingValues
+                )
             }
             composable(route = Screen.ScheduleScreen.route) {
-                ScheduleScreen(navController = navController)
+                ScheduleScreen(
+                    navController = navController,
+                    paddingValues = paddingValues
+                )
             }
             composable(route = Screen.UserProfileScreen.route) {
-                UserProfileScreen(navController = navController)
+                UserProfileScreen(
+                    navController = navController,
+                    paddingValues = paddingValues
+                )
             }
         }
     }

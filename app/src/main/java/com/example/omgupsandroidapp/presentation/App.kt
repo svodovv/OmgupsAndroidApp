@@ -46,9 +46,7 @@ fun App(dataStoreManager: DataStoreManager, navController: NavHostController) {
         itemsBottomBar = itemsBottomBar,
     ) {
         NavHostComposable(
-            navController = navController,
-            dataStoreManager = dataStoreManager,
-            paddingValues = it
+            navController = navController, paddingValues = it
         )
     }
 

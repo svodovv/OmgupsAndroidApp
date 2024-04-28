@@ -14,11 +14,12 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("d
 
 
 
-class DataStoreManager @Inject constructor(val context: Context) {
+class DataStoreManager @Inject constructor(private val context: Context) {
 
     suspend fun saveLoggedIn(isLoggedIn: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[isLoggedInKey] = isLoggedIn
+
         }
     }
 

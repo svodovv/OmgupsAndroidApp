@@ -1,15 +1,21 @@
 package com.omgupsapp.presentation
 
 sealed class Screen(val route: String) {
-    object AuthScreen: Screen("auth_screen")
-    object LogOutScreen: Screen("logOut_screen")
-    object UserProfileScreen: Screen("userProfile_screen")
-    object HomeScreen: Screen("home_screen")
-    object ScheduleScreen: Screen("ScheduleScreen")
+    //Auth Group
+    data object AuthScreen : Screen("auth_screen")
+
+    //HomeScreensGroup
+    data object LogOutScreen : Screen("logOut_screen")
+    data object UserProfileScreen : Screen("user_profile_screen")
+    data object HomeScreen : Screen("home_screen")
+    data object ScheduleScreen : Screen("schedule_screen")
+
+    data object SplashScreen: Screen("splash_screen")
 }
 
-sealed class NavigationGroup(val route: String){
-    object AuthGroup: NavigationGroup("auth_screens")
+sealed class NavigationGroup(val route: String) {
+    data object AuthGroup : NavigationGroup("auth_screens")
 
-    object HomeScreens: NavigationGroup("home_screens")
+    data object HomeScreens : NavigationGroup("home_screens")
+
 }

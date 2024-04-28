@@ -1,5 +1,6 @@
 package com.omgupsapp.presentation.ui.SettingsScreen
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.lifecycle.ViewModel
 import com.example.omgupsandroidapp.presentation.ui.SettingsScreen.ThemeState
 import com.omgupsapp.domain.use_case.logout.LogoutUseCase
@@ -18,5 +19,7 @@ class SettingsViewModel @Inject constructor(
         logoutUseCase()
     }
 
-    fun themeUpdate(themeState: Boolean) = !themeState
+    fun themeUpdate(themeState: Boolean) {
+        !themeState
+    }
 }

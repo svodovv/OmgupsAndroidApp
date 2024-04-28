@@ -18,7 +18,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            OmgupsAndroidAppTheme {
+
+            OmgupsAndroidAppTheme() {
                 val navController = rememberNavController()
                 App(dataStoreManager, navController)
             }

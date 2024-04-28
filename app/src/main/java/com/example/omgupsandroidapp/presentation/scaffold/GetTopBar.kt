@@ -6,17 +6,12 @@ import com.omgupsapp.presentation.Screen
 
 @Composable
 fun GetTopBar(
-    navController: NavController,
-    route: String,
-    selectedTitle: String
+    navController: NavController, route: String, selectedTitle: String
 ) {
-    if (route == Screen.AuthScreen.route
-        || route == Screen.LogOutScreen.route) {
-        /* Пустой @Composable */
+    if (route == Screen.AuthScreen.route || route == Screen.LogOutScreen.route || route == Screen.SplashScreen.route) {/* Пустой @Composable */
     } else {
         TopAppBarComposable(
-            navController = navController,
-            selectedTitle = selectedTitle
-            )
+            navController = navController, selectedTitle = selectedTitle
+        )
     }
 }

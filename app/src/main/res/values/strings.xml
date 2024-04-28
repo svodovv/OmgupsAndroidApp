@@ -7,4 +7,5 @@
     <string name="ErrorInLoginOrPassword">Неверный логин или пароль</string>
     <string name="LoginOrPasswordIsNull">Пожалуйста, заполните оба поля для входа</string>
     <string name="Settings">Настройки</string>
+    <string name="exit">Выход</string>
 </resources>

@@ -13,7 +13,7 @@ fun GetNavigationBar(
     navController: NavHostController,
     selectedTitle: MutableState<String>
 ) {
-    if (route == Screen.AuthScreen.route || route == Screen.LogOutScreen.route) {
+    if (route == Screen.AuthScreen.route || route == Screen.LogOutScreen.route || route == Screen.SplashScreen.route) {
         //Ничего)
     } else {
         NavigationBarComposable(

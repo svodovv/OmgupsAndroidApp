@@ -81,7 +81,7 @@ dependencies {
 
     //Dagger - Hilt
     kapt ("androidx.hilt:hilt-compiler:1.0.0")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 
@@ -109,6 +109,11 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
+    //Splash screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
+    //Lottie
+    implementation("com.airbnb.android:lottie-compose:6.3.0")
 
 }
 

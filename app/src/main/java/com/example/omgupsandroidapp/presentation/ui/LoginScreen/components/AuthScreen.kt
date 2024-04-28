@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -21,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -34,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
+import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
+import com.example.omgupsandroidapp.presentation.ui.LoginScreen.components.OmgupsImage
 import com.omgupsapp.presentation.Screen
 import com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel
 
@@ -48,13 +53,31 @@ fun AuthScreen(
 
     var showError by remember { mutableStateOf(false) }
 
+    LaunchedEffect(stateAuthentication) {
+        if (stateAuthentication.userAuthenticated == true) {
+            navController.navigate(Screen.HomeScreen.route) {
+                popUpTo(Screen.AuthScreen.route) {
+                    inclusive = true
+                }
+            }
+        } else if (stateAuthentication.userAuthenticated == false) {
+            viewModel.isNotLoading()
+        }
+    }
+
     if (stateToken.csrfToken) {
         if (stateAuthentication.isLoading && !showError) {
-            Box( modifier = Modifier
-                .fillMaxSize()) {
-                LoadingScreen(modifier = Modifier.align(Center))
+
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Center)
+                )
+
             }
         }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -63,17 +86,11 @@ fun AuthScreen(
             horizontalAlignment = CenterHorizontally
         ) {
 
-            Box(
+            OmgupsImage(
                 modifier = Modifier
                     .weight(2f)
                     .align(CenterHorizontally)
-            ) {
-                Image(
-                    painterResource(id = R.drawable.logo_text),
-                    contentDescription = stringResource(R.string.omgupslogo),
-                    modifier = Modifier.align(Center)
-                )
-            }
+            )
 
             Column(
                 modifier = Modifier.weight(1f),
@@ -161,25 +178,16 @@ fun AuthScreen(
                         if (stateAuthentication.login.isNotBlank() && stateAuthentication.password.isNotBlank()) {
                             viewModel.userAuthenticated()
                         } else showError = true
-                    }, modifier = Modifier
+                    },
+                    modifier = Modifier
                         .padding(8.dp)
                         .width(200.dp),
                     enabled = !stateAuthentication.isLoading
                 ) {
                     Text(stringResource(R.string.signIn))
                 }
-                LaunchedEffect(stateAuthentication) {
-                    if (stateAuthentication.userAuthenticated == true) {
-                        navController.navigate(Screen.HomeScreen.route){
-                            popUpTo(Screen.AuthScreen.route){
-                                inclusive = true
-                            }
-                        }
-                    }
-                    else if(stateAuthentication.userAuthenticated == false){
-                        viewModel.isNotLoading()
-                    }
-                }
+
+
             }
         }
     } else if (stateToken.isLoading) {
@@ -211,6 +219,7 @@ fun AuthScreen(
             )
         }
     }
+
 }
 
 

@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ModeyScreen.MoneyScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.PlanScreen.PlanScreen
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkaScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.StudentBookScreen.StudentBookScreen
 import com.example.omgupsandroidapp.presentation.ui.SettingsScreen.copmposable.SettingsScreen
 import com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreen
@@ -88,7 +89,9 @@ fun NavHostComposable(
             composable(Screen.StudentBookScreen.route) {
                 StudentBookScreen(navController = navController, paddingValues = paddingValues)
             }
-
+            composable(Screen.SpravkaScreen.route) {
+                SpravkaScreen(navController = navController, paddingValues = paddingValues)
+            }
 
         }
     }

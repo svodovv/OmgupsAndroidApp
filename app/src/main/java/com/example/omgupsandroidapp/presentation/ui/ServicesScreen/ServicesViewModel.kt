@@ -23,7 +23,8 @@ class ServicesViewModel @Inject constructor() : ViewModel() {
         Service(
             "Зачетная книжка", Screen.StudentBookScreen.route, R.drawable.ic_study_card
         ),
+        Service(
+            "Заказ справок", Screen.SpravkaScreen.route, R.drawable.ic_spravki
+        )
     )
-
-
 }

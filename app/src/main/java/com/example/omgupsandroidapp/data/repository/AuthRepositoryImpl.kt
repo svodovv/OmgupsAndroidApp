@@ -6,8 +6,10 @@ import com.omgupsapp.data.local.DataStore.DataStoreManager
 import com.omgupsapp.data.remote.Retrofit.AuthApi
 import com.omgupsapp.domain.repository.AuthRepository
 import javax.inject.Inject
+import javax.inject.Named
 
 class AuthRepositoryImpl @Inject constructor(
+
     private val api: AuthApi,
     private val dataStoreManager: DataStoreManager
 ) : AuthRepository {

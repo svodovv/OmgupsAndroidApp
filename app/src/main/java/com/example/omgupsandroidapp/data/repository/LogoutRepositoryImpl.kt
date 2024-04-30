@@ -7,7 +7,9 @@ import com.omgupsapp.domain.repository.LogoutRepository
 import javax.inject.Inject
 
 class LogoutRepositoryImpl @Inject constructor(
-    val dataStoreManager: DataStoreManager, val api: LogoutApi, private val cookieDao: CookieDao
+    val dataStoreManager: DataStoreManager,
+
+    val api: LogoutApi, private val cookieDao: CookieDao
 ) : LogoutRepository {
     override suspend fun logout() {
 

@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ModeyScreen.MoneyScreen
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.PlanScreen.PlanScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkaScreen
@@ -75,8 +75,8 @@ fun NavHostComposable(
             }
 
 
-            composable(Screen.MoneyScreen.route) {
-                MoneyScreen(navController = navController, paddingValues = paddingValues)
+            composable(Screen.ScholarshipScreen.route) {
+                ScholarshipScreen(navController = navController, paddingValues = paddingValues)
             }
             composable(Screen.OrderScreen.route) {
                 OrderScreen(navController = navController, paddingValues = paddingValues)

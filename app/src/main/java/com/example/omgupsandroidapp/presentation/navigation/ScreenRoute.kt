@@ -12,7 +12,7 @@ sealed class Screen(val route: String) {
 
     data object SplashScreen: Screen("splash_screen")
 
-    data object MoneyScreen: Screen("money_screen")
+    data object ScholarshipScreen: Screen("money_screen")
     data object OrderScreen: Screen("order_screen")
     data object PlanScreen: Screen("plan_screen")
     data object SpravkaScreen: Screen("spravka_screen")

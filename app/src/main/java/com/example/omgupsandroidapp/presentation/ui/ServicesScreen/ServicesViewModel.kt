@@ -12,7 +12,7 @@ class ServicesViewModel @Inject constructor() : ViewModel() {
 
     val serviceList = listOf(
         Service(
-            "Выплаты", Screen.MoneyScreen.route, R.drawable.ic_modey
+            "Выплаты", Screen.ScholarshipScreen.route, R.drawable.ic_modey
         ),
         Service(
             "Приказы", Screen.OrderScreen.route, R.drawable.ic_order

@@ -8,4 +8,8 @@
     <string name="LoginOrPasswordIsNull">Пожалуйста, заполните оба поля для входа</string>
     <string name="Settings">Настройки</string>
     <string name="exit">Выход</string>
+    <string name="money">Выплаты</string>
+    <string name="Services">Сервисы</string>
+    <string name="profile">Профиль</string>
+    <string name="shedule">Расписание</string>
 </resources>

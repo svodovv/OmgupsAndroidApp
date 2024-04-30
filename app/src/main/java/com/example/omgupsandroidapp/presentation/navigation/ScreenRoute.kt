@@ -7,10 +7,15 @@ sealed class Screen(val route: String) {
     //HomeScreensGroup
     data object LogOutScreen : Screen("logOut_screen")
     data object UserProfileScreen : Screen("user_profile_screen")
-    data object HomeScreen : Screen("home_screen")
+    data object Service : Screen("home_screen")
     data object ScheduleScreen : Screen("schedule_screen")
 
     data object SplashScreen: Screen("splash_screen")
+
+    data object MoneyScreen: Screen("money_screen")
+    data object OrderScreen: Screen("order_screen")
+    data object PlanScreen: Screen("plan_screen")
+    data object StudentBookScreen: Screen("student_book_screen")
 }
 
 sealed class NavigationGroup(val route: String) {

@@ -28,7 +28,7 @@ fun TopAppBarComposable(
         actions = {
             IconButton(onClick = { navController.navigate(Screen.LogOutScreen.route) }) {
                 Icon(
-                    painterResource(id = R.drawable.round_settings_30),
+                    painterResource(id = R.drawable.ic_settings),
                     contentDescription = "Settings icon"
                 )
             }

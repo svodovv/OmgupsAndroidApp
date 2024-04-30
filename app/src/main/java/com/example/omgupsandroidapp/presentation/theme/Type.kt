@@ -38,5 +38,10 @@ val Typography = Typography(
         fontFamily = Montserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
-    )
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp
+    ),
 )

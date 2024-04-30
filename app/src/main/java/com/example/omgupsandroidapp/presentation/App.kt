@@ -2,9 +2,9 @@ package com.omgupsapp.presentation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.omgupsandroidapp.R
-import com.omgupsapp.data.local.DataStore.DataStoreManager
 import com.omgupsapp.presentation.navigation.NavHostComposable
 import com.omgupsapp.presentation.scaffold.ScaffoldComposable
 
@@ -18,23 +18,23 @@ data class BottomNavigationItem(
 )
 
 @Composable
-fun App(dataStoreManager: DataStoreManager, navController: NavHostController) {
+fun App( navController: NavHostController) {
 
     val itemsBottomBar = listOf(
         BottomNavigationItem(
-            tittle = "Сервисы",
-            route = Screen.HomeScreen.route,
+            tittle = stringResource(R.string.Services),
+            route = Screen.Service.route,
             selectedIcon = R.drawable.ic_services,
             hasNews = false,
         ),
         BottomNavigationItem(
-            tittle = "Профиль",
+            tittle = stringResource(R.string.profile),
             route = Screen.UserProfileScreen.route,
             selectedIcon = R.drawable.ic_outilineprofile,
             hasNews = false,
         ),
         BottomNavigationItem(
-            tittle = "Расписание",
+            tittle = stringResource(R.string.shedule),
             route = Screen.ScheduleScreen.route,
             selectedIcon = R.drawable.ic_outline_schedule,
             hasNews = false,

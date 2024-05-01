@@ -17,7 +17,7 @@ data class ScholarshipDtoItem(
 
 fun ScholarshipDtoItem.toScholarshipModel(): ScholarshipModel {
     return ScholarshipModel(
-        date = date,
+        dateInterval = dateInterval,
         sum = sum,
         typeOfPayment = typeOfPayment,
         year = year

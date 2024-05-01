@@ -1,33 +1,34 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen
 
-import androidx.compose.foundation.Canvas
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -50,35 +51,52 @@ fun ScholarshipScreen(
                 stickyHeader {
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxSize()
                             .padding(start = 8.dp, end = 8.dp)
                     ) {
-                        RowInStickyHeader(columnName = "Дата приказа", modifier = Modifier.weight(1.5f))
-                        RowInStickyHeader(columnName = "Тип выплаты", modifier = Modifier.weight(2f))
-                        RowInStickyHeader(columnName = "Курс", modifier = Modifier.weight(1.2f))
-                        RowInStickyHeader(columnName = "Сумма", modifier = Modifier.weight(0.7f))
+                        TextInLazyColumn(
+                            columnName = "Период", modifier = Modifier.weight(1.5f),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        TextInLazyColumn(
+                            columnName = "Тип выплаты", modifier = Modifier.weight(1.7f),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        TextInLazyColumn(columnName = "Курс", modifier = Modifier.weight(1.2f),
+                            style = MaterialTheme.typography.bodyLarge)
+                        TextInLazyColumn(columnName = "Сумма", modifier = Modifier.weight(0.7f),
+                            style = MaterialTheme.typography.bodyLarge)
                     }
-                    Divider(modifier = Modifier.fillMaxWidth(), color = Color.Black, thickness = 1.dp)
+                    Divider(
+                        modifier = Modifier.fillMaxWidth(), color = Color.Black, thickness = 1.dp
+                    )
                 }
 
-                items(scholarship.value.scholarshipList) {
-                    Row(modifier = Modifier.padding(8.dp)) {
-                        Text(text = it.date, modifier = Modifier
-                            .weight(1.5f)
-                            .padding(1.dp)
-,
-                            style = MaterialTheme.typography.bodySmall)
-                        Text(text = it.typeOfPayment, modifier = Modifier
-                            .weight(2f)
-                            .padding(1.dp), style = MaterialTheme.typography.bodySmall)
-                        Text(text = it.year, modifier = Modifier
-                            .weight(1.2f)
-                            .padding(1.dp), style = MaterialTheme.typography.bodySmall)
-                        Text(text = it.sum, modifier = Modifier
-                            .weight(0.7f)
-                            .padding(1.dp), style = MaterialTheme.typography.bodySmall)
+                itemsIndexed(scholarship.value.scholarshipList) { index, it ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 8.dp)
+                            .background(
+                                color = if (index % 2 == 0) {
+                                    MaterialTheme.colorScheme.background
+                                } else {
+                                    MaterialTheme.colorScheme.surfaceVariant
+                                }
+                            ), verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        TextInLazyColumn(columnName = it.dateInterval, modifier = Modifier.weight(1.5f))
+                        TextInLazyColumn(columnName = it.typeOfPayment, modifier = Modifier.weight(1.7f))
+                        TextInLazyColumn(columnName = it.year, modifier = Modifier.weight(1.2f))
+                        TextInLazyColumn(columnName = it.sum, modifier = Modifier.weight(0.7f))
                     }
-                    Divider(modifier = Modifier.fillMaxWidth(), color = Color.Black, thickness = 1.dp)
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        thickness = 1.dp
+                    )
                 }
             }
         } else {
@@ -89,16 +107,16 @@ fun ScholarshipScreen(
 }
 
 @Composable
-fun RowInStickyHeader(
-    columnName: String, modifier: Modifier = Modifier
+fun TextInLazyColumn(
+    columnName: String,
+    modifier: Modifier = Modifier,
+    style: TextStyle = MaterialTheme.typography.bodySmall
 ) {
-    Row(modifier = modifier) {
-        Text(text = columnName, style = MaterialTheme.typography.bodySmall)
-        Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(1.dp)
-                .background(color = Color.Red)
+    Box(
+        modifier = modifier, contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = columnName, style = style, textAlign = TextAlign.Center
         )
     }
 }

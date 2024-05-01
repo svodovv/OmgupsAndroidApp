@@ -115,6 +115,9 @@ dependencies {
     //Lottie
     implementation("com.airbnb.android:lottie-compose:6.3.0")
 
+    //Joda Time
+    implementation ("joda-time:joda-time:2.10.14")
+
 }
 
 kapt {

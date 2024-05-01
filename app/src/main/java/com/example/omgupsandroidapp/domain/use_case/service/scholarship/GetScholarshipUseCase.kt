@@ -1,14 +1,12 @@
-package com.example.omgupsandroidapp.domain.use_case.service
+package com.example.omgupsandroidapp.domain.use_case.service.scholarship
 
 import android.util.Log
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.toScholarshipModel
 import com.example.omgupsandroidapp.data.repository.ServiceRepositoryImpl
-import com.example.omgupsandroidapp.domain.model.ScholarshipModel
 import com.omgupsapp.common.Resource
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
-import java.util.concurrent.Flow
 import javax.inject.Inject
 
 class GetScholarshipUseCase @Inject constructor(

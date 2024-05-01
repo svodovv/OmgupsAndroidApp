@@ -12,4 +12,7 @@
     <string name="Services">Сервисы</string>
     <string name="profile">Профиль</string>
     <string name="shedule">Расписание</string>
+    <string name="current_spravok">Кол-во</string>
+    <string name="Spravka_training">Справка об обучении</string>
+    <string name="Spravka_military">Справка в военокомат</string>
 </resources>

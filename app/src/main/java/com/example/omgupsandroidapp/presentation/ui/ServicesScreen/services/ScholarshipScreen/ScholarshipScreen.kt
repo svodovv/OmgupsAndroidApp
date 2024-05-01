@@ -1,9 +1,8 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -55,20 +54,32 @@ fun ScholarshipScreen(
                             .padding(start = 8.dp, end = 8.dp)
                     ) {
                         TextInLazyColumn(
-                            columnName = "Период", modifier = Modifier.weight(1.5f),
+                            columnName = "Период",
+                            modifier = Modifier.weight(1.5f),
                             style = MaterialTheme.typography.bodyLarge
                         )
                         TextInLazyColumn(
-                            columnName = "Тип выплаты", modifier = Modifier.weight(1.7f),
+                            columnName = "Тип выплаты",
+                            modifier = Modifier.weight(1.7f),
                             style = MaterialTheme.typography.bodyLarge
                         )
-                        TextInLazyColumn(columnName = "Курс", modifier = Modifier.weight(1.2f),
-                            style = MaterialTheme.typography.bodyLarge)
-                        TextInLazyColumn(columnName = "Сумма", modifier = Modifier.weight(0.7f),
-                            style = MaterialTheme.typography.bodyLarge)
+                        TextInLazyColumn(
+                            columnName = "Курс",
+                            modifier = Modifier.weight(1.2f),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        TextInLazyColumn(
+                            columnName = "Сумма",
+                            modifier = Modifier.weight(0.7f),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     }
                     Divider(
-                        modifier = Modifier.fillMaxWidth(), color = Color.Black, thickness = 1.dp
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        color = Color.Black,
+                        thickness = 1.dp
                     )
                 }
 
@@ -85,8 +96,12 @@ fun ScholarshipScreen(
                                 }
                             ), verticalAlignment = Alignment.CenterVertically
                     ) {
-                        TextInLazyColumn(columnName = it.dateInterval, modifier = Modifier.weight(1.5f))
-                        TextInLazyColumn(columnName = it.typeOfPayment, modifier = Modifier.weight(1.7f))
+                        TextInLazyColumn(
+                            columnName = it.dateInterval, modifier = Modifier.weight(1.5f)
+                        )
+                        TextInLazyColumn(
+                            columnName = it.typeOfPayment, modifier = Modifier.weight(1.7f)
+                        )
                         TextInLazyColumn(columnName = it.year, modifier = Modifier.weight(1.2f))
                         TextInLazyColumn(columnName = it.sum, modifier = Modifier.weight(0.7f))
                     }
@@ -98,6 +113,24 @@ fun ScholarshipScreen(
                         thickness = 1.dp
                     )
                 }
+                scholarship.value.totalSum?.let {
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Общая сумма: ${it.totalSum}",
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Start
+                            )
+                        }
+                    }
+                }
+
             }
         } else {
             LoadingScreen()

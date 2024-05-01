@@ -26,7 +26,6 @@ class ScholarshipViewModel @Inject constructor(
 
     init {
         getScholarship()
-        getTotalSum()
     }
 
     private fun getScholarship() {
@@ -38,6 +37,7 @@ class ScholarshipViewModel @Inject constructor(
                             scholarshipList = result.data ?: emptyList()
                         )
                     }
+                    getTotalSum()
                 }
 
                 is Resource.Loading -> {

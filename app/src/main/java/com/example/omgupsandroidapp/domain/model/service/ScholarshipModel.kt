@@ -1,4 +1,4 @@
-package com.example.omgupsandroidapp.domain.model
+package com.example.omgupsandroidapp.domain.model.service
 
 
 data class ScholarshipModel (

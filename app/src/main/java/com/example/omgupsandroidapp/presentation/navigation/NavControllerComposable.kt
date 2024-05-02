@@ -1,6 +1,7 @@
 package com.omgupsapp.presentation.navigation
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -58,11 +59,7 @@ fun NavHostComposable(
                 )
             }
 
-            composable(route = Screen.Service.route) {
-                ServiceScreen(
-                    navController = navController, paddingValues = paddingValues
-                )
-            }
+
 
             composable(route = Screen.ScheduleScreen.route) {
                 ScheduleScreen(
@@ -76,7 +73,12 @@ fun NavHostComposable(
                 )
             }
 
+            composable(route = Screen.Service.route) {
+                ServiceScreen(
+                    navController = navController, paddingValues = paddingValues
+                )
 
+            }
             composable(Screen.ScholarshipScreen.route) {
                 ScholarshipScreen(navController = navController, paddingValues = paddingValues)
             }

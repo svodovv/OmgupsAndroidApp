@@ -53,6 +53,7 @@ class AuthRepositoryImpl @Inject constructor(
                 parseLkTestAuth(it, "Учебные")
             }
             if (userIsAuth == true){
+                dataStoreManager.saveLoggedIn(true)
                 return true
             }
         }

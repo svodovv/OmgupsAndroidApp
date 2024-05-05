@@ -115,6 +115,7 @@ fun AuthScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp, bottom = 0.dp, end = 8.dp),
+
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
                         else MaterialTheme.colorScheme.outline,

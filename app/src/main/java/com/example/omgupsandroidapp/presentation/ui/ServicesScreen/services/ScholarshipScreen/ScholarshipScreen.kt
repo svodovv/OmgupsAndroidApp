@@ -56,22 +56,22 @@ fun ScholarshipScreen(
                         TextInLazyColumn(
                             columnName = "Период",
                             modifier = Modifier.weight(1.5f),
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodySmall
                         )
                         TextInLazyColumn(
                             columnName = "Тип выплаты",
                             modifier = Modifier.weight(1.7f),
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodySmall
                         )
                         TextInLazyColumn(
                             columnName = "Курс",
                             modifier = Modifier.weight(1.2f),
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodySmall
                         )
                         TextInLazyColumn(
                             columnName = "Сумма",
                             modifier = Modifier.weight(0.7f),
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodySmall
                         )
                     }
                     Divider(
@@ -124,7 +124,7 @@ fun ScholarshipScreen(
                         ) {
                             Text(
                                 text = "Общая сумма: ${it.totalSum}",
-                                style = MaterialTheme.typography.bodyLarge,
+                                style = MaterialTheme.typography.bodySmall,
                                 textAlign = TextAlign.Start
                             )
                         }
@@ -143,7 +143,7 @@ fun ScholarshipScreen(
 fun TextInLazyColumn(
     columnName: String,
     modifier: Modifier = Modifier,
-    style: TextStyle = MaterialTheme.typography.bodySmall
+    style: TextStyle = MaterialTheme.typography.bodyLarge
 ) {
     Box(
         modifier = modifier, contentAlignment = Alignment.Center

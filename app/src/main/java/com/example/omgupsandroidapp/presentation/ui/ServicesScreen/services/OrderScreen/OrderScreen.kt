@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,11 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,50 +37,77 @@ fun OrderScreen(
     val orderState = orderViewModel.orderState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { orderState.value.orderList.size })
 
-    ServicesTopAppBar(title = "Приказы", navController = navController)
 
-    if (orderState.value.orderList.isNotEmpty()) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center
-        ) {
-            HorizontalPager(
-                state = pagerState,
-                key = { orderState.value.orderList[it] },
-                modifier = Modifier.fillMaxSize()
-            ) { index ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            text = orderState.value.orderList[index].orderTitle,
-                            style = MaterialTheme.typography.bodyMedium,
-                            textAlign = TextAlign.Center
-                        )
-                        orderState.value.orderList[index].orderList.forEachIndexed() { index, orderName ->
-                            Row(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+    ) {
+
+        ServicesTopAppBar(title = "Приказы", navController = navController)
+
+        if (orderState.value.orderList.isNotEmpty()) {
+            Box(
+                modifier = Modifier
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                HorizontalPager(
+                    state = pagerState,
+                    key = { orderState.value.orderList[it].orderTitle },
+                ) { index ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+
                                 Text(
-                                    text = "$index.", style = MaterialTheme.typography.bodyLarge,
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier.weight(1f)
+                                    text = orderState.value.orderList[index].orderTitle,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    modifier = Modifier
+                                        .padding(16.dp)
+                                        .border(1.dp, Color.Black),
+                                    maxLines = 2,
+                                    minLines = 2
                                 )
-                                Text(
-                                    text = orderName, style = MaterialTheme.typography.bodyLarge,
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier.weight(3f)
-                                )
+
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        horizontal = 8.dp,
+                                    ), thickness = 1.dp, Color.Black
+                            )
+                            orderState.value.orderList[index].orderList.forEachIndexed { index, orderName ->
+                                Row(
+                                    modifier = Modifier
+                                        .padding(
+                                            start = 8.dp, top = 8.dp, end = 8.dp
+                                        )
+                                        .fillMaxWidth()
+                                ) {
+                                    Text(
+                                        text = "${index + 1}.",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    Text(
+                                        text = orderName,
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        textAlign = TextAlign.Start,
+                                        modifier = Modifier.weight(11f)
+                                    )
+                                }
                             }
                         }
                     }
                 }
             }
+        } else {
+            LoadingScreen()
         }
-    }else{
-        LoadingScreen()
     }
 }

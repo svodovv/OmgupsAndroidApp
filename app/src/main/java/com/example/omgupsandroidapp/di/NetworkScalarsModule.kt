@@ -37,7 +37,7 @@ object NetworkScalarsModule {
     @Singleton
     fun provideOkHttpClient(cookieJar: MyCookieJar): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .cookieJar(cookieJar).build()
     }
 

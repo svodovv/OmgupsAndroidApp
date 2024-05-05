@@ -15,3 +15,11 @@ internal fun parseMetaDataInHtmlDoc(htmlContent: String, metaName: String): Stri
 internal fun parseTitleInHtmlDoc(htmlContent: String): String? {
     return Jsoup.parse(htmlContent).title()
 }
+
+internal fun parseLkTestAuth(html: String, entryName: String): Boolean {
+    val doc = Jsoup.parse(html)
+    val cardBody = doc.select("div.card-body").first()
+    val text = cardBody?.text()?.trim()
+
+    return text != null && text.contains(entryName)
+}

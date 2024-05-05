@@ -34,7 +34,6 @@ class AuthRepositoryImpl @Inject constructor(
         login: String,
         password: String,
     ): Boolean {
-        Log.e("TOKEN", csrfToken.toString() )
         val response = api.authentication(
             csrfToken = csrfToken!!,
             login = login,
@@ -42,11 +41,18 @@ class AuthRepositoryImpl @Inject constructor(
             rememberMe = "1"
         )
         if (response.isSuccessful){
-            val title = response.body()?.let {
+         /*   val title = response.body()?.let {
                 parseTitleInHtmlDoc(it)
             }
             if (title != null && title.contains("кабинет")) {
                 dataStoreManager.saveLoggedIn(true)
+                return true
+            }*/
+
+            val userIsAuth = response.body()?.let {
+                parseLkTestAuth(it, "Учебные")
+            }
+            if (userIsAuth == true){
                 return true
             }
         }

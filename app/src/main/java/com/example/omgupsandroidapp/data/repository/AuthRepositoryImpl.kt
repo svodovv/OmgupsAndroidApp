@@ -8,6 +8,15 @@ import com.omgupsapp.domain.repository.AuthRepository
 import javax.inject.Inject
 import javax.inject.Named
 
+
+/*
+
+    По скольку сервер не расчитан на мобилку всегда приходит HTTP ответ 200
+    (учитывается только правильный запрос, если запрос был неккоректен, то он выкинет 400),
+    даже если был введ не правильный пароль, из-за этого приходиться парсить содержмое страницы входа
+     , на lktest и проде разное содержиое страницы входа, по этому работать в разных ветках
+*/
+
 class AuthRepositoryImpl @Inject constructor(
 
     private val api: AuthApi,

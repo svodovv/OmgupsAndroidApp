@@ -1,8 +1,5 @@
 package com.omgupsapp.presentation.navigation
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -14,7 +11,6 @@ import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Orde
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.PlanScreen.PlanScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkaScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.StudentBookScreen.StudentBookScreen
-import com.example.omgupsandroidapp.presentation.ui.SettingsScreen.copmposable.SettingsScreen
 import com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreen
 import com.omgupsapp.presentation.NavigationGroup
 import com.omgupsapp.presentation.Screen
@@ -52,12 +48,6 @@ fun NavHostComposable(
             startDestination = Screen.ScheduleScreen.route,
             route = NavigationGroup.HomeScreens.route
         ) {
-
-            composable(route = Screen.LogOutScreen.route) {
-                SettingsScreen(
-                    navController = navController, paddingValues = paddingValues
-                )
-            }
 
 
 

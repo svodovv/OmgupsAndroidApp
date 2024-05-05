@@ -78,7 +78,7 @@ fun ScholarshipScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp),
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.inverseSurface,
                         thickness = 1.dp
                     )
                 }
@@ -92,7 +92,7 @@ fun ScholarshipScreen(
                                 color = if (index % 2 == 0) {
                                     MaterialTheme.colorScheme.background
                                 } else {
-                                    MaterialTheme.colorScheme.surfaceVariant
+                                    MaterialTheme.colorScheme.inverseOnSurface
                                 }
                             ), verticalAlignment = Alignment.CenterVertically
                     ) {

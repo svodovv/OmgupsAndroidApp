@@ -86,7 +86,7 @@ fun OrderScreen(
                                     .fillMaxWidth()
                                     .padding(
                                         horizontal = 8.dp,
-                                    ), thickness = 1.dp, Color.Black
+                                    ), thickness = 1.dp, MaterialTheme.colorScheme.inverseSurface,
                             )
 
                             orderState.value.orderList[index].orderList.forEachIndexed { index, orderName ->

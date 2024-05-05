@@ -7,17 +7,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
-import com.omgupsapp.presentation.Screen
+import com.example.omgupsandroidapp.presentation.ui.LogoutScreen.LogoutAlertDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarComposable(
     navController: NavController,
     selectedTitle: String
-    ) {
+) {
+    val logOutState = remember {
+        mutableStateOf(false)
+    }
     TopAppBar(
         title = {
             Text(
@@ -26,7 +31,9 @@ fun TopAppBarComposable(
             )
         },
         actions = {
-            IconButton(onClick = { navController.navigate(Screen.LogOutScreen.route) }) {
+            IconButton(onClick = {
+                logOutState.value = true
+            }) {
                 Icon(
                     painterResource(id = R.drawable.ic_settings),
                     contentDescription = "Settings icon"
@@ -34,5 +41,8 @@ fun TopAppBarComposable(
             }
         }
     )
+    if (logOutState.value) {
+        LogoutAlertDialog(onDismissRequest = { logOutState.value })
+    }
 }
 

@@ -17,8 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             OmgupsAndroidAppTheme {
-                val navController = rememberNavController()
-                App(navController)
+                App()
             }
         }
     }

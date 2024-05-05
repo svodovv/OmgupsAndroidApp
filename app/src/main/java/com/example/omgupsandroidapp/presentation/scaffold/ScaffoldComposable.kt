@@ -17,6 +17,7 @@ fun ScaffoldComposable(
     itemsBottomBar: List<BottomNavigationItem>,
     content: @Composable (PaddingValues) -> Unit
 ) {
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val selectedTitle = remember { mutableStateOf("") }
 

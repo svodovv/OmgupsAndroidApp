@@ -1,9 +1,12 @@
 package com.omgupsapp.presentation
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.omgupsandroidapp.R
 import com.omgupsapp.presentation.navigation.NavHostComposable
 import com.omgupsapp.presentation.scaffold.ScaffoldComposable
@@ -18,7 +21,8 @@ data class BottomNavigationItem(
 )
 
 @Composable
-fun App( navController: NavHostController) {
+fun App() {
+    val navController = rememberNavController()
 
     val itemsBottomBar = listOf(
         BottomNavigationItem(
@@ -41,12 +45,14 @@ fun App( navController: NavHostController) {
         ),
     )
 
+
     ScaffoldComposable(
         navController = navController,
         itemsBottomBar = itemsBottomBar,
-    ) {
+    ) { paddingValues ->
         NavHostComposable(
-            navController = navController, paddingValues = it
+            navController = navController,
+            paddingValues = paddingValues
         )
     }
 

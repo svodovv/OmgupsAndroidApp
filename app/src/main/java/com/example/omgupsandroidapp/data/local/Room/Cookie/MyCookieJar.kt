@@ -43,7 +43,6 @@ class MyCookieJar @Inject constructor(
                 .expiresAt(entity.expiresAt)
                 .build()
         }
-        Log.e("Cookie", cookie.toString())
         return cookie
     }
 }

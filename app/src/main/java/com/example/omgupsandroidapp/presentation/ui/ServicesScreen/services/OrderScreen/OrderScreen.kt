@@ -1,7 +1,7 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -48,8 +48,7 @@ fun OrderScreen(
 
         if (orderState.value.orderList.isNotEmpty()) {
             Box(
-                modifier = Modifier
-                    .padding(paddingValues),
+                modifier = Modifier,
                 contentAlignment = Alignment.Center
             ) {
                 HorizontalPager(
@@ -61,17 +60,26 @@ fun OrderScreen(
                             .fillMaxSize()
                             .padding(16.dp)
                     ) {
-                        Column(modifier = Modifier.fillMaxWidth()) {
+                        Column(modifier = Modifier.fillMaxSize()) {
 
-                                Text(
-                                    text = orderState.value.orderList[index].orderTitle,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    modifier = Modifier
-                                        .padding(16.dp)
-                                        .border(1.dp, Color.Black),
-                                    maxLines = 2,
-                                    minLines = 2
-                                )
+                            Text(
+                                text = orderState.value.orderList[index].orderTitle,
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        vertical =
+                                        if (orderState.value.orderList[index].orderTitle.length < 40) {
+                                            27.dp
+                                        } else
+                                            16.dp,
+                                        horizontal = 16.dp
+                                    ),
+                                minLines = 1,
+                                maxLines = 2,
+
+                                textAlign = TextAlign.Center
+                            )
 
                             Divider(
                                 modifier = Modifier
@@ -80,6 +88,7 @@ fun OrderScreen(
                                         horizontal = 8.dp,
                                     ), thickness = 1.dp, Color.Black
                             )
+
                             orderState.value.orderList[index].orderList.forEachIndexed { index, orderName ->
                                 Row(
                                     modifier = Modifier
@@ -101,6 +110,23 @@ fun OrderScreen(
                                         modifier = Modifier.weight(11f)
                                     )
                                 }
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(8.dp),
+                                verticalAlignment = Alignment.Bottom,
+                                horizontalArrangement = Arrangement.End
+                            ) {
+
+
+                                Text(
+                                    text = "${index + 1} / ${orderState.value.orderList.size}",
+
+                                    textAlign = TextAlign.End,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
                             }
                         }
                     }

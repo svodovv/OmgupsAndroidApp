@@ -27,17 +27,22 @@ fun NavHostComposable(
 
 
     NavHost(
-        navController = navController, startDestination = Screen.SplashScreen.route
+        navController = navController,
+        startDestination = NavigationGroup.AuthGroup.route
     ) {
 
-        composable(route = Screen.SplashScreen.route) {
-            SplashScreen(navController = navController)
-        }
+
 
         navigation(
-            startDestination = Screen.AuthScreen.route, route = NavigationGroup.AuthGroup.route
+            startDestination = Screen.SplashScreen.route,
+            route = NavigationGroup.AuthGroup.route
 
         ) {
+
+            composable(route = Screen.SplashScreen.route) {
+                SplashScreen(navController = navController)
+            }
+
             composable(route = Screen.AuthScreen.route) {
                 AuthScreen(navController = navController)
             }/*

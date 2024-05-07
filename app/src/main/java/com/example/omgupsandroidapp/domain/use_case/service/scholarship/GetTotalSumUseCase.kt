@@ -1,8 +1,8 @@
 package com.example.omgupsandroidapp.domain.use_case.service.scholarship
 
 import android.os.Build
-import com.example.omgupsandroidapp.domain.model.service.ScholarshipModel
-import com.example.omgupsandroidapp.domain.model.TotalSumPerMonthModel
+import com.example.omgupsandroidapp.domain.model.service.Scholarship.ScholarshipModel
+import com.example.omgupsandroidapp.domain.model.service.Scholarship.TotalSumPerMonthModel
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

@@ -68,13 +68,13 @@ fun ServiceScreen(
                     Text(
                         text = it.serviceName,
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.weight(3f),
+                        modifier = Modifier.weight(5f),
                         textAlign = TextAlign.Start
                     )
                 }
             }
         }
-        Spacer(modifier = Modifier.size(150.dp))
+        Spacer(modifier = Modifier.size(50.dp))
     }
 
 }

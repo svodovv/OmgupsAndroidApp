@@ -17,32 +17,31 @@ import com.example.omgupsandroidapp.presentation.ui.LogoutScreen.LogoutAlertDial
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarComposable(
-    navController: NavController,
-    selectedTitle: String
+    navController: NavController, selectedTitle: String
 ) {
     val logOutState = remember {
         mutableStateOf(false)
     }
-    TopAppBar(
-        title = {
-            Text(
-                text = selectedTitle,
-                style = MaterialTheme.typography.displayMedium
+    TopAppBar(title = {
+        Text(
+            text = selectedTitle, style = MaterialTheme.typography.displayMedium
+        )
+    }, actions = {
+        IconButton(onClick = {
+            logOutState.value = true
+        }) {
+            Icon(
+                painterResource(id = R.drawable.ic_logout),
+                contentDescription = "Settings icon"
             )
-        },
-        actions = {
-            IconButton(onClick = {
-                logOutState.value = true
-            }) {
-                Icon(
-                    painterResource(id = R.drawable.ic_settings),
-                    contentDescription = "Settings icon"
-                )
-            }
         }
-    )
+    })
     if (logOutState.value) {
-        LogoutAlertDialog(onDismissRequest = { logOutState.value })
+        LogoutAlertDialog(
+            onDismissRequest = {
+                logOutState.value = false // Закрыть диалог
+            }, navController = navController
+        )
     }
 }
 

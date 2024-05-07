@@ -55,12 +55,12 @@ fun ScholarshipScreen(
                     ) {
                         TextInLazyColumn(
                             columnName = "Период",
-                            modifier = Modifier.weight(1.5f),
+                            modifier = Modifier.weight(1.3f),
                             style = MaterialTheme.typography.bodySmall
                         )
                         TextInLazyColumn(
                             columnName = "Тип выплаты",
-                            modifier = Modifier.weight(1.7f),
+                            modifier = Modifier.weight(1.5f),
                             style = MaterialTheme.typography.bodySmall
                         )
                         TextInLazyColumn(
@@ -70,7 +70,7 @@ fun ScholarshipScreen(
                         )
                         TextInLazyColumn(
                             columnName = "Сумма",
-                            modifier = Modifier.weight(0.7f),
+                            modifier = Modifier.weight(0.8f),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -97,13 +97,13 @@ fun ScholarshipScreen(
                             ), verticalAlignment = Alignment.CenterVertically
                     ) {
                         TextInLazyColumn(
-                            columnName = it.dateInterval, modifier = Modifier.weight(1.5f)
+                            columnName = it.dateInterval, modifier = Modifier.weight(1.3f)
                         )
                         TextInLazyColumn(
-                            columnName = it.typeOfPayment, modifier = Modifier.weight(1.7f)
+                            columnName = it.typeOfPayment, modifier = Modifier.weight(1.5f)
                         )
                         TextInLazyColumn(columnName = it.year, modifier = Modifier.weight(1.2f))
-                        TextInLazyColumn(columnName = it.sum, modifier = Modifier.weight(0.7f))
+                        TextInLazyColumn(columnName = it.sum, modifier = Modifier.weight(0.8f))
                     }
                     Divider(
                         modifier = Modifier

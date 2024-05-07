@@ -35,6 +35,7 @@ import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.LoginScreen.components.OmgupsImage
+import com.omgupsapp.presentation.NavigationGroup
 import com.omgupsapp.presentation.Screen
 import com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel
 
@@ -51,7 +52,7 @@ fun AuthScreen(
 
     LaunchedEffect(stateAuthentication) {
         if (stateAuthentication.userAuthenticated == true) {
-            navController.navigate(Screen.Service.route) {
+            navController.navigate(NavigationGroup.HomeScreens.route) {
                 popUpTo(Screen.AuthScreen.route) {
                     inclusive = true
                 }

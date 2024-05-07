@@ -1,6 +1,6 @@
 package com.example.omgupsandroidapp.data.remote.dto.scholarship
 
-import com.example.omgupsandroidapp.domain.model.service.ScholarshipModel
+import com.example.omgupsandroidapp.domain.model.service.Scholarship.ScholarshipModel
 import com.google.gson.annotations.SerializedName
 
 data class ScholarshipDtoItem(

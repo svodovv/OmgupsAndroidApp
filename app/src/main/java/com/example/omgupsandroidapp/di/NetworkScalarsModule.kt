@@ -35,7 +35,8 @@ object NetworkScalarsModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(cookieJar: MyCookieJar): OkHttpClient {
+    @Named("scalarsOkHttp")
+    fun provideScalarsOkHttpClient(cookieJar: MyCookieJar): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .cookieJar(cookieJar).build()
@@ -44,8 +45,9 @@ object NetworkScalarsModule {
 
     @Provides
     @Singleton
-    @Named("Scalars")
+    @Named("scalars")
     fun provideRetrofit(
+        @Named("scalarsOkHttp")
         okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder().baseUrl(Constants.BASE_URL).client(okHttpClient)
@@ -54,7 +56,7 @@ object NetworkScalarsModule {
 
     @Provides
     @Singleton
-    fun authApi(@Named("Scalars") retrofit: Retrofit): AuthApi {
+    fun authApi(@Named("scalars") retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
     }
 
@@ -69,7 +71,7 @@ object NetworkScalarsModule {
 
     @Provides
     @Singleton
-    fun logoutApi(@Named("Scalars") retrofit: Retrofit): LogoutApi {
+    fun logoutApi(@Named("scalars") retrofit: Retrofit): LogoutApi {
         return retrofit.create(LogoutApi::class.java)
     }
 

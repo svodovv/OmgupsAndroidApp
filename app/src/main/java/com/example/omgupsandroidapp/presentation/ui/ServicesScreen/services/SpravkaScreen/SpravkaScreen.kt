@@ -1,6 +1,8 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +24,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -39,28 +42,57 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.omgupsapp.presentation.Screen
+import dagger.hilt.android.AndroidEntryPoint
 
-@SuppressLint("UnrememberedMutableState")
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SpravkaScreen(
-    navController: NavController, paddingValues: PaddingValues
+    navController: NavController,
+    paddingValues: PaddingValues,
+    spravkiViewModel: SpravkiViewModel = hiltViewModel()
 ) {
     ServicesTopAppBar(title = "Заказать справку", navController = navController)
 
 
-   /* Column(
+   Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
        // SampleSpravka(R.string.Spravka_military)
-        SampleSpravka(namdeSpravka = R.string.Spravka_training)
-    }*/
+        //SampleSpravka(namdeSpravka = R.string.Spravka_training)
+    }
     var InputSpravka  by remember { mutableStateOf("") }
+    val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
+
+    if (spravki.value.spravkiList.isNotEmpty()){
+        Box(
+            modifier = Modifier
+                .padding(paddingValues),
+                contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = spravki.value.spravkiList[0].toString(),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .border(1.dp, Color.Black),
+                maxLines = 2,
+                minLines = 2
+            )
+        }
+    }
+   /*
+
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -114,7 +146,7 @@ fun SpravkaScreen(
                             modifier = Modifier
                                 .fillMaxWidth(.4f),
                             onClick = {
-                                // Отправка значения InputSpravka на сервер
+
                             }
                         ) {
                             Text(text = "Заказать")
@@ -188,7 +220,7 @@ fun SpravkaScreen(
                 }
             }
         }
-    }
+    }*/
     
 }
 

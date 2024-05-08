@@ -8,3 +8,11 @@ data class TypesSpravkiDtoItem(
     val ID: String,
     val Value: String,
 )
+
+data class ReferenceHistoryDtoItem (
+    val CountOrder: String,
+    val Date: String,
+    val NumberOrder: String,
+    val Status: String,
+    val TypeOrder: String
+)

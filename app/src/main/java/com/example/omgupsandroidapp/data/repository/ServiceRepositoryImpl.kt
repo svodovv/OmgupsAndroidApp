@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.OrderStatusDto
 
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
@@ -36,5 +37,11 @@ class ServiceRepositoryImpl @Inject constructor(
     override suspend fun getTypesSravki(): TypeSpravkaDto {
         return serviceApi.getTypesSpravki()
     }
+
+    override suspend fun getReferenceHistory(): OrderStatusDto {
+        return serviceApi.getReferenceHistory()
+    }
+
+
 
 }

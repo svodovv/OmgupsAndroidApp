@@ -2,15 +2,12 @@ package com.example.omgupsandroidapp.data.remote.Retrofit
 
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
-import com.example.omgupsandroidapp.data.remote.dto.spravki.OrderStatusDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.omgupsapp.common.Resource
-import okhttp3.Request
-import okhttp3.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -27,12 +24,13 @@ interface ServiceApi {
         @Body post: SpravkaPostModel
     ): Resource<SpravkaPostModel>
 
+    @GET("student/gethistory?type=0")
+    suspend fun getReferenceHistory(): ReferenceHistoryDto
 
     @GET("student/gettypes")
     suspend fun getTypesSpravki(): TypeSpravkaDto
 
-    @GET("student/gethistory?type=0")
-    suspend fun getReferenceHistory(): OrderStatusDto
+
 
 
 

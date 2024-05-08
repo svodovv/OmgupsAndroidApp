@@ -1,11 +1,9 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
-import com.example.omgupsandroidapp.data.remote.dto.spravki.OrderStatusDto
-import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDtoItem
-import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeList
+import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 
 data class ReferenceHistoryState (
-    val referenceHistoryList: List<OrderStatusDto> = emptyList(),
+    val referenceHistoryList: List<TypeStatusList> = emptyList(),
     val isLoading: Boolean = false,
     val error: String = ""
 )

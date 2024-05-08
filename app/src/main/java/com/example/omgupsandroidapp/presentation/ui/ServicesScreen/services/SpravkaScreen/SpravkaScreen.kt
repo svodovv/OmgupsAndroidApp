@@ -57,40 +57,58 @@ import dagger.hilt.android.AndroidEntryPoint
 fun SpravkaScreen(
     navController: NavController,
     paddingValues: PaddingValues,
-    spravkiViewModel: SpravkiViewModel = hiltViewModel()
+    spravkiViewModel: SpravkiViewModel = hiltViewModel(),
+    referenceHistoryViewModel: ReferenceHistoryViewModel = hiltViewModel()
 ) {
     ServicesTopAppBar(title = "Заказать справку", navController = navController)
 
-
-   Column(
+    var InputSpravka by remember { mutableStateOf("") }
+    //val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
+    val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
+    Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-       // SampleSpravka(R.string.Spravka_military)
+        // SampleSpravka(R.string.Spravka_military)
         //SampleSpravka(namdeSpravka = R.string.Spravka_training)
-    }
-    var InputSpravka  by remember { mutableStateOf("") }
-    val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
 
-    if (spravki.value.spravkiList.isNotEmpty()){
-        Box(
-            modifier = Modifier
-                .padding(paddingValues),
-                contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = spravki.value.spravkiList[0].toString(),
-                style = MaterialTheme.typography.titleMedium,
+        if (referenceHistory.value.referenceHistoryList.isNotEmpty()) {
+            Box(
                 modifier = Modifier
-                    .padding(16.dp)
-                    .border(1.dp, Color.Black),
-                maxLines = 2,
-                minLines = 2
-            )
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = referenceHistory.value.referenceHistoryList[0].toString(),
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .border(1.dp, Color.Black),
+                    maxLines = 2,
+                    minLines = 2
+                )
+            }
+            /* if (spravki.value.spravkiList.isNotEmpty()) {
+           Box(
+               modifier = Modifier
+                   .padding(paddingValues),
+               contentAlignment = Alignment.Center
+           ) {
+               Text(
+                   text = spravki.value.spravkiList[0].toString(),
+                   style = MaterialTheme.typography.titleMedium,
+                   modifier = Modifier
+                       .padding(16.dp)
+                       .border(1.dp, Color.Black),
+                   maxLines = 2,
+                   minLines = 2
+               )
+           }
+       }*/
         }
     }
-   /*
+        /*
 
 
     Column(
@@ -221,11 +239,11 @@ fun SpravkaScreen(
             }
         }
     }*/
-    
+
 }
 
 
-/*@Composable
+    /*@Composable
 fun SampleSpravka(
     namdeSpravka : Int
 ){
@@ -308,36 +326,38 @@ fun SampleSpravka(
         // }
     }
 }*/
-@Composable
-fun OrderStatusBar(currentStage: Int) {
-    val stages = listOf("Заказано", "В работе", "Готова")
+    @Composable
+    fun OrderStatusBar(currentStage: Int) {
+        val stages = listOf("Заказано", "В работе", "Готова")
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        stages.forEachIndexed { index, stage ->
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            stages.forEachIndexed { index, stage ->
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(
                         text = stage,
                         color = Color.White,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
-                Spacer(modifier = Modifier.size(10.dp, 10.dp))
+                    Spacer(modifier = Modifier.size(10.dp, 10.dp))
                     Box(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .background(
-                            if (index <= currentStage) Color.Green else Color.Gray,
-                            shape = CircleShape
-                        ))
+                        modifier = Modifier
+                            .size(24.dp)
+                            .background(
+                                if (index <= currentStage) Color.Green else Color.Gray,
+                                shape = CircleShape
+                            )
+                    )
 
+                }
             }
         }
     }
-}
+

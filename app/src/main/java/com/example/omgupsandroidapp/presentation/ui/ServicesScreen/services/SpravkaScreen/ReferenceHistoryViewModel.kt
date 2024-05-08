@@ -19,14 +19,16 @@ class ReferenceHistoryViewModel @Inject constructor(
     val _referenceHistoryState = MutableStateFlow(ReferenceHistoryState())
     val referenceHistoryState = _referenceHistoryState.asStateFlow()
 
-
+    init {
+        getReferenceHistory()
+    }
 
     fun getReferenceHistory(){
         getReferenceHistoryUseCase.invoke().onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _referenceHistoryState.update {
-                        it.copy(referenceHistoryList = result.data? ?: emptyList())
+                        it.copy(referenceHistoryList = result.data?.OrderStatus ?: emptyList())
                     }
                 }
 

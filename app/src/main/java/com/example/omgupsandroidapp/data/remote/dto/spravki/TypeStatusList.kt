@@ -1,6 +1,6 @@
 package com.example.omgupsandroidapp.data.remote.dto.spravki
 
-data class OrderStatusDto(
+data class TypeStatusList(
     val CountOrder: String,
     val Date: String,
     val NumberOrder: String,

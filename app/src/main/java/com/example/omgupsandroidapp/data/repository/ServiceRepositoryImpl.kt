@@ -1,18 +1,16 @@
 package com.example.omgupsandroidapp.data.repository
 
-import android.util.Log
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
-import com.example.omgupsandroidapp.data.remote.dto.spravki.OrderStatusDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.example.omgupsandroidapp.domain.repository.ServiceRepository
 import com.omgupsapp.common.Resource
-import retrofit2.http.POST
 import javax.inject.Inject
-import javax.inject.Named
 
 
 class ServiceRepositoryImpl @Inject constructor(
@@ -38,7 +36,7 @@ class ServiceRepositoryImpl @Inject constructor(
         return serviceApi.getTypesSpravki()
     }
 
-    override suspend fun getReferenceHistory(): OrderStatusDto {
+    override suspend fun getReferenceHistory(): ReferenceHistoryDto {
         return serviceApi.getReferenceHistory()
     }
 

@@ -1,11 +1,11 @@
 package com.example.omgupsandroidapp.data.remote.dto.spravki
 
-data class ReferenceHistory(
-    val OrderStatus: List<OrderStatusDto>
+data class ReferenceHistoryDto(
+    val OrderStatus: List<TypeStatusList>
 )
 
-fun ReferenceHistoryDtoItem.toReferenceHistoryModel(): OrderStatusDto {
-    return OrderStatusDto(
+fun ReferenceHistoryDtoItem.toReferenceHistoryModel(): TypeStatusList {
+    return TypeStatusList(
         CountOrder = this.CountOrder,
         Date = this.Date,
         NumberOrder = this.NumberOrder,

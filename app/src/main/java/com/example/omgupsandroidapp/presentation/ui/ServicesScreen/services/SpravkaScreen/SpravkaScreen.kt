@@ -57,7 +57,7 @@ import dagger.hilt.android.AndroidEntryPoint
 fun SpravkaScreen(
     navController: NavController,
     paddingValues: PaddingValues,
-    spravkiViewModel: SpravkiViewModel = hiltViewModel(),
+    //spravkiViewModel: SpravkiViewModel = hiltViewModel(),
     referenceHistoryViewModel: ReferenceHistoryViewModel = hiltViewModel()
 ) {
     ServicesTopAppBar(title = "Заказать справку", navController = navController)

@@ -1,7 +1,7 @@
 package com.example.omgupsandroidapp.data.remote.dto.spravki
 
 data class ReferenceHistoryDto(
-    val OrderStatus: List<TypeStatusList>
+    val historyStatus: List<TypeStatusList>
 )
 
 fun ReferenceHistoryDtoItem.toReferenceHistoryModel(): TypeStatusList {

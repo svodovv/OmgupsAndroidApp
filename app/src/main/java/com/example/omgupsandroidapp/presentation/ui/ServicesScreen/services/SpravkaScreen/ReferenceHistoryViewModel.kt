@@ -2,7 +2,6 @@ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Spr
 
 import androidx.lifecycle.ViewModel
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetReferenceHistoryUseCase
-import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetTypesSpravkiUseCase
 import com.omgupsapp.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +27,7 @@ class ReferenceHistoryViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     _referenceHistoryState.update {
-                        it.copy(referenceHistoryList = result.data?.OrderStatus ?: emptyList())
+                        it.copy(referenceHistoryList = result.data?.historyStatus ?: emptyList())
                     }
                 }
 

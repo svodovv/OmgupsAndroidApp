@@ -2,6 +2,7 @@ package com.example.omgupsandroidapp.data.remote.Retrofit
 
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.StatusSpravakaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
@@ -27,8 +28,8 @@ interface ServiceApi {
 
     @POST("student/loadspravka")
     suspend fun postSpravka(
-        @Body post: SpravkaPostModel
-    ): Response<SpravkaPostModel>
+        @Body post: LoadSpravkaDto
+    ): Response<LoadSpravkaDto>
 
    /* @GET("student/gethistory?type={id}")
     suspend fun getReferenceHistory(@Query("id") id: Int): ReferenceHistoryDto*/

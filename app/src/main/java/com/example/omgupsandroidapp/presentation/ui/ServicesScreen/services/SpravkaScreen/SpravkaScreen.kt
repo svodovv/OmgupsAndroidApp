@@ -47,13 +47,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
+import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.omgupsapp.presentation.Screen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -71,9 +74,12 @@ fun SpravkaScreen(
     var InputSpravka by remember { mutableStateOf("") }
     //val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
     val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
+    val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statysSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
-    val postSprava = SpravkaPostModel(0,1)
-    orderSpravkaViewModel.postSravka(postSprava)
+        val postSpravkA = LoadSpravka(1,1)
+    //orderSpravkaViewModel.postSravka(postSprava)
+
+    //orderSpravkaViewModel.postSravka()
     /*orderSpravkaViewModel.myresponse.observe(this, Observer { respons ->
         if (respons != null) {
             if (respons.isSuccessful){
@@ -141,8 +147,10 @@ fun SpravkaScreen(
             }
         }
 
+        //if(orderSpravkaViewModel.myresponse.isInitialized)
+
     }
-        /*
+
 
 
     Column(
@@ -198,7 +206,9 @@ fun SpravkaScreen(
                             modifier = Modifier
                                 .fillMaxWidth(.4f),
                             onClick = {
-
+                                 orderSpravkaViewModel.viewModelScope.launch {
+                                     orderSpravkaViewModel.postSravka(postSpravkA)
+                                 }
                             }
                         ) {
                             Text(text = "Заказать")
@@ -272,7 +282,7 @@ fun SpravkaScreen(
                 }
             }
         }
-    }*/
+    }
 
 }
 

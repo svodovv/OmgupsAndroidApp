@@ -43,10 +43,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
+import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
+import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.omgupsapp.presentation.Screen
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,14 +61,26 @@ import dagger.hilt.android.AndroidEntryPoint
 fun SpravkaScreen(
     navController: NavController,
     paddingValues: PaddingValues,
-    //spravkiViewModel: SpravkiViewModel = hiltViewModel(),
-    referenceHistoryViewModel: ReferenceHistoryViewModel = hiltViewModel()
+    spravkiViewModel: SpravkiViewModel = hiltViewModel(),
+    referenceHistoryViewModel: ReferenceHistoryViewModel = hiltViewModel(),
+    spravkaViewModul: StatusSpravkaViewModul = hiltViewModel(),
+    orderSpravkaViewModel: OrderSpravkaViewModel = hiltViewModel()
 ) {
     ServicesTopAppBar(title = "Заказать справку", navController = navController)
 
     var InputSpravka by remember { mutableStateOf("") }
     //val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
     val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
+    val statysSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
+    val postSprava = SpravkaPostModel(0,1)
+    orderSpravkaViewModel.postSravka(postSprava)
+    /*orderSpravkaViewModel.myresponse.observe(this, Observer { respons ->
+        if (respons != null) {
+            if (respons.isSuccessful){
+                Log.d("Main", respons.body().toString())
+            }
+        }
+    })*/
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceAround,
@@ -73,7 +89,7 @@ fun SpravkaScreen(
         // SampleSpravka(R.string.Spravka_military)
         //SampleSpravka(namdeSpravka = R.string.Spravka_training)
 
-        if (referenceHistory.value.referenceHistoryList.isNotEmpty()) {
+        /*if (referenceHistory.value.referenceHistoryList.isNotEmpty()) {
             Box(
                 modifier = Modifier
                     .padding(paddingValues),
@@ -88,7 +104,7 @@ fun SpravkaScreen(
                     maxLines = 2,
                     minLines = 2
                 )
-            }
+            }*/
             /* if (spravki.value.spravkiList.isNotEmpty()) {
            Box(
                modifier = Modifier
@@ -105,8 +121,26 @@ fun SpravkaScreen(
                    minLines = 2
                )
            }
-       }*/
+       }
+        }*/
+        if (statysSpravki.value.spravkiStatus.isNotEmpty()){
+            Box(
+                modifier = Modifier
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = statysSpravki.value.spravkiStatus,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .border(1.dp, Color.Black),
+                    maxLines = 2,
+                    minLines = 2
+                )
+            }
         }
+
     }
         /*
 

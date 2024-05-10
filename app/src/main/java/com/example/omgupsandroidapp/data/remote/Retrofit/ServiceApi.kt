@@ -3,13 +3,19 @@ package com.example.omgupsandroidapp.data.remote.Retrofit
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
-import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
+import com.example.omgupsandroidapp.data.remote.dto.spravki.StatusSpravakaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.omgupsapp.common.Resource
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
+
 
 interface ServiceApi {
 
@@ -22,13 +28,17 @@ interface ServiceApi {
     @POST("student/loadspravka")
     suspend fun postSpravka(
         @Body post: SpravkaPostModel
-    ): Resource<SpravkaPostModel>
+    ): Response<SpravkaPostModel>
 
-    @GET("student/gethistory?type=0")
-    suspend fun getReferenceHistory(): ReferenceHistoryDto
-
+   /* @GET("student/gethistory?type={id}")
+    suspend fun getReferenceHistory(@Query("id") id: Int): ReferenceHistoryDto*/
+   @GET("student/gethistory")
+   suspend fun getReferenceHistory(@Query("type") id: Int): ReferenceHistoryDto
     @GET("student/gettypes")
     suspend fun getTypesSpravki(): TypeSpravkaDto
+
+    @GET("student/getstatus")
+    suspend fun getStatysSpravka(): StatusSpravakaDto
 
 
 

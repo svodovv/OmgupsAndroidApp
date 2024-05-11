@@ -2,7 +2,9 @@ package com.example.omgupsandroidapp.data.remote.Retrofit
 
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
+
 import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.StatusSpravakaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto

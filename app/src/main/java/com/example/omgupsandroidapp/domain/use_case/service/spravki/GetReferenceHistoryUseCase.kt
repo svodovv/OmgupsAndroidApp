@@ -16,8 +16,10 @@ class GetReferenceHistoryUseCase @Inject constructor(
     operator fun invoke() = flow {
         try {
             emit(Resource.Loading())
-            val ReferenceHistoryList = serviceRepositoryImpl.getReferenceHistory()
-            emit(Resource.Success(ReferenceHistoryList))
+            val ReferenceHistoryList0 = serviceRepositoryImpl.getReferenceHistory(0)
+            emit(Resource.Success(ReferenceHistoryList0))
+            val ReferenceHistoryList1 = serviceRepositoryImpl.getReferenceHistory(1)
+            emit(Resource.Success(ReferenceHistoryList1))
             //emit(Resource.Success(SpravkiList))
         } catch (e: IOException) {
             emit(Resource.Error(e.localizedMessage ?: "IO Exception"))

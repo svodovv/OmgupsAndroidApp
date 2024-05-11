@@ -2,12 +2,15 @@ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Spr
 
 import androidx.lifecycle.ViewModel
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetReferenceHistoryUseCase
+import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetTypesSpravkiUseCase
 import com.omgupsapp.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,11 +22,11 @@ class ReferenceHistoryViewModel @Inject constructor(
     val referenceHistoryState = _referenceHistoryState.asStateFlow()
 
     init {
-        getReferenceHistory()
+        runBlocking { getReferenceHistory() }
     }
 
-    fun getReferenceHistory(){
-        getReferenceHistoryUseCase.invoke().onEach { result ->
+    suspend fun getReferenceHistory(){
+        getReferenceHistoryUseCase.invoke().collectLatest { result ->
             when(result) {
                 is Resource.Success -> {
                     _referenceHistoryState.update {
@@ -48,4 +51,9 @@ class ReferenceHistoryViewModel @Inject constructor(
             }
         }
     }
+  /*  suspend fun getType(){
+        getTypesSpravkiUseCase.invoke().collect {
+            type.value.spravkiList[0].ID
+        }
+    }*/
 }

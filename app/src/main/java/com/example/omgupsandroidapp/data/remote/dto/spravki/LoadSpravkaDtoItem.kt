@@ -14,6 +14,12 @@ data class LoadSpravkaDto (
     val spravkaForm : List<LoadSpravka>
 )
 
+fun LoadSpravka.toDtoLoadSpravka() : LoadSpravkaDto {
+    return LoadSpravkaDto(
+        listOf(this)
+    )
+}
+
 data class LoadSpravkaDtoItem(
     @SerializedName("type")
     val type : Int,

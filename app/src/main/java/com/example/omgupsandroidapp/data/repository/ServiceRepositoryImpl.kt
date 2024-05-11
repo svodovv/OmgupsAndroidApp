@@ -3,12 +3,15 @@ package com.example.omgupsandroidapp.data.repository
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDtoItem
 import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.StatusSpravakaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.toDtoLoadSpravka
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.example.omgupsandroidapp.domain.repository.ServiceRepository
 import com.omgupsapp.common.Resource
@@ -26,8 +29,8 @@ class ServiceRepositoryImpl @Inject constructor(
     /*override suspend fun postSpravka(csrfToken: String,type : Int, count : Int): Resource<SpravkaPostModel> {
         return serviceApi.postSpravka(csrfToken,type,count)
     }*/
-    override suspend fun postSpravka(post: LoadSpravkaDto): Response<LoadSpravkaDto> {
-        return serviceApi.postSpravka(post)
+    override suspend fun postSpravka(post: LoadSpravka): Response<LoadSpravkaDto> {
+        return serviceApi.postSpravka(post.toDtoLoadSpravka())
     }
 
 

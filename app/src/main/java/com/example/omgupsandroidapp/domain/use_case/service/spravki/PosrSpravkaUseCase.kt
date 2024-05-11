@@ -1,5 +1,6 @@
 package com.example.omgupsandroidapp.domain.use_case.service.spravki
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
@@ -14,8 +15,9 @@ import javax.inject.Inject
 class PostSpravkaUseCase @Inject constructor(
     private val serviceRepositoryImpl: ServiceRepositoryImpl
 ) {
-    var sparavka = LoadSpravkaDto(listOf())
-    operator fun invoke() = flow {
+
+    @SuppressLint("SuspiciousIndentation")
+     fun invoke(sparavka: LoadSpravka) = flow {
         try {
             emit(Resource.Loading())
             val spravkaForm = serviceRepositoryImpl.postSpravka(sparavka)

@@ -53,6 +53,7 @@ android {
 
 dependencies {
     val roomVersion = "2.6.1"
+    val workVersion = "2.9.0"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -116,6 +117,8 @@ dependencies {
     implementation("com.airbnb.android:lottie-compose:6.3.0")
 
     implementation( "com.jakewharton.threetenabp:threetenabp:1.3.0")
+
+    implementation("androidx.work:work-runtime-ktx:$workVersion")
 
 }
 

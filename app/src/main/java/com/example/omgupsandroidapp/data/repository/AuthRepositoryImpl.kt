@@ -5,6 +5,7 @@ import android.util.Log
 import com.omgupsapp.data.local.DataStore.DataStoreManager
 import com.omgupsapp.data.remote.Retrofit.AuthApi
 import com.omgupsapp.domain.repository.AuthRepository
+import org.jsoup.Jsoup
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -61,5 +62,19 @@ class AuthRepositoryImpl @Inject constructor(
             }
         }
         return false
+    }
+
+    private fun parseMetaDataInHtmlDoc(htmlContent: String, metaName: String): String? {
+        return try {
+            val element = Jsoup.parse(htmlContent).select("meta[name=$metaName]").first()
+            element?.attr("content")
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "Error in parsing fun"
+        }
+    }
+
+    private fun parseTitleInHtmlDoc(htmlContent: String): String? {
+        return Jsoup.parse(htmlContent).title()
     }
 }

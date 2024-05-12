@@ -145,16 +145,35 @@ fun SpravkaScreen(
                             Text(text = "Заказать")
                         }
                     }
-                    var ind : Int = 0
+                    var ind : Int = -1
+                    var stasus = 0
                     Spacer(modifier = Modifier.size(20.dp, 20.dp))
                     spravkaViewModul.viewModelScope.launch {
-                        spravkaViewModul.getStatus(0)
-                        val stasus = spravkaViewModul.status.value.spravkiStatus
+                         stasus = referenceHistoryViewModel.referenceHistoryState.value.referenceHistoryList.size
+                       //  referenceHistoryViewModel.getReferenceHistory(0)
+                        //val stasus = spravkaViewModul.status.value.spravkiStatus
+                       /* val stasus = spravkaViewModul.status.value.spravkiStatus
                         listStatusSpravka.mapIndexed { index, result ->
                             when (result) {
                                 stasus -> ind = index
                             }
-                        }.withIndex()
+                        }.withIndex()*/
+                    }
+                    val s = referenceHistory.value.referenceHistoryList.size
+                    Log.i("TAAAAG",s.toString()  )
+                    Log.i("TG",stasus.toString() )
+                    for ((i, element) in listStatusSpravka.withIndex()) {
+                        if (element == spravkaViewModul.status.value.spravkiStatus ) {
+                            ind = i
+                            break
+                        }
+                    }
+                    if (ind != -1) {
+                        Log.i("TAAAAG","Индекс совпадающего элемента: $ind" )
+                    } else {
+                  //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
+                       // Log.i("TAAAAG",stasus )
+
                     }
                     OrderStatusBar(ind)
                 }

@@ -28,7 +28,7 @@ interface ServiceApi {
     @GET("student/getorders")
     suspend fun getOrders(): OrderDto
 
-    @POST("student/loadspravka")
+    @POST("spravkaapi/spravka/create")
     suspend fun postSpravka(
         @Body post: LoadSpravkaDto
     ): Response<LoadSpravkaDto>
@@ -41,7 +41,7 @@ interface ServiceApi {
     suspend fun getTypesSpravki(): TypeSpravkaDto
 
     @GET("student/getstatus")
-    suspend fun getStatysSpravka(): StatusSpravakaDto
+    suspend fun getStatysSpravka(@Query("type") id: Int): StatusSpravakaDto
 
 
 

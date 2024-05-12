@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
 import com.example.omgupsandroidapp.data.repository.ServiceRepositoryImpl
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.example.omgupsandroidapp.domain.use_case.service.order.GetOrderUseCase
@@ -19,10 +20,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import java.net.URL
@@ -38,11 +41,11 @@ class SpravkiViewModel @Inject constructor(
     val spravkiState = _spravkiState.asStateFlow()
     //var myResponse: MutableLiveData<Response<SpravkaPostModel>> = MutableLiveData()
     init {
-        getSpravkiTypes()
+        runBlocking {  getSpravkiTypes()}
     }
 
-     fun getSpravkiTypes(){
-        getTypesSpravkiUseCase.invoke().onEach { result ->
+     suspend fun getSpravkiTypes() {
+        getTypesSpravkiUseCase.invoke().collectLatest { result ->
             when(result) {
                 is Resource.Success -> {
                     _spravkiState.update {
@@ -65,7 +68,7 @@ class SpravkiViewModel @Inject constructor(
                     }
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     /*fun postSpravka(post: SpravkaPostModel) {

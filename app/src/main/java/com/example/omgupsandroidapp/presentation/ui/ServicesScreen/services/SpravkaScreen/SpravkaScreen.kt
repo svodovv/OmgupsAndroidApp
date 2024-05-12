@@ -1,8 +1,11 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
@@ -45,6 +51,7 @@ import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Serv
 import kotlinx.coroutines.launch
 
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SpravkaScreen(
@@ -55,99 +62,33 @@ fun SpravkaScreen(
     spravkaViewModul: StatusSpravkaViewModul = hiltViewModel(),
     orderSpravkaViewModel: OrderSpravkaViewModel = hiltViewModel()
 ) {
-    ServicesTopAppBar(title = "Заказать справку", navController = navController)
 
-    var InputSpravka by remember { mutableStateOf("") }
-    //val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
+
+    var InputSpravka0 by remember { mutableStateOf("") }
+    var InputSpravka1 by remember { mutableStateOf("") }
+    val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
     val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
     val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statysSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
-        val postSpravkA =  LoadSpravka(1,1)
-    //orderSpravkaViewModel.postSravka(postSprava)
-
-    //orderSpravkaViewModel.postSravka()
-    /*orderSpravkaViewModel.myresponse.observe(this, Observer { respons ->
-        if (respons != null) {
-            if (respons.isSuccessful){
-                Log.d("Main", respons.body().toString())
-            }
-        }
-    })*/
+    val types = spravkiViewModel.spravkiState.value
+    val listStatusSpravka = listOf("","","","",)
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // SampleSpravka(R.string.Spravka_military)
-        //SampleSpravka(namdeSpravka = R.string.Spravka_training)
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(
+                state = ScrollState(0),
+                enabled = true
 
-        /*if (referenceHistory.value.referenceHistoryList.isNotEmpty()) {
-            Box(
-                modifier = Modifier
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = referenceHistory.value.referenceHistoryList[0].toString(),
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .border(1.dp, Color.Black),
-                    maxLines = 2,
-                    minLines = 2
-                )
-            }*/
-            /* if (spravki.value.spravkiList.isNotEmpty()) {
-           Box(
-               modifier = Modifier
-                   .padding(paddingValues),
-               contentAlignment = Alignment.Center
-           ) {
-               Text(
-                   text = spravki.value.spravkiList[0].toString(),
-                   style = MaterialTheme.typography.titleMedium,
-                   modifier = Modifier
-                       .padding(16.dp)
-                       .border(1.dp, Color.Black),
-                   maxLines = 2,
-                   minLines = 2
-               )
-           }
-       }
-        }*/
-        if (statysSpravki.value.spravkiStatus.isNotEmpty()){
-            Box(
-                modifier = Modifier
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = statysSpravki.value.spravkiStatus,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .border(1.dp, Color.Black),
-                    maxLines = 2,
-                    minLines = 2
-                )
-            }
-        }
-
-        //if(orderSpravkaViewModel.myresponse.isInitialized)
-
-    }
-
-
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
+            ),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        ServicesTopAppBar(title = "Заказать справку", navController = navController)
         Card (
             modifier = Modifier
                 .padding(10.dp, 10.dp)
-                .weight(1f)
+                .fillMaxSize(1f)
+               // .weight(0.2f)
         ) {
             Box(
                 modifier = Modifier
@@ -177,22 +118,27 @@ fun SpravkaScreen(
                             modifier = Modifier
                                 .fillMaxWidth(.2f)
                                 .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                            value = InputSpravka,
-                            onValueChange = { InputSpravka = it },
+                            value = InputSpravka0,
+                            onValueChange = { InputSpravka0 = it },
                             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                             singleLine = true,
                             maxLines = 1,
                             label = { Text(
                                 stringResource(R.string.current_spravok),
                                 fontSize = 12.sp,
-                                color = Color.Black,
+                                color = Color.White,
                             ) },
                         )
                         Button(
                             modifier = Modifier
                                 .fillMaxWidth(.4f),
                             onClick = {
-                                         orderSpravkaViewModel.postSravka(postSpravkA)
+                                    orderSpravkaViewModel.postSravka(
+                                        LoadSpravka(
+                                            types.spravkiList[0].ID,
+                                            InputSpravka0
+                                        )
+                                    )
                             }
                         ) {
                             Text(text = "Заказать")
@@ -200,6 +146,9 @@ fun SpravkaScreen(
                     }
                     Spacer(modifier = Modifier.size(20.dp, 20.dp))
 
+                    when (spravkaViewModul.status.value.spravkiStatus) {
+                        -> ""
+                    }
                     OrderStatusBar(0)
 
                 }
@@ -208,7 +157,7 @@ fun SpravkaScreen(
         Card (
             modifier = Modifier
                 .padding(10.dp, 10.dp)
-                .weight(1f)
+                //.weight(0.2f)
         ) {
             Box(
                 modifier = Modifier
@@ -238,22 +187,28 @@ fun SpravkaScreen(
                             modifier = Modifier
                                 .fillMaxWidth(.2f)
                                 .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                            value = InputSpravka,
-                            onValueChange = { InputSpravka = it },
+                            value = InputSpravka1,
+                            onValueChange = { InputSpravka1 = it },
                             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                             singleLine = true,
                             maxLines = 1,
                             label = { Text(
                                 stringResource(R.string.current_spravok),
                                 fontSize = 12.sp,
-                                color = Color.Black,
+                                color = Color.White,
                             ) },
                         )
                         Button(
                             modifier = Modifier
                                 .fillMaxWidth(.4f),
                             onClick = {
-                                // Отправка значения InputSpravka на сервер
+                                    orderSpravkaViewModel.postSravka(
+                                        LoadSpravka(
+                                            types.spravkiList[1].ID,
+                                            InputSpravka1
+                                        )
+                                    )
+
                             }
                         ) {
                             Text(text = "Заказать")
@@ -356,12 +311,14 @@ fun SampleSpravka(
 }*/
     @Composable
     fun OrderStatusBar(currentStage: Int) {
-        val stages = listOf("Заказано", "В работе", "Готова")
+        val stages = listOf("Заказано", "В работе", "На подписании", "Готова")
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 20.dp)
         ) {
             stages.forEachIndexed { index, stage ->
 
@@ -370,7 +327,7 @@ fun SampleSpravka(
                 ) {
                     Text(
                         text = stage,
-                        color = Color.White,
+                        color = Color.Black,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )

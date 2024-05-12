@@ -25,7 +25,6 @@ class OrderSpravkaViewModel @Inject constructor(
 ): ViewModel() {
 
 
-    val post = listOf(LoadSpravka(0,1))
     var _orderSpravka = MutableStateFlow(LoadSpravkaState())
     var orderSpravka = _orderSpravka.asStateFlow()
     var myresponse: MutableLiveData<retrofit2.Response<SpravkaPostModel>?> = MutableLiveData()

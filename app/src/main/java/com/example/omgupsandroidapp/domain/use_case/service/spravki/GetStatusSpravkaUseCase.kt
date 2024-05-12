@@ -13,10 +13,10 @@ class GetStatusSpravkaUseCase @Inject constructor(
     private val serviceRepositoryImpl: ServiceRepositoryImpl
 ) {
     @SuppressLint("SuspiciousIndentation")
-    operator fun invoke() = flow {
+    operator fun invoke(id: Int) = flow {
         try {
             emit(Resource.Loading())
-            val statysSpravka = serviceRepositoryImpl.getStatusSpravka()
+            val statysSpravka = serviceRepositoryImpl.getStatusSpravka(1)
             emit(Resource.Success(statysSpravka))
         } catch (e: IOException) {
             emit(Resource.Error(e.localizedMessage ?: "IO Exception"))

@@ -46,8 +46,8 @@ class ServiceRepositoryImpl @Inject constructor(
         return serviceApi.getReferenceHistory(id)
     }
 
-    override suspend fun getStatusSpravka(): StatusSpravakaDto {
-        return serviceApi.getStatysSpravka()
+    override suspend fun getStatusSpravka(id: Int): StatusSpravakaDto {
+        return serviceApi.getStatysSpravka(id)
     }
 
 }

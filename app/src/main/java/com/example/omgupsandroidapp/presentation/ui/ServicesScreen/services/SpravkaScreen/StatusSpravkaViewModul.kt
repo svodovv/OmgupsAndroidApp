@@ -24,7 +24,7 @@ class StatusSpravkaViewModul @Inject constructor(
        runBlocking { getStatus()}
     }
      suspend fun getStatus() {
-       getStatusSpravkaUseCase.invoke().collectLatest { result ->
+       getStatusSpravkaUseCase.invoke(1).collectLatest { result ->
            when(result) {
                is Resource.Success -> {
                    _status.update {

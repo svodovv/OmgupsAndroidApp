@@ -23,5 +23,5 @@ interface ServiceRepository {
 
     suspend fun getReferenceHistory(id: Int): ReferenceHistoryDto
 
-    suspend fun getStatusSpravka(): StatusSpravakaDto
+    suspend fun getStatusSpravka(id: Int): StatusSpravakaDto
 }

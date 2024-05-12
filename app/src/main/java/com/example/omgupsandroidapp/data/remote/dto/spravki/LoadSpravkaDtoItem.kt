@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class LoadSpravka(
     @SerializedName("type")
-    val type : Int,
+    val type : String,
     @SerializedName("count")
-    val count: Int
+    val count: String
 )
 
 data class LoadSpravkaDto (
@@ -26,12 +26,12 @@ data class LoadSpravkaDtoItem(
     @SerializedName("count")
     val count: Int
 )
-fun LoadSpravkaDtoItem.toSpravkaPostModel() : LoadSpravka {
+/*fun LoadSpravkaDtoItem.toSpravkaPostModel() : LoadSpravka {
     return  LoadSpravka(
         type = type,
         count = count
     )
-}
+}*/
 /*data class TypeSpravkiDtoItem(
     //@SerializedName("type")
     val type : String

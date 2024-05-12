@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -51,7 +52,7 @@ import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Serv
 import kotlinx.coroutines.launch
 
 
-@SuppressLint("StateFlowValueCalledInComposition")
+@SuppressLint("StateFlowValueCalledInComposition", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SpravkaScreen(
@@ -71,7 +72,7 @@ fun SpravkaScreen(
     val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statysSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
     val types = spravkiViewModel.spravkiState.value
-    val listStatusSpravka = listOf("","","","",)
+    val listStatusSpravka = listOf("Нет:Заявка не найдена","Да:На подписании","Да:В работе","Да:Создано","Да:Готово",)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -144,13 +145,18 @@ fun SpravkaScreen(
                             Text(text = "Заказать")
                         }
                     }
+                    var ind : Int = 0
                     Spacer(modifier = Modifier.size(20.dp, 20.dp))
-
-                    when (spravkaViewModul.status.value.spravkiStatus) {
-                        -> ""
+                    spravkaViewModul.viewModelScope.launch {
+                        spravkaViewModul.getStatus(0)
+                        val stasus = spravkaViewModul.status.value.spravkiStatus
+                        listStatusSpravka.mapIndexed { index, result ->
+                            when (result) {
+                                stasus -> ind = index
+                            }
+                        }.withIndex()
                     }
-                    OrderStatusBar(0)
-
+                    OrderStatusBar(ind)
                 }
             }
         }

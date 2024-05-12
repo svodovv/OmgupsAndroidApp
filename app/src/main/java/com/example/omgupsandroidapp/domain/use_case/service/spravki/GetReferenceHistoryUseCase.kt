@@ -13,13 +13,13 @@ class GetReferenceHistoryUseCase @Inject constructor(
     private val serviceRepositoryImpl: ServiceRepositoryImpl
 ) {
     @SuppressLint("SuspiciousIndentation")
-    operator fun invoke() = flow {
+    operator fun invoke(id : Int) = flow {
         try {
             emit(Resource.Loading())
-            val ReferenceHistoryList0 = serviceRepositoryImpl.getReferenceHistory(0)
+            val ReferenceHistoryList0 = serviceRepositoryImpl.getReferenceHistory(id)
             emit(Resource.Success(ReferenceHistoryList0))
-            val ReferenceHistoryList1 = serviceRepositoryImpl.getReferenceHistory(1)
-            emit(Resource.Success(ReferenceHistoryList1))
+            //val ReferenceHistoryList1 = serviceRepositoryImpl.getReferenceHistory(1)
+            //emit(Resource.Success(ReferenceHistoryList1))
             //emit(Resource.Success(SpravkiList))
         } catch (e: IOException) {
             emit(Resource.Error(e.localizedMessage ?: "IO Exception"))

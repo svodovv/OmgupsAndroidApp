@@ -16,7 +16,7 @@ class GetStatusSpravkaUseCase @Inject constructor(
     operator fun invoke(id: Int) = flow {
         try {
             emit(Resource.Loading())
-            val statysSpravka = serviceRepositoryImpl.getStatusSpravka(1)
+            val statysSpravka = serviceRepositoryImpl.getStatusSpravka(id)
             emit(Resource.Success(statysSpravka))
         } catch (e: IOException) {
             emit(Resource.Error(e.localizedMessage ?: "IO Exception"))

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
+import java.net.IDN
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +23,12 @@ class ReferenceHistoryViewModel @Inject constructor(
     val referenceHistoryState = _referenceHistoryState.asStateFlow()
 
     init {
-        runBlocking { getReferenceHistory() }
+        runBlocking { getReferenceHistory(0) }
+        runBlocking { getReferenceHistory(1) }
     }
 
-    suspend fun getReferenceHistory(){
-        getReferenceHistoryUseCase.invoke().collectLatest { result ->
+    suspend fun getReferenceHistory(id: Int){
+        getReferenceHistoryUseCase.invoke(id).collectLatest { result ->
             when(result) {
                 is Resource.Success -> {
                     _referenceHistoryState.update {

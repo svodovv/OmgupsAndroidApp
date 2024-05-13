@@ -70,9 +70,11 @@ fun SpravkaScreen(
     val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
     val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
     val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
-    val statysSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
+    val statusSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
     val types = spravkiViewModel.spravkiState.value
-    val listStatusSpravka = listOf("Нет:Заявка не найдена","Да:На подписании","Да:В работе","Да:Создано","Да:Готово",)
+    var  stasus = statusSpravki.value.spravkiStatus
+    val listStatusSpravka = listOf("Нет:Заявка не найдена","Да:Создано","Да:В работе","Да:На подписании","Да:К выдаче",)
+    var ind : Int = -1
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -140,30 +142,22 @@ fun SpravkaScreen(
                                             InputSpravka0
                                         )
                                     )
+                                spravkaViewModul.viewModelScope.launch {
+                                    stasus = spravkaViewModul.getStatus(0)
+                                    for ((i, element) in listStatusSpravka.withIndex()) {
+                                        if (element == stasus ) {
+                                            ind = i
+                                            break
+                                        }
+                                    }
+                                }
                             }
                         ) {
                             Text(text = "Заказать")
                         }
                     }
-                    var ind : Int = -1
-                    var stasus = 0
-                    Spacer(modifier = Modifier.size(20.dp, 20.dp))
-                    spravkaViewModul.viewModelScope.launch {
-                         stasus = referenceHistoryViewModel.referenceHistoryState.value.referenceHistoryList.size
-                       //  referenceHistoryViewModel.getReferenceHistory(0)
-                        //val stasus = spravkaViewModul.status.value.spravkiStatus
-                       /* val stasus = spravkaViewModul.status.value.spravkiStatus
-                        listStatusSpravka.mapIndexed { index, result ->
-                            when (result) {
-                                stasus -> ind = index
-                            }
-                        }.withIndex()*/
-                    }
-                    val s = referenceHistory.value.referenceHistoryList.size
-                    Log.i("TAAAAG",s.toString()  )
-                    Log.i("TG",stasus.toString() )
                     for ((i, element) in listStatusSpravka.withIndex()) {
-                        if (element == spravkaViewModul.status.value.spravkiStatus ) {
+                        if (element == stasus ) {
                             ind = i
                             break
                         }
@@ -171,11 +165,13 @@ fun SpravkaScreen(
                     if (ind != -1) {
                         Log.i("TAAAAG","Индекс совпадающего элемента: $ind" )
                     } else {
-                  //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
-                       // Log.i("TAAAAG",stasus )
+                        //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
+                        Log.i("TAAAAG",stasus )
 
                     }
+                    Spacer(modifier = Modifier.size(20.dp, 20.dp))
                     OrderStatusBar(ind)
+
                 }
             }
         }
@@ -241,7 +237,7 @@ fun SpravkaScreen(
                     }
                     Spacer(modifier = Modifier.size(20.dp, 20.dp))
 
-                    OrderStatusBar(0)
+                  //  OrderStatusBar(0, st)
 
                 }
             }
@@ -335,7 +331,7 @@ fun SampleSpravka(
     }
 }*/
     @Composable
-    fun OrderStatusBar(currentStage: Int) {
+    fun OrderStatusBar(currentStage: Int,) {
         val stages = listOf("Заказано", "В работе", "На подписании", "Готова")
 
         Row(
@@ -361,7 +357,9 @@ fun SampleSpravka(
                         modifier = Modifier
                             .size(24.dp)
                             .background(
-                                if (index <= currentStage) Color.Green else Color.Gray,
+                                if (index == 0) {
+                                  Color.Gray
+                                }else if (index <= currentStage) Color.Green else Color.Gray,
                                 shape = CircleShape
                             )
                     )

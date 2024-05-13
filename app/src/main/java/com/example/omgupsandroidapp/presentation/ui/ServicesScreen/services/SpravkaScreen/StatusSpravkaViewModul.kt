@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class StatusSpravkaViewModul @Inject constructor(
         runBlocking { getStatus(0)}
         runBlocking { getStatus(1)}
     }
-     suspend fun getStatus(id: Int): String {
+    suspend fun getStatus(id: Int): String {
        getStatusSpravkaUseCase.invoke(id).collectLatest { result ->
            when(result) {
                is Resource.Success -> {

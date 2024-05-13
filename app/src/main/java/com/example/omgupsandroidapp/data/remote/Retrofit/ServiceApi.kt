@@ -28,10 +28,15 @@ interface ServiceApi {
     @GET("student/getorders")
     suspend fun getOrders(): OrderDto
 
+    /*@POST("spravkaapi/spravka/create")
+    suspend fun postSpravka(
+        @Body post: LoadSpravkaDto
+    ): Response<LoadSpravkaDto>*/
+
     @POST("spravkaapi/spravka/create")
     suspend fun postSpravka(
         @Body post: LoadSpravkaDto
-    ): Response<LoadSpravkaDto>
+    ): Call<ResponseBody>
 
    /* @GET("student/gethistory?type={id}")
     suspend fun getReferenceHistory(@Query("id") id: Int): ReferenceHistoryDto*/

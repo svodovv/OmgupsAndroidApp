@@ -10,12 +10,14 @@ import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.omgupsapp.common.Resource
+import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
 
 interface ServiceRepository {
     suspend fun getScholarship(): ScholarshipDto
 
-    suspend fun postSpravka(post: LoadSpravka): Response<LoadSpravkaDto>
+    suspend fun postSpravka(post: LoadSpravka): Call<ResponseBody>
 
     suspend fun getOrder(): OrderDto
 

@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
+import retrofit2.Call
 import javax.inject.Inject
 @HiltViewModel
 class OrderSpravkaViewModel @Inject constructor(
@@ -43,7 +45,7 @@ class OrderSpravkaViewModel @Inject constructor(
                     when(result) {
                         is Resource.Success -> {
                             _orderSpravka.update {
-                                it.copy(spravkaForm = result.data?.body()?.spravkaForm ?: emptyList())
+                                it.copy(spravkaForm = result.data?.spravkaForm ?: emptyList())
                             }
                         }
                         is Resource.Loading -> {
@@ -82,7 +84,6 @@ class OrderSpravkaViewModel @Inject constructor(
                     }
                 }
             }*/
-
     }
 
     /*suspend fun postSravka(post: SpravkaPostModel){

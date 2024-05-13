@@ -15,6 +15,8 @@ import com.example.omgupsandroidapp.data.remote.dto.spravki.toDtoLoadSpravka
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.example.omgupsandroidapp.domain.repository.ServiceRepository
 import com.omgupsapp.common.Resource
+import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -29,10 +31,13 @@ class ServiceRepositoryImpl @Inject constructor(
     /*override suspend fun postSpravka(csrfToken: String,type : Int, count : Int): Resource<SpravkaPostModel> {
         return serviceApi.postSpravka(csrfToken,type,count)
     }*/
-    override suspend fun postSpravka(post: LoadSpravka): Response<LoadSpravkaDto> {
+    /*override suspend fun postSpravka(post: LoadSpravka): Response<LoadSpravkaDto> {
+        return serviceApi.postSpravka(post.toDtoLoadSpravka())
+    }*/
+
+    override suspend fun postSpravka(post: LoadSpravka): Call<ResponseBody> {
         return serviceApi.postSpravka(post.toDtoLoadSpravka())
     }
-
 
     override suspend fun getOrder(): OrderDto{
         return serviceApi.getOrders()

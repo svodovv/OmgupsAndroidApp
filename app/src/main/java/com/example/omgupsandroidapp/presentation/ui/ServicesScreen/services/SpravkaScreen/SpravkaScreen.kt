@@ -73,7 +73,7 @@ fun SpravkaScreen(
     val statusSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
     val types = spravkiViewModel.spravkiState.value
     var  stasus = statusSpravki.value.spravkiStatus
-    val listStatusSpravka = listOf("Нет:Заявка не найдена","Да:Создано","Да:В работе","Да:На подписании","Да:К выдаче",)
+    val listStatusSpravka = listOf("Нет:Заявка уже подана.","Да:Создано","Да:В работе","Да:На подписании","Да:К выдаче",)
     var ind : Int = -1
     Column(
         modifier = Modifier
@@ -151,10 +151,14 @@ fun SpravkaScreen(
                                         }
                                     }
                                 }
+                                Log.i("TAAAAG",stasus )
                             }
                         ) {
                             Text(text = "Заказать")
                         }
+                    }
+                    spravkaViewModul.viewModelScope.launch {
+                        stasus = spravkaViewModul.getStatus(0)
                     }
                     for ((i, element) in listStatusSpravka.withIndex()) {
                         if (element == stasus ) {
@@ -168,9 +172,10 @@ fun SpravkaScreen(
                         //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
                         Log.i("TAAAAG",stasus )
 
+
                     }
                     Spacer(modifier = Modifier.size(20.dp, 20.dp))
-                    OrderStatusBar(ind)
+                    OrderStatusBar(ind - 1)
 
                 }
             }
@@ -357,7 +362,7 @@ fun SampleSpravka(
                         modifier = Modifier
                             .size(24.dp)
                             .background(
-                                if (index == 0) {
+                                if (currentStage < 0 ) {
                                   Color.Gray
                                 }else if (index <= currentStage) Color.Green else Color.Gray,
                                 shape = CircleShape

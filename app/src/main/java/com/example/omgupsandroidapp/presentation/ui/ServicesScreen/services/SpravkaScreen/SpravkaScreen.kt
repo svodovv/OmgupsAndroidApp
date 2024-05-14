@@ -258,9 +258,11 @@ fun SpravkaScreen(
             }
         }
         Spacer(modifier = Modifier.size(20.dp, 20.dp))
-        Log.i("TAAAAG",history.referenceHistoryList.Date )
-        ExpandableOrderTable(history.referenceHistoryList)
-
+        Log.i("TAAAAG",history.referenceHistoryList[0].Date )
+       // Log.i("TAAAAG",history.referenceHistoryList[] )
+        history.referenceHistoryList.map {
+            ExpandableOrderTable(it)
+        }
     }
 
 }

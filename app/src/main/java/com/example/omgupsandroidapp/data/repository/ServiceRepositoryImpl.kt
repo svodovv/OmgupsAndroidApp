@@ -35,7 +35,7 @@ class ServiceRepositoryImpl @Inject constructor(
         return serviceApi.postSpravka(post.toDtoLoadSpravka())
     }*/
 
-    override suspend fun postSpravka(post: LoadSpravka): Call<ResponseBody> {
+    override suspend fun postSpravka(post: LoadSpravka): String {
         return serviceApi.postSpravka(post.toDtoLoadSpravka())
     }
 

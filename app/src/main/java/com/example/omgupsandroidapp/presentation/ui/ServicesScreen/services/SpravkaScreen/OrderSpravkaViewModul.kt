@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
+import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.StatusSpravakaDto
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.PostSpravkaUseCase
 import com.omgupsapp.common.Resource
@@ -32,7 +34,7 @@ class OrderSpravkaViewModel @Inject constructor(
     var myresponse: MutableLiveData<retrofit2.Response<SpravkaPostModel>?> = MutableLiveData()
 
 
-       fun postSravka(postSpravkA: LoadSpravka) {
+       fun postSravka(postSpravkA: LoadSpravka): String {
             viewModelScope.launch {
                 postSpravkaUseCase.invoke(postSpravkA).catch {
                     _orderSpravka.update {
@@ -45,7 +47,8 @@ class OrderSpravkaViewModel @Inject constructor(
                     when(result) {
                         is Resource.Success -> {
                             _orderSpravka.update {
-                                it.copy(spravkaForm = result.data?.spravkaForm ?: emptyList())
+                               // it.copy(spravkaForm = result.data?.spravkaForm ?: emptyList())
+                                it.copy(stasusAfterOrder = orderSpravka.value.stasusAfterOrder )
                             }
                         }
                         is Resource.Loading -> {
@@ -84,6 +87,7 @@ class OrderSpravkaViewModel @Inject constructor(
                     }
                 }
             }*/
+           return orderSpravka.value.stasusAfterOrder
     }
 
     /*suspend fun postSravka(post: SpravkaPostModel){

@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,8 +23,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -48,6 +53,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
+import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import kotlinx.coroutines.launch
 
@@ -72,9 +78,12 @@ fun SpravkaScreen(
     val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statusSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
     val types = spravkiViewModel.spravkiState.value
-    var  stasus = statusSpravki.value.spravkiStatus
+    val history = referenceHistoryViewModel.referenceHistoryState.value
+    var  stasus : String = ""
     val listStatusSpravka = listOf("Нет:Заявка уже подана.","Да:Создано","Да:В работе","Да:На подписании","Да:К выдаче",)
     var ind : Int = -1
+
+    var stastusAfterOrderSpravka = ""
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -136,7 +145,7 @@ fun SpravkaScreen(
                             modifier = Modifier
                                 .fillMaxWidth(.4f),
                             onClick = {
-                                    orderSpravkaViewModel.postSravka(
+                                stastusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
                                         LoadSpravka(
                                             types.spravkiList[0].ID,
                                             InputSpravka0
@@ -144,14 +153,15 @@ fun SpravkaScreen(
                                     )
                                 spravkaViewModul.viewModelScope.launch {
                                     stasus = spravkaViewModul.getStatus(0)
-                                    for ((i, element) in listStatusSpravka.withIndex()) {
-                                        if (element == stasus ) {
-                                            ind = i
-                                            break
-                                        }
+                                }
+                                for ((i, element) in listStatusSpravka.withIndex()) {
+                                    if (element == stasus ) {
+                                        ind = i
+                                        break
                                     }
                                 }
                                 Log.i("TAAAAG",stasus )
+                                Log.i("StastusAfterOrderSpravka",stastusAfterOrderSpravka )
                             }
                         ) {
                             Text(text = "Заказать")
@@ -247,6 +257,10 @@ fun SpravkaScreen(
                 }
             }
         }
+        Spacer(modifier = Modifier.size(20.dp, 20.dp))
+        Log.i("TAAAAG",history.referenceHistoryList.Date )
+        ExpandableOrderTable(history.referenceHistoryList)
+
     }
 
 }
@@ -336,7 +350,7 @@ fun SampleSpravka(
     }
 }*/
     @Composable
-    fun OrderStatusBar(currentStage: Int,) {
+    fun OrderStatusBar(currentStage: Int) {
         val stages = listOf("Заказано", "В работе", "На подписании", "Готова")
 
         Row(
@@ -362,9 +376,9 @@ fun SampleSpravka(
                         modifier = Modifier
                             .size(24.dp)
                             .background(
-                                if (currentStage < 0 ) {
-                                  Color.Gray
-                                }else if (index <= currentStage) Color.Green else Color.Gray,
+                                if (currentStage < 0) {
+                                    Color.Gray
+                                } else if (index <= currentStage) Color.Green else Color.Gray,
                                 shape = CircleShape
                             )
                     )
@@ -373,4 +387,35 @@ fun SampleSpravka(
             }
         }
     }
+
+@Composable
+fun OrderTable(orderStatus: TypeStatusList) {
+    Row {
+        //Text("NumberOrder: ${orderStatus.NumberOrder}")
+        Text("Дата: ${orderStatus.Date}")
+        Text("Тип: ${orderStatus.TypeOrder}")
+        Text("Кол-во: ${orderStatus.CountOrder}")
+        Text("Статус: ${orderStatus.Status}")
+    }
+}
+
+@Composable
+fun ExpandableOrderTable(orderStatus: TypeStatusList) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Column {
+        Row(
+            modifier = Modifier.clickable { expanded = !expanded }
+        ) {
+            Text("История Справок", textAlign = TextAlign.Center)
+            Icon(
+                imageVector = if (expanded) Icons.Default.ArrowDropDown else Icons.Default.KeyboardArrowUp,
+                contentDescription = "Expand/Collapse"
+            )
+        }
+        if (expanded) {
+            OrderTable(orderStatus)
+        }
+    }
+}
 

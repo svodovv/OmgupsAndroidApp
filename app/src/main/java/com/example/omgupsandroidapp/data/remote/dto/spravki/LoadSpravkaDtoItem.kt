@@ -11,7 +11,9 @@ data class LoadSpravka(
 )
 
 data class LoadSpravkaDto (
-    val spravkaForm : List<LoadSpravka>
+    val spravkaForm : List<LoadSpravka>,
+    @SerializedName("status")
+    val status : String = " "
 )
 
 fun LoadSpravka.toDtoLoadSpravka() : LoadSpravkaDto {

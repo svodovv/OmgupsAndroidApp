@@ -36,7 +36,7 @@ interface ServiceApi {
     @POST("spravkaapi/spravka/create")
     suspend fun postSpravka(
         @Body post: LoadSpravkaDto
-    ): Call<ResponseBody>
+    ): String
 
    /* @GET("student/gethistory?type={id}")
     suspend fun getReferenceHistory(@Query("id") id: Int): ReferenceHistoryDto*/

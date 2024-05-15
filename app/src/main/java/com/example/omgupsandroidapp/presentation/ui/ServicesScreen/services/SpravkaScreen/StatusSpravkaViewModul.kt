@@ -22,8 +22,8 @@ class StatusSpravkaViewModul @Inject constructor(
 
 
     init {
-       // runBlocking { getStatus(0)}
-       // runBlocking { getStatus(1)}
+        runBlocking { getStatus(0)}
+        runBlocking { getStatus(1)}
     }
     suspend fun getStatus(id: Int): String {
        getStatusSpravkaUseCase.invoke(id).collectLatest { result ->

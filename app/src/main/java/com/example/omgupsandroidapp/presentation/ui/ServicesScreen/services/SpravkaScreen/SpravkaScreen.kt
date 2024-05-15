@@ -25,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -74,16 +75,34 @@ fun SpravkaScreen(
     var InputSpravka0 by remember { mutableStateOf("") }
     var InputSpravka1 by remember { mutableStateOf("") }
     val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
-    val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
+    val referenceHistory =
+        referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
     val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statusSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
     val types = spravkiViewModel.spravkiState.value
     val history = referenceHistoryViewModel.referenceHistoryState.value
-    var  stasus : String = ""
-    val listStatusSpravka = listOf("Нет:Заявка уже подана.","Да:Создано","Да:В работе","Да:На подписании","Да:К выдаче",)
-    var ind : Int = -1
+    var stasus = statusSpravki.value.spravkiStatus
+    val listStatusSpravka = listOf(
+        "Нет:Заявка уже подана.",
+        "Да:Создано",
+        "Да:В работе",
+        "Да:На подписании",
+        "Да:К выдаче",
+    )
+    var ind: Int = -1
 
-    var stastusAfterOrderSpravka = ""
+    var listhistor = listOf(
+        TypeStatusList("2", "23.10.2023", "00", "Создано", "Военная"),
+        TypeStatusList("2", "23.10.2023", "00", "В работе", "Студент"),
+        TypeStatusList("2", "23.10.2023", "00", "Создано", "Военная"),
+        TypeStatusList("2", "23.10.2023", "00", "В работе", "Студент"),
+        TypeStatusList("2", "23.10.2023", "00", "Создано", "Военная"),
+        TypeStatusList("2", "23.10.2023", "00", "В работе", "Студент"),
+        TypeStatusList("2", "23.10.2023", "00", "Создано", "Военная"),
+        TypeStatusList("2", "23.10.2023", "00", "В работе", "Студент")
+    )
+
+    var stastusAfterOrderSpravka = " "
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -96,11 +115,11 @@ fun SpravkaScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ServicesTopAppBar(title = "Заказать справку", navController = navController)
-        Card (
+        Card(
             modifier = Modifier
                 .padding(10.dp, 10.dp)
                 .fillMaxSize(1f)
-               // .weight(0.2f)
+            // .weight(0.2f)
         ) {
             Box(
                 modifier = Modifier
@@ -108,7 +127,7 @@ fun SpravkaScreen(
                     .fillMaxSize()
             )
             {
-                Column (modifier = Modifier.fillMaxWidth()){
+                Column(modifier = Modifier.fillMaxWidth()) {
                     Row(
                         Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.Top,
@@ -123,8 +142,8 @@ fun SpravkaScreen(
                     Spacer(modifier = Modifier.size(20.dp, 20.dp))
                     Row(
                         Modifier.fillMaxWidth(),
-                         verticalAlignment = Alignment.CenterVertically,
-                         horizontalArrangement = Arrangement.Absolute.SpaceAround
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Absolute.SpaceAround
                     ) {
                         TextField(
                             modifier = Modifier
@@ -135,33 +154,35 @@ fun SpravkaScreen(
                             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                             singleLine = true,
                             maxLines = 1,
-                            label = { Text(
-                                stringResource(R.string.current_spravok),
-                                fontSize = 12.sp,
-                                color = Color.White,
-                            ) },
+                            label = {
+                                Text(
+                                    stringResource(R.string.current_spravok),
+                                    fontSize = 12.sp,
+                                    color = Color.White,
+                                )
+                            },
                         )
                         Button(
                             modifier = Modifier
                                 .fillMaxWidth(.4f),
                             onClick = {
                                 stastusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
-                                        LoadSpravka(
-                                            types.spravkiList[0].ID,
-                                            InputSpravka0
-                                        )
+                                    LoadSpravka(
+                                        types.spravkiList[0].ID,
+                                        InputSpravka0
                                     )
+                                )
                                 spravkaViewModul.viewModelScope.launch {
                                     stasus = spravkaViewModul.getStatus(0)
                                 }
                                 for ((i, element) in listStatusSpravka.withIndex()) {
-                                    if (element == stasus ) {
+                                    if (element == stasus) {
                                         ind = i
                                         break
                                     }
                                 }
-                                Log.i("TAAAAG",stasus )
-                                Log.i("StastusAfterOrderSpravka",stastusAfterOrderSpravka )
+                                Log.i("TAAAAG", stasus)
+                                Log.i("StastusAfterOrderSpravka", stastusAfterOrderSpravka)
                             }
                         ) {
                             Text(text = "Заказать")
@@ -171,16 +192,16 @@ fun SpravkaScreen(
                         stasus = spravkaViewModul.getStatus(0)
                     }
                     for ((i, element) in listStatusSpravka.withIndex()) {
-                        if (element == stasus ) {
+                        if (element == stasus) {
                             ind = i
                             break
                         }
                     }
                     if (ind != -1) {
-                        Log.i("TAAAAG","Индекс совпадающего элемента: $ind" )
+                        Log.i("TAAAAG", "Индекс совпадающего элемента: $ind")
                     } else {
                         //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
-                        Log.i("TAAAAG",stasus )
+                        Log.i("TAAAAG", stasus)
 
 
                     }
@@ -190,10 +211,10 @@ fun SpravkaScreen(
                 }
             }
         }
-        Card (
+        Card(
             modifier = Modifier
                 .padding(10.dp, 10.dp)
-                //.weight(0.2f)
+            //.weight(0.2f)
         ) {
             Box(
                 modifier = Modifier
@@ -201,7 +222,7 @@ fun SpravkaScreen(
                     .fillMaxSize()
             )
             {
-                Column (modifier = Modifier.fillMaxWidth()){
+                Column(modifier = Modifier.fillMaxWidth()) {
                     Row(
                         Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.Top,
@@ -228,22 +249,24 @@ fun SpravkaScreen(
                             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                             singleLine = true,
                             maxLines = 1,
-                            label = { Text(
-                                stringResource(R.string.current_spravok),
-                                fontSize = 12.sp,
-                                color = Color.White,
-                            ) },
+                            label = {
+                                Text(
+                                    stringResource(R.string.current_spravok),
+                                    fontSize = 12.sp,
+                                    color = Color.White,
+                                )
+                            },
                         )
                         Button(
                             modifier = Modifier
                                 .fillMaxWidth(.4f),
                             onClick = {
-                                    orderSpravkaViewModel.postSravka(
-                                        LoadSpravka(
-                                            types.spravkiList[1].ID,
-                                            InputSpravka1
-                                        )
+                                orderSpravkaViewModel.postSravka(
+                                    LoadSpravka(
+                                        types.spravkiList[1].ID,
+                                        InputSpravka1
                                     )
+                                )
 
                             }
                         ) {
@@ -251,22 +274,22 @@ fun SpravkaScreen(
                         }
                     }
                     Spacer(modifier = Modifier.size(20.dp, 20.dp))
+                    OrderStatusBar(ind - 1)
 
-                  //  OrderStatusBar(0, st)
+                    //  OrderStatusBar(0, st)
 
                 }
             }
         }
         Spacer(modifier = Modifier.size(20.dp, 20.dp))
-        Log.i("TAAAAG",history.referenceHistoryList[0].Date )
-       // Log.i("TAAAAG",history.referenceHistoryList[] )
-        history.referenceHistoryList.map {
-            ExpandableOrderTable(it)
-        }
+        //Log.i("TAAAAG",history.referenceHistoryList[0].Date )
+        // Log.i("TAAAAG",history.referenceHistoryList[] )
+            ExpandableOrderTable(listhistor)
+        Spacer(modifier = Modifier.size(20.dp, 20.dp))
+
     }
 
 }
-
 
     /*@Composable
 fun SampleSpravka(
@@ -392,32 +415,119 @@ fun SampleSpravka(
 
 @Composable
 fun OrderTable(orderStatus: TypeStatusList) {
-    Row {
+    Row(
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxSize(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+
         //Text("NumberOrder: ${orderStatus.NumberOrder}")
-        Text("Дата: ${orderStatus.Date}")
-        Text("Тип: ${orderStatus.TypeOrder}")
-        Text("Кол-во: ${orderStatus.CountOrder}")
-        Text("Статус: ${orderStatus.Status}")
+        Column (
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text(orderStatus.Date, textAlign = TextAlign.Center)
+            }
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text(orderStatus.TypeOrder, textAlign = TextAlign.Center)
+            }
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text(orderStatus.CountOrder, textAlign = TextAlign.Center)
+            }
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Row (horizontalArrangement = Arrangement.Center){
+                Text(orderStatus.Status, textAlign = TextAlign.Center)
+            }
+        }
+    }
+}
+@Composable
+fun OrderTableOne() {
+    Row(
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxSize(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+
+        Text("Дата", textAlign = TextAlign.Center)
+        Text("Тип", textAlign = TextAlign.Center)
+        Text("Кол во", textAlign = TextAlign.Center)
+        Text("Статус", textAlign = TextAlign.Center)
+
+        /*Column (
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text("Дата", textAlign = TextAlign.Center)
+            }
+
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text("       Тип", textAlign = TextAlign.Center)
+            }
+
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text("    Кол-во", textAlign = TextAlign.Center)
+            }
+
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text("Статус", textAlign = TextAlign.Center)
+            }
+        }*/
     }
 }
 
 @Composable
-fun ExpandableOrderTable(orderStatus: TypeStatusList) {
+fun ExpandableOrderTable(orderStatus: List<TypeStatusList>) {
     var expanded by remember { mutableStateOf(false) }
 
     Column {
         Row(
             modifier = Modifier.clickable { expanded = !expanded }
         ) {
-            Text("История Справок", textAlign = TextAlign.Center)
+            Text("История справок")
             Icon(
-                imageVector = if (expanded) Icons.Default.ArrowDropDown else Icons.Default.KeyboardArrowUp,
+                imageVector = if (expanded)
+                    Icons.Default.KeyboardArrowDown
+                else
+                    Icons.Default.KeyboardArrowUp,
                 contentDescription = "Expand/Collapse"
             )
         }
         if (expanded) {
-            OrderTable(orderStatus)
+            OrderTableOne()
+            orderStatus.map {
+                OrderTable(it)
+            }
         }
     }
 }
+
 

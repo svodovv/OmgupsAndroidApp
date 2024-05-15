@@ -32,8 +32,8 @@ class ReferenceHistoryViewModel @Inject constructor(
             when(result) {
                 is Resource.Success -> {
                     _referenceHistoryState.update {
-                        result.data?.historyStatus?.let { it1 -> it.copy(referenceHistoryList = it1) }!!
-                      //  it.copy(referenceHistoryList = result.data?.historyStatus )
+                       // result.data?.historyStatus?.let { it1 -> it.copy(referenceHistoryList = it1) }!!
+                        it.copy(referenceHistoryList = result.data?.historyStatus ?: emptyList() )
                     }
                 }
 

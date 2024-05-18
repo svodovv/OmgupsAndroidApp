@@ -9,15 +9,3 @@ data class TypesSpravkiDtoItem(
     val Value: String,
 )
 
-data class ReferenceHistoryDtoItem (
-    @SerializedName("CountOrder")
-    val CountOrder: String,
-    @SerializedName("Date")
-    val Date: String,
-    @SerializedName("NumberOrder")
-    val NumberOrder: String,
-    @SerializedName("Status")
-    val Status: String,
-    @SerializedName("TypeOrder")
-    val TypeOrder: String
-)

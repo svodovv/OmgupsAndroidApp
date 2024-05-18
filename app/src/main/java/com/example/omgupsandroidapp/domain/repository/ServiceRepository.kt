@@ -17,7 +17,7 @@ import retrofit2.Response
 interface ServiceRepository {
     suspend fun getScholarship(): ScholarshipDto
 
-    suspend fun postSpravka(post: LoadSpravka): String
+    suspend fun postSpravka(post: LoadSpravka): LoadSpravkaDto
 
     suspend fun getOrder(): OrderDto
 

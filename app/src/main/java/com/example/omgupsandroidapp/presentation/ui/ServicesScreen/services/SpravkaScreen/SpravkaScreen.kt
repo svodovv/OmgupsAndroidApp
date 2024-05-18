@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,6 +30,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -55,6 +57,7 @@ import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.TextInLazyColumn
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import kotlinx.coroutines.launch
 
@@ -456,9 +459,10 @@ fun OrderTable(orderStatus: TypeStatusList) {
         }
     }
 }
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OrderTableOne() {
-    Row(
+    /* Row(
         modifier = Modifier
             .padding(10.dp)
             .fillMaxSize(),
@@ -501,6 +505,44 @@ fun OrderTableOne() {
                 Text("Статус", textAlign = TextAlign.Center)
             }
         }*/
+    }*/
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        stickyHeader {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 8.dp, end = 8.dp)
+            ) {
+                TextInLazyColumn(
+                    columnName = "Дата",
+                    modifier = Modifier.weight(1.5f),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                TextInLazyColumn(
+                    columnName = "Тип",
+                    modifier = Modifier.weight(1.7f),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                TextInLazyColumn(
+                    columnName = "Кол-во",
+                    modifier = Modifier.weight(1.2f),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                TextInLazyColumn(
+                    columnName = "Статус",
+                    modifier = Modifier.weight(0.7f),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                color = Color.Black,
+                thickness = 1.dp
+            )
+
+        }
     }
 }
 

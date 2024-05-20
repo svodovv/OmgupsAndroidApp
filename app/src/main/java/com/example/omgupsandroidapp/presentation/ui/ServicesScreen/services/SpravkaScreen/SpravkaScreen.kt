@@ -37,6 +37,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,6 +75,7 @@ fun SpravkaScreen(
     referenceHistoryViewModel : ReferenceHistoryViewModel = hiltViewModel(),
     spravkaViewModul: StatusSpravkaViewModul = hiltViewModel(),
     orderSpravkaViewModel: OrderSpravkaViewModel = hiltViewModel()
+
 ) {
 
 
@@ -87,6 +89,11 @@ fun SpravkaScreen(
     val types = spravkiViewModel.spravkiState.value
     val history = referenceHistoryViewModel.referenceHistoryState.value
     var stasus = statusSpravki.value.spravkiStatus
+
+    LaunchedEffect(stasus) {
+        val status = spravkaViewModul.getStatus(0)
+        stasus = status
+    }
     val listStatusSpravka = listOf(
         "Нет:Заявка уже подана.",
         "Да:Создано",

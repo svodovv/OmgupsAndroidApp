@@ -38,8 +38,6 @@ interface ServiceApi {
         @Body post: LoadSpravkaDto
     ): LoadSpravkaDto
 
-   /* @GET("student/gethistory?type={id}")
-    suspend fun getReferenceHistory(@Query("id") id: Int): ReferenceHistoryDto*/
    @GET("student/gethistory")
    suspend fun getReferenceHistory(@Query("type") id: Int): ReferenceHistoryDto
     @GET("student/gettypes")

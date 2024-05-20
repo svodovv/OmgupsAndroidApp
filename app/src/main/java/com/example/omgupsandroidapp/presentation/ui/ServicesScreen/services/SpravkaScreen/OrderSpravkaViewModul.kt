@@ -25,13 +25,13 @@ import javax.inject.Inject
 @HiltViewModel
 class OrderSpravkaViewModel @Inject constructor(
    private val postSpravkaUseCase: PostSpravkaUseCase
-    //private val serviceApi: ServiceApi
+
 ): ViewModel() {
 
 
     var _orderSpravka = MutableStateFlow(LoadSpravkaState())
     var orderSpravka = _orderSpravka.asStateFlow()
-    var myresponse: MutableLiveData<retrofit2.Response<SpravkaPostModel>?> = MutableLiveData()
+
 
 
        fun postSravka(postSpravkA: LoadSpravka): String {

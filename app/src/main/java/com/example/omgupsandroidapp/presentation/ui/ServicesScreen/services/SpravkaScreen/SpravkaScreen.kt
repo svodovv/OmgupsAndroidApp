@@ -296,7 +296,7 @@ fun SpravkaScreen(
             //Log.i("TAAAAG",history.referenceHistoryList[0].Date )
             // Log.i("TAAAAG",history.referenceHistoryList[] )
             ExpandableOrderTable(listhistor)
-            Spacer(modifier = Modifier.size(20.dp, 20.dp))
+            Spacer(modifier = Modifier.size(20.dp, 100.dp))
         }
 
     }
@@ -433,23 +433,23 @@ fun OrderTable(orderStatus: TypeStatusList) {
             .fillMaxSize()
             .padding(start = 8.dp, end = 8.dp)
     ) {
-        TextInLazyColumn(
-            columnName = "Дата",
+        TextInLazyColumns(
+            columnName = orderStatus.Date,
             modifier = Modifier.weight(.25f),
             style = MaterialTheme.typography.bodySmall
         )
-        TextInLazyColumn(
-            columnName = "Тип",
+        TextInLazyColumns(
+            columnName = orderStatus.TypeOrder,
             modifier = Modifier.weight(0.25f),
             style = MaterialTheme.typography.bodySmall
         )
-        TextInLazyColumn(
-            columnName = "Кол-во",
+        TextInLazyColumns(
+            columnName = orderStatus.CountOrder,
             modifier = Modifier.weight(0.25f),
             style = MaterialTheme.typography.bodySmall
         )
-        TextInLazyColumn(
-            columnName = "Статус",
+        TextInLazyColumns(
+            columnName = orderStatus.Status,
             modifier = Modifier.weight(0.25f),
             style = MaterialTheme.typography.bodySmall
         )
@@ -542,29 +542,29 @@ fun OrderTableOne() {
             }
         }*/
     }*/
-    LazyColumn(modifier = Modifier.fillMaxSize().height(100.dp)) {
+    LazyColumn(modifier = Modifier.fillMaxSize().height(30.dp)) {
         item {
             Row(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(start = 8.dp, end = 8.dp)
             ) {
-                TextInLazyColumn(
+                TextInLazyColumns(
                     columnName = "Дата",
                     modifier = Modifier.weight(.25f),
                     style = MaterialTheme.typography.bodySmall
                 )
-                TextInLazyColumn(
+                TextInLazyColumns(
                     columnName = "Тип",
                     modifier = Modifier.weight(0.25f),
                    style = MaterialTheme.typography.bodySmall
                 )
-                TextInLazyColumn(
+                TextInLazyColumns(
                     columnName = "Кол-во",
                     modifier = Modifier.weight(0.25f),
                     style = MaterialTheme.typography.bodySmall
                 )
-                TextInLazyColumn(
+                TextInLazyColumns(
                     columnName = "Статус",
                     modifier = Modifier.weight(0.25f),
                     style = MaterialTheme.typography.bodySmall
@@ -574,7 +574,7 @@ fun OrderTableOne() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp),
-                color = Color.Black,
+                color = Color.White,
                 thickness = 1.dp
             )
 

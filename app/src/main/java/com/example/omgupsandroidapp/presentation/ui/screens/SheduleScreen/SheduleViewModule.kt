@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import com.example.omgupsandroidapp.domain.use_case.service.shedule.GetSheduleUseCase
 import com.example.omgupsandroidapp.presentation.ui.screens.ServicesScreen.services.OrderScreen.OrderState
 import com.omgupsapp.common.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
-
+@HiltViewModel
 class SheduleViewModul @Inject constructor(
     private val getSheduleUseCase: GetSheduleUseCase
 ): ViewModel() {
@@ -17,10 +20,12 @@ class SheduleViewModul @Inject constructor(
     private val _sheduleState = MutableStateFlow(SheduleState())
     val sheduleState = _sheduleState.asStateFlow()
 
+    init {
+        runBlocking {   getShedule() }
+    }
 
-
-    private fun getShedule(){
-        getSheduleUseCase.invoke().onEach { result ->
+     suspend fun getShedule(){
+        getSheduleUseCase.invoke().collectLatest { result ->
             when (result) {
                 is Resource.Success -> {
                     _sheduleState.update {

@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.magnifier
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,6 +34,8 @@ import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.screens.ServicesScreen.services.ScholarshipScreen.TextInLazyColumn
 import com.example.omgupsandroidapp.presentation.ui.screens.SheduleScreen.SheduleViewModul
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Locale
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
@@ -49,7 +54,9 @@ fun ScheduleScreen(
 
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .padding(0.dp,40.dp)
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -57,13 +64,21 @@ fun ScheduleScreen(
             sheduleState.value.sheduleList.map {
             Box(
                 modifier = Modifier
-                    .background(color = Color.Black)
-                    .size(400.dp)
+                    .padding(10.dp,10.dp)
+                    .fillMaxSize(1f)
+                    .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
             ) {
-                    Row {
-                        Column {
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ){
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
                             Row {
-                                Text(text = it.id.toString() + " айди")
+                                Text(text = getCurrentDate())
                             }
                             Row {
                                 Text(text = it.subj + " предмет")
@@ -79,7 +94,6 @@ fun ScheduleScreen(
                             }
                         }
                     }
-
                 }
                /* Column {
                     Row {
@@ -148,4 +162,12 @@ fun OneDayShedule(
 
 }
 
+fun getCurrentDate(): String {
+    val calendar = Calendar.getInstance()
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+    val day_of_week = calendar.get(Calendar.DAY_OF_WEEK)
+    val month = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+    val year = calendar.get(Calendar.YEAR)
+    return "$day."+"$month"
+}
 

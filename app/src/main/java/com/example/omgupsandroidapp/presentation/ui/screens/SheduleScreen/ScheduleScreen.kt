@@ -55,30 +55,34 @@ fun ScheduleScreen(
 
     LazyColumn(
         modifier = Modifier
-            .padding(0.dp,40.dp)
+            .padding(0.dp, 40.dp)
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             sheduleState.value.sheduleList.map {
-            Box(
-                modifier = Modifier
-                    .padding(10.dp,10.dp)
-                    .fillMaxSize(1f)
-                    .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
-            ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ){
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                        ) {
-                            Row {
-                                Text(text = getCurrentDate())
+                Row{
+                    Text("Нечетная неделя")
+                }
+                Box(
+                    modifier = Modifier
+                        .padding(10.dp, 10.dp)
+                        .fillMaxSize(1f)
+                        .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+                ){
+                    Column {
+                        Text("Понедельник")
+
+                        Text("Вторник")
+
+                        Text("Понедельник")
+
+                        Text("Понедельник")
+                    }
+                }
+               /* Column {
+               Row {
                             }
                             Row {
                                 Text(text = it.subj + " предмет")
@@ -92,10 +96,6 @@ fun ScheduleScreen(
                             Row {
                                 Text(text = it.time.toString() + " какая пара")
                             }
-                        }
-                    }
-                }
-               /* Column {
                     Row {
                         Text(text = sheduleState.value.sheduleList[0].id.toString() + " айди")
                     }
@@ -158,7 +158,29 @@ fun OneDayShedule(
     day_of_week: String,
     modifier: Modifier = Modifier,
 ){
+    Box(
+        modifier = Modifier
+            .padding(10.dp, 10.dp)
+            .fillMaxSize(1f)
+            .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxSize()
+        ){
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
 
+                Row {
+                    Text(text = day_of_week)
+                }
+
+            }
+        }
+    }
 
 }
 

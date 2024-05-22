@@ -29,5 +29,4 @@ class GetSheduleUseCase @Inject constructor(
         }
     }
 
-
 }

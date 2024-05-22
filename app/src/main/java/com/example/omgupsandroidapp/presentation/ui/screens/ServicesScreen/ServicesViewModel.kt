@@ -25,6 +25,9 @@ class ServicesViewModel @Inject constructor() : ViewModel() {
         ),
         Service(
             "Заказ справок", Screen.SpravkaScreen.route, R.drawable.ic_spravki
+        ),
+        Service(
+            "Расписание", Screen.ScheduleScreen.route, R.drawable.ic_outline_schedule
         )
     )
 }

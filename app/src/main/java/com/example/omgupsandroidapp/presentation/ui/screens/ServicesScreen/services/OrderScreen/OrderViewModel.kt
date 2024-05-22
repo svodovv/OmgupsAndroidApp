@@ -1,5 +1,6 @@
 package com.example.omgupsandroidapp.presentation.ui.screens.ServicesScreen.services.OrderScreen
 
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.omgupsandroidapp.domain.use_case.service.order.GetOrderUseCase

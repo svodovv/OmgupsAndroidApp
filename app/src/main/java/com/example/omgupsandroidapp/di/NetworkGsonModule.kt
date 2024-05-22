@@ -39,9 +39,9 @@ object NetworkGsonModule {
         val cache = Cache(cacheDir, cacheSize)
 
         return OkHttpClient.Builder()
-            .cache(cache)
+            //.cache(cache)
             .addNetworkInterceptor(onlineInterceptor)
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+            //.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .cookieJar(cookieJar).build()
     }
 

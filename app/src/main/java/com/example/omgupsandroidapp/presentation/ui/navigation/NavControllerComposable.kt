@@ -50,17 +50,10 @@ fun NavHostComposable(
              */
         }
         navigation(
-            startDestination = Screen.ScheduleScreen.route,
+            startDestination = Screen.UserProfileScreen.route,
             route = NavigationGroup.HomeScreens.route
         ) {
 
-
-
-            composable(route = Screen.ScheduleScreen.route) {
-                ScheduleScreen(
-                    navController = navController, paddingValues = paddingValues
-                )
-            }
 
             composable(route = Screen.UserProfileScreen.route) {
                 UserProfileScreen(
@@ -91,7 +84,11 @@ fun NavHostComposable(
             composable(Screen.SpravkaScreen.route) {
                 SpravkaScreen(navController = navController, paddingValues = paddingValues)
             }
-
+            composable(route = Screen.ScheduleScreen.route) {
+                ScheduleScreen(
+                    navController = navController, paddingValues = paddingValues
+                )
+            }
         }
     }
 }

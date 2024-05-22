@@ -51,7 +51,8 @@ fun ScheduleScreen(
 
     val sheduleState = sheduleViewModul.sheduleState.collectAsStateWithLifecycle()
 
-
+    val nechet = sheduleState.value.sheduleList.filter {  it.type_of_week == 0 }
+    val chet = sheduleState.value.sheduleList.filter {  it.type_of_week == 1 }
 
     LazyColumn(
         modifier = Modifier
@@ -61,27 +62,795 @@ fun ScheduleScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            sheduleState.value.sheduleList.map {
-                Row{
-                    Text("Нечетная неделя")
-                }
-                Box(
-                    modifier = Modifier
-                        .padding(10.dp, 10.dp)
-                        .fillMaxSize(1f)
-                        .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
-                ){
-                    Column {
-                        Text("Понедельник")
-
+            Row{
+                Text("Нечетная неделя")
+            }
+            nechet.map {
+                when(it.day_of_week) {
+                    "Понедельник" -> Box(
+                            modifier = Modifier
+                                .padding(10.dp, 10.dp)
+                                .fillMaxSize(1f)
+                                .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+                        ) {
+                            Text("Понедельник")
+                            when (it.time) {
+                                0 -> Row {
+                                        Column(
+                                            modifier = Modifier
+                                                .padding(10.dp, 10.dp)
+                                                .fillMaxSize(.25f)
+                                        ) {
+                                            Row {
+                                                Text("8:00")
+                                            }
+                                            Row {
+                                                Text("9:35")
+                                            }
+                                        }
+                                        Column(
+                                            modifier = Modifier
+                                                .padding(10.dp, 10.dp)
+                                                .fillMaxSize(.75f)
+                                        )
+                                        {
+                                            Row {
+                                                Text(it.subj)
+                                            }
+                                        }
+                                    }
+                                1 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("9:45")
+                                        }
+                                        Row {
+                                            Text("11:20")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                                2 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("11:30")
+                                        }
+                                        Row {
+                                            Text("13:05")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                                3 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("13:55")
+                                        }
+                                        Row {
+                                            Text("15:30")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                                4 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("15:40")
+                                        }
+                                        Row {
+                                            Text("17:15")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    "Вторник" -> Box(
+                        modifier = Modifier
+                            .padding(10.dp, 10.dp)
+                            .fillMaxSize(1f)
+                            .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+                    ) {
                         Text("Вторник")
-
-                        Text("Понедельник")
-
-                        Text("Понедельник")
+                        when (it.time) {
+                            0 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("8:00")
+                                    }
+                                    Row {
+                                        Text("9:35")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            1 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("9:45")
+                                    }
+                                    Row {
+                                        Text("11:20")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            2 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("11:30")
+                                    }
+                                    Row {
+                                        Text("13:05")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            3 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("13:55")
+                                    }
+                                    Row {
+                                        Text("15:30")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            4 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("15:40")
+                                    }
+                                    Row {
+                                        Text("17:15")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                        }
                     }
+                    /*"Среда" -> Box(
+                        modifier = Modifier
+                            .padding(10.dp, 10.dp)
+                            .fillMaxSize(1f)
+                            .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+                    ) {
+                        Text("Среда")
+                        when (it.time) {
+                            0 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("8:00")
+                                    }
+                                    Row {
+                                        Text("9:35")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            1 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("9:45")
+                                    }
+                                    Row {
+                                        Text("11:20")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            2 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("11:30")
+                                    }
+                                    Row {
+                                        Text("13:05")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            3 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("13:55")
+                                    }
+                                    Row {
+                                        Text("15:30")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            4 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("15:40")
+                                    }
+                                    Row {
+                                        Text("17:15")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    "Четверг" -> Box(
+                        modifier = Modifier
+                            .padding(10.dp, 10.dp)
+                            .fillMaxSize(1f)
+                            .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+                    ) {
+                        Text("Четверг")
+                        when (it.time) {
+                            0 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("8:00")
+                                    }
+                                    Row {
+                                        Text("9:35")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            1 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("9:45")
+                                    }
+                                    Row {
+                                        Text("11:20")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            2 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("11:30")
+                                    }
+                                    Row {
+                                        Text("13:05")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            3 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("13:55")
+                                    }
+                                    Row {
+                                        Text("15:30")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            4 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("15:40")
+                                    }
+                                    Row {
+                                        Text("17:15")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    "Пятница" -> Box(
+                            modifier = Modifier
+                                .padding(10.dp, 10.dp)
+                                .fillMaxSize(1f)
+                                .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+                        ) {
+                            Text("Пятница")
+                            when (it.time) {
+                                0 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("8:00")
+                                        }
+                                        Row {
+                                            Text("9:35")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                                1 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("9:45")
+                                        }
+                                        Row {
+                                            Text("11:20")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                                2 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("11:30")
+                                        }
+                                        Row {
+                                            Text("13:05")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                                3 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("13:55")
+                                        }
+                                        Row {
+                                            Text("15:30")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                                4 -> Row {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.25f)
+                                    ) {
+                                        Row {
+                                            Text("15:40")
+                                        }
+                                        Row {
+                                            Text("17:15")
+                                        }
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .fillMaxSize(.75f)
+                                    )
+                                    {
+                                        Row {
+                                            Text(it.subj)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    "Суббота" -> Box(
+                        modifier = Modifier
+                            .padding(10.dp, 10.dp)
+                            .fillMaxSize(1f)
+                            .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+                    ) {
+                        Text("Суббота")
+                        when (it.time) {
+                            0 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("8:00")
+                                    }
+                                    Row {
+                                        Text("9:35")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            1 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("9:45")
+                                    }
+                                    Row {
+                                        Text("11:20")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            2 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("11:30")
+                                    }
+                                    Row {
+                                        Text("13:05")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            3 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("13:55")
+                                    }
+                                    Row {
+                                        Text("15:30")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                            4 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("15:40")
+                                    }
+                                    Row {
+                                        Text("17:15")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                )
+                                {
+                                    Row {
+                                        Text(it.subj)
+                                    }
+                                }
+                            }
+                        }
+                    }*/
                 }
-               /* Column {
+            }
+
+            /* Column {
                Row {
                             }
                             Row {
@@ -112,8 +881,6 @@ fun ScheduleScreen(
                         Text(text = sheduleState.value.sheduleList[0].time.toString() + " какая пара")
                     }
                 }*/
-
-            }
            /* if (sheduleState.value.sheduleList.isNotEmpty()) {
                 sheduleState.value.sheduleList.map {
                     Box(

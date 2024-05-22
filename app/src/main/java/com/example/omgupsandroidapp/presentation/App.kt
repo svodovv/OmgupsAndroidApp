@@ -1,5 +1,6 @@
 package com.omgupsapp.presentation
 
+import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
@@ -21,6 +22,7 @@ data class BottomNavigationItem(
     val badeCount: Int? = null // Колличество уведомлений на странице
 )
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun App() {
     val navController = rememberNavController()

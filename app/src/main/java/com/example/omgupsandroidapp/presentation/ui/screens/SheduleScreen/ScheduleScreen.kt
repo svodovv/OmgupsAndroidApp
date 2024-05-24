@@ -1,6 +1,7 @@
 package com.omgupsapp.presentation.ui.SheduleScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -128,6 +129,7 @@ fun ScheduleScreen(
     val nechet = sheduleState.value.sheduleList.filter { it.type_of_week == 0 }
     val chet = sheduleState.value.sheduleList.filter { it.type_of_week == 1 }
     val dayOfWeek = listOf("Понедельник", "Вторник","Среда","Четверг","Пятница","Суббота")
+    val nechetWeek = nechet.filter { it.type_of_week == 0 }
     val nechpon1 = nechet.filter { it.day_of_week == "Понедельник" }
     val nechpon2 = nechet.filter { it.day_of_week == "Вторник" }
     val nechpon3 = nechet.filter { it.day_of_week == "Среда" }
@@ -140,7 +142,7 @@ fun ScheduleScreen(
     val chet4 = nechet.filter { it.day_of_week == "Четверг" }
     val chet5 = nechet.filter { it.day_of_week == "Пятница" }
     val chet6 = nechet.filter { it.day_of_week == "Суббота" }
-
+    Log.i("NECHET",nechpon1.toString())
     LazyColumn(
         modifier = Modifier
             .padding(0.dp, 60.dp)
@@ -157,7 +159,7 @@ fun ScheduleScreen(
                 for (it in dayOfWeek) {
                     when (it) {
                         "Понедельник" -> Row {
-                            createDayBox(dayOfWeek = it, schedule = nechpon1)
+                                createDayBox(dayOfWeek = it, schedule = nechetWeek)
                         }
                         "Вторник" -> Row {
                             createDayBox(dayOfWeek = it, schedule = nechpon2)
@@ -1059,130 +1061,133 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
         ) {
             Text(dayOfWeek)
             for (scheduleItem in schedule) {
-                when (scheduleItem.time) {
-                    0 -> Row {
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.25f)
-                        ) {
-                            Row {
-                                Text("8:0")
+                schedule.map {
+                    when (it.day_of_week) {
+                        dayOfWeek -> when (scheduleItem.time) {
+                            0 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("8:0")
+                                    }
+                                    Row {
+                                        Text("9:35")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                ) {
+                                    Row {
+                                        Text(scheduleItem.subj)
+                                    }
+                                }
                             }
-                            Row {
-                                Text("9:35")
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.75f)
-                        ) {
-                            Row {
-                                Text(scheduleItem.subj)
-                            }
-                        }
-                    }
 
-                    1 -> Row {
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.25f)
-                        ) {
-                            Row {
-                                Text("9:45")
+                            1 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("9:45")
+                                    }
+                                    Row {
+                                        Text("11:20")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                ) {
+                                    Row {
+                                        Text(scheduleItem.subj)
+                                    }
+                                }
                             }
-                            Row {
-                                Text("11:20")
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.75f)
-                        ) {
-                            Row {
-                                Text(scheduleItem.subj)
-                            }
-                        }
-                    }
 
-                    2 -> Row {
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.25f)
-                        ) {
-                            Row {
-                                Text("11:30")
+                            2 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("11:30")
+                                    }
+                                    Row {
+                                        Text("13:05")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                ) {
+                                    Row {
+                                        Text(scheduleItem.subj)
+                                    }
+                                }
                             }
-                            Row {
-                                Text("13:05")
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.75f)
-                        ) {
-                            Row {
-                                Text(scheduleItem.subj)
-                            }
-                        }
-                    }
 
-                    3 -> Row {
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.25f)
-                        ) {
-                            Row {
-                                Text("13:55")
+                            3 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("13:55")
+                                    }
+                                    Row {
+                                        Text("15:30")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                ) {
+                                    Row {
+                                        Text(scheduleItem.subj)
+                                    }
+                                }
                             }
-                            Row {
-                                Text("15:30")
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.75f)
-                        ) {
-                            Row {
-                                Text(scheduleItem.subj)
-                            }
-                        }
-                    }
 
-                    4 -> Row {
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.25f)
-                        ) {
-                            Row {
-                                Text("15:40")
-                            }
-                            Row {
-                                Text("17:15")
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .padding(10.dp, 10.dp)
-                                .fillMaxSize(.75f)
-                        ) {
-                            Row {
-                                Text(scheduleItem.subj)
+                            4 -> Row {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.25f)
+                                ) {
+                                    Row {
+                                        Text("15:40")
+                                    }
+                                    Row {
+                                        Text("17:15")
+                                    }
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(10.dp, 10.dp)
+                                        .fillMaxSize(.75f)
+                                ) {
+                                    Row {
+                                        Text(scheduleItem.subj)
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
-
 }
 
 

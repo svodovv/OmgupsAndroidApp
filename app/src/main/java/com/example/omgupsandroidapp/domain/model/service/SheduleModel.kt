@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class SheduleModel (
     @SerializedName("day_of_week")
-    val day_of_week: String,
+    var day_of_week: String,
     @SerializedName("guid")
     val guid: String,
     @SerializedName("id")

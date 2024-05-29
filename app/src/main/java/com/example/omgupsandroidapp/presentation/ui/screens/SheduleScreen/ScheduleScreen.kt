@@ -147,9 +147,10 @@ fun ScheduleScreen(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxSize()
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.fillMaxSize().padding(15.dp,0.dp)
                 ) {
-                    Text("Нечетная неделя")
+                    Text("Нечетная неделя", fontSize = 25.sp)
                 }
                 dayOfWeek.map { dayWeek ->
                     val days = nechet.filter { it.day_of_week == dayWeek }
@@ -159,9 +160,10 @@ fun ScheduleScreen(
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxSize()
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.fillMaxSize().padding(15.dp,0.dp)
                 ) {
-                    Text("Четная неделя")
+                    Text("Четная неделя", fontSize = 25.sp)
                 }
                 dayOfWeek.map { dayWeek ->
                     val days = chet.filter { it.day_of_week == dayWeek }
@@ -180,7 +182,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
         modifier = Modifier
             .padding(10.dp, 10.dp)
             .fillMaxSize(1f)
-            .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+            .background(color = Color(0xFF3D6CB9), shape = RoundedCornerShape(16.dp))
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,

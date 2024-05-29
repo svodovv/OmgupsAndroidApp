@@ -34,14 +34,14 @@ object NetworkGsonModule {
         onlineInterceptor: OnlineInterceptor,
         ): OkHttpClient {
 
-        val cacheSize = (10 * 1024 * 1024).toLong() // 5 MB
+        val cacheSize = (10 * 2024 * 2024).toLong() // 5 MB
         val cacheDir = File(context.cacheDir, "http-cache")
         val cache = Cache(cacheDir, cacheSize)
 
         return OkHttpClient.Builder()
-            //.cache(cache)
+           // .cache(cache)
             .addNetworkInterceptor(onlineInterceptor)
-            //.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+          //  .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .cookieJar(cookieJar).build()
     }
 

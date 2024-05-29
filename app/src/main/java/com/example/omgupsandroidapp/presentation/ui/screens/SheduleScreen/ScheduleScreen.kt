@@ -32,6 +32,7 @@ import androidx.compose.ui.input.key.Key.Companion.F
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
@@ -144,21 +145,29 @@ fun ScheduleScreen(
             Column(
 
             ) {
-                Text("Нечетная неделя")
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text("Нечетная неделя")
+                }
                 dayOfWeek.map { dayWeek ->
                     val days = nechet.filter { it.day_of_week == dayWeek }
                     Row {
-
                         createDayBox(dayOfWeek = dayWeek, schedule = days)
                     }
                 }
-            }
-            Text("Четная неделя")
-            dayOfWeek.map { dayWeek ->
-                val days = chet.filter { it.day_of_week == dayWeek }
-                Row {
-
-                    createDayBox(dayOfWeek = dayWeek, schedule = days)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text("Четная неделя")
+                }
+                dayOfWeek.map { dayWeek ->
+                    val days = chet.filter { it.day_of_week == dayWeek }
+                    Row {
+                        createDayBox(dayOfWeek = dayWeek, schedule = days)
+                    }
                 }
             }
         }
@@ -173,14 +182,24 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
             .fillMaxSize(1f)
             .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
     ) {
-        Text(dayOfWeek)
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp, 10.dp),
+
+        ) {
+            Text(dayOfWeek, fontSize = 20.sp)
+        }
         for (scheduleItem in schedule) {
             when (scheduleItem.time) {
                 0 -> Row {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.25f)
+                            .fillMaxSize(.25f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
                             Text("8:0")
@@ -192,10 +211,21 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.75f)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row {
-                            Text(scheduleItem.subj)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    shape = RoundedCornerShape(8.dp),
+                                    color = Color(0xFFBAEAFF)
+                                )
+                        ) {
+                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
                         }
                     }
                 }
@@ -204,7 +234,9 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.25f)
+                            .fillMaxSize(.25f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
                             Text("9:45")
@@ -216,10 +248,21 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.75f)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row {
-                            Text(scheduleItem.subj)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    shape = RoundedCornerShape(8.dp),
+                                    color = Color(0xFFBAEAFF)
+                                )
+                        ) {
+                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
                         }
                     }
                 }
@@ -228,7 +271,9 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.25f)
+                            .fillMaxSize(.25f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
                             Text("11:30")
@@ -240,10 +285,21 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.75f)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row {
-                            Text(scheduleItem.subj)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    shape = RoundedCornerShape(8.dp),
+                                    color = Color(0xFFBAEAFF)
+                                )
+                        ) {
+                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
                         }
                     }
                 }
@@ -252,7 +308,9 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.25f)
+                            .fillMaxSize(.25f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
                             Text("13:55")
@@ -264,10 +322,21 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.75f)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row {
-                            Text(scheduleItem.subj)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    shape = RoundedCornerShape(8.dp),
+                                    color = Color(0xFFBAEAFF)
+                                )
+                        ) {
+                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
                         }
                     }
                 }
@@ -276,7 +345,9 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.25f)
+                            .fillMaxSize(.25f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
                             Text("15:40")
@@ -288,10 +359,21 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
-                            .fillMaxSize(.75f)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row {
-                            Text(scheduleItem.subj)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    shape = RoundedCornerShape(8.dp),
+                                    color = Color(0xFFBAEAFF)
+                                )
+                        ) {
+                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
                         }
                     }
                 }

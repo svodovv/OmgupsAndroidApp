@@ -12,8 +12,6 @@ import javax.inject.Inject
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("data_store")
 
-
-
 class DataStoreManager @Inject constructor(private val context: Context) {
 
     suspend fun saveLoggedIn(isLoggedIn: Boolean) {

@@ -140,7 +140,7 @@ fun ScholarshipScreen(
 }
 
 @Composable
-fun TextInLazyColumn(
+private fun TextInLazyColumn(
     columnName: String,
     modifier: Modifier = Modifier,
     style: TextStyle = MaterialTheme.typography.bodyLarge

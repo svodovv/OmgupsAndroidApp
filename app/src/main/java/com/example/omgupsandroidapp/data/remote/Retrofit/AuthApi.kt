@@ -13,7 +13,6 @@ interface AuthApi {
 
     @FormUrlEncoded
     @POST("/user/sign-in/login")
-
     suspend fun authentication(
         @Field("_csrf") csrfToken: String,
         @Field("LoginForm[identity]") login: String,

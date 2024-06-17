@@ -11,11 +11,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
+import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -39,15 +41,13 @@ object NetworkGsonModule {
         val cache = Cache(cacheDir, cacheSize)
 
         return OkHttpClient.Builder()
-            .cache(cache)
-            .addNetworkInterceptor(onlineInterceptor)
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+
+            //.addNetworkInterceptor(onlineInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .cookieJar(cookieJar).build()
     }
 
-    @Provides
-    @Singleton
-    @Named("gson")
+    @Provides @Singleton @Named("gson")
     fun provideRetrofitGson(
         @Named("gsonOkHttp")
         okHttpClient: OkHttpClient

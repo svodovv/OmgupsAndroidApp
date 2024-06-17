@@ -17,13 +17,14 @@ class MyCookieJar @Inject constructor(
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
         coroutineScope.launch {
+            cookieDao.deleteCookie()
             for (cookie in cookies) {
                 cookieDao.insertCookie(
                     CookieEntity(
                         host = url.host,
                         name = cookie.name,
                         value = cookie.value,
-                        expiresAt = System.currentTimeMillis() + 50000
+                        expiresAt = System.currentTimeMillis()
                     )
                 )
             }
@@ -40,7 +41,7 @@ class MyCookieJar @Inject constructor(
                 .domain(url.host)
                 .path("/")
                 .httpOnly()
-                .expiresAt(entity.expiresAt)
+                //.expiresAt(entity.expiresAt)
                 .build()
         }
         return cookie

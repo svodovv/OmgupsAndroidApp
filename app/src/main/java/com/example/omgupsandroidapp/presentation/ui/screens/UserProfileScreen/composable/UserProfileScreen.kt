@@ -73,7 +73,14 @@ fun UserProfileScreen(
                                         .align(Alignment.Center)
                                 )
                             } else {
-                                TODO()
+                               /* AsyncImage(
+                                    model = userProfile.imageVector,
+                                    contentDescription = userProfile.direction,
+                                    modifier = Modifier
+                                        .size(100.dp)
+                                        .clip(RoundedCornerShape(50.dp))
+                                        .align(Alignment.Center)
+                                )*/
                             }
                         }
                         Text(

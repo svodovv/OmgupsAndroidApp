@@ -20,7 +20,6 @@ import javax.inject.Named
 */
 
 class AuthRepositoryImpl @Inject constructor(
-
     private val api: AuthApi,
     private val dataStoreManager: DataStoreManager
 ) : AuthRepository {
@@ -40,12 +39,11 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-
     override suspend fun authentication(
         login: String,
         password: String,
     ): Boolean {
-        Log.e("TOKEN", csrfToken.toString() )
+
         val response = api.authentication(
             csrfToken = csrfToken!!,
             login = login,

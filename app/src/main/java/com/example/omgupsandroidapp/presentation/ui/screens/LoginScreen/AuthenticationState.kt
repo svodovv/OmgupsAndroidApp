@@ -5,5 +5,5 @@ data class AuthenticationState(
     val error: String = "",
     val isLoading: Boolean = false,
     val login: String = "Кондратьев Владимир Андреевич",
-    val password: String = "1",
+    val password: String = "2",
 )

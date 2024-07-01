@@ -1,9 +1,11 @@
 package com.omgupsapp.presentation
 
+import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +22,7 @@ data class BottomNavigationItem(
     val badeCount: Int? = null // Колличество уведомлений на странице
 )
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun App() {
     val navController = rememberNavController()
@@ -42,15 +45,17 @@ fun App() {
         ),
     )
 
+    //LaunchedEffect(navController) { }
 
-    ScaffoldComposable(
-        navController = navController,
-        itemsBottomBar = itemsBottomBar,
-    ) { paddingValues ->
-        NavHostComposable(
+        ScaffoldComposable(
             navController = navController,
-            paddingValues = paddingValues
-        )
-    }
+            itemsBottomBar = itemsBottomBar,
+        ) { paddingValues ->
+            NavHostComposable(
+                navController = navController,
+                paddingValues = paddingValues
+            )
+        }
+
 
 }

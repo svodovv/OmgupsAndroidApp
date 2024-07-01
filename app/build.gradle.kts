@@ -86,7 +86,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 
-
+    //Swipe Refresch
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.26.5-rc")
     // Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.4.0")
     implementation( "com.squareup.retrofit2:converter-gson:2.9.0")

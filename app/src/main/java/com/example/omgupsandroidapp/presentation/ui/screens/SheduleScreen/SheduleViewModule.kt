@@ -1,56 +1,56 @@
-package com.example.omgupsandroidapp.presentation.ui.screens.ServicesScreen.services.OrderScreen
+package com.example.omgupsandroidapp.presentation.ui.screens.SheduleScreen
 
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.omgupsandroidapp.domain.use_case.service.order.GetOrderUseCase
+import com.example.omgupsandroidapp.domain.use_case.service.shedule.GetSheduleUseCase
+import com.example.omgupsandroidapp.presentation.ui.screens.ServicesScreen.services.OrderScreen.OrderState
 import com.omgupsapp.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
-
 @HiltViewModel
-class OrderViewModel @Inject constructor(
-    private val getOrderUseCase: GetOrderUseCase
-) : ViewModel() {
+class SheduleViewModul @Inject constructor(
+    private val getSheduleUseCase: GetSheduleUseCase
+): ViewModel() {
 
-    private val _orderState = MutableStateFlow(OrderState())
-    val orderState = _orderState.asStateFlow()
+    private val _sheduleState = MutableStateFlow(SheduleState())
+    val sheduleState = _sheduleState.asStateFlow()
 
     init {
-        getOrder()
+        runBlocking {  getShedule() }
     }
 
-    private fun getOrder() {
-        getOrderUseCase.invoke().onEach { result ->
+     suspend fun getShedule(){
+        getSheduleUseCase.invoke().collectLatest { result ->
             when (result) {
                 is Resource.Success -> {
-                    _orderState.update {
-                        it.copy(orderList = result.data ?: emptyList())
+                    _sheduleState.update {
+                        it.copy(sheduleList = result.data ?: emptyList())
                     }
                 }
 
                 is Resource.Loading -> {
-                    _orderState.update {
+                    _sheduleState.update {
                         it.copy(isLoading = true)
                     }
                 }
 
                 is Resource.Error -> {
-                    _orderState.update {
+                    _sheduleState.update {
                         it.copy(
                             error = result.message
                                 ?: "Ошибка соединения, это может быть вызванно активным VPN сервисом"
                         )
                     }
                 }
-
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
 }

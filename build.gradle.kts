@@ -5,3 +5,4 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.48" apply false
     kotlin("kapt") version "1.8.21"
 }
+

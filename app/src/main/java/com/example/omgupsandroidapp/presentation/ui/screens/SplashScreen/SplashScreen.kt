@@ -12,7 +12,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    navController: NavController, splashScreenViewModel: SplashScreenViewModel = hiltViewModel()
+    navController: NavController,
+    splashScreenViewModel: SplashScreenViewModel = hiltViewModel()
 ) {
 
     val splashScreenState = splashScreenViewModel.splashScreenState.collectAsStateWithLifecycle()

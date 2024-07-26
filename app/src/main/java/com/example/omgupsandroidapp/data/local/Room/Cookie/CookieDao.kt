@@ -8,7 +8,7 @@ import androidx.room.Upsert
 
 @Dao
 interface CookieDao {
-    @Insert
+    @Upsert
     suspend fun insertCookie(cookie: CookieEntity)
 
     @Query("DELETE FROM cookies ")

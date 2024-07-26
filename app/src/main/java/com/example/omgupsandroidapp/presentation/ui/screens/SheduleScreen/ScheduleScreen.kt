@@ -38,7 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.domain.model.service.SheduleModel
-import com.example.omgupsandroidapp.presentation.ui.screens.ServicesScreen.services.ScholarshipScreen.TextInLazyColumn
+
 import com.example.omgupsandroidapp.presentation.ui.screens.SheduleScreen.SheduleViewModul
 import kotlinx.coroutines.launch
 import java.util.Calendar

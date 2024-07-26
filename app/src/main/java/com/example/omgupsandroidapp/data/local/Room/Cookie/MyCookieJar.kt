@@ -16,8 +16,8 @@ class MyCookieJar @Inject constructor(
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+
         coroutineScope.launch {
-            cookieDao.deleteCookie()
             for (cookie in cookies) {
                 cookieDao.insertCookie(
                     CookieEntity(
@@ -31,12 +31,12 @@ class MyCookieJar @Inject constructor(
         }
     }
 
+
     override fun loadForRequest(url: HttpUrl): List<Cookie> {
 
         val cookieEntities = cookieDao.getCookiesForHost(url.host)
         val cookie = cookieEntities.map { entity ->
-            Cookie.Builder()
-                .name(entity.name)
+            Cookie.Builder().name(entity.name)
                 .value(entity.value)
                 .domain(url.host)
                 .path("/")
@@ -44,6 +44,7 @@ class MyCookieJar @Inject constructor(
                 //.expiresAt(entity.expiresAt)
                 .build()
         }
+
         return cookie
     }
 }

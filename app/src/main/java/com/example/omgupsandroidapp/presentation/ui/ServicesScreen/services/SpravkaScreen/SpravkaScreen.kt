@@ -3,11 +3,8 @@ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Spr
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,9 +21,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -37,7 +32,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,13 +48,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
-import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.TextInLazyColumn
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import kotlinx.coroutines.launch
 
@@ -81,19 +72,23 @@ fun SpravkaScreen(
 
     var InputSpravka0 by remember { mutableStateOf("") }
     var InputSpravka1 by remember { mutableStateOf("") }
+        InputSpravka1.toString()
+        InputSpravka0.toString()
     val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
-    val referenceHistory =
-        referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
+    val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
     val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statusSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
     val types = spravkiViewModel.spravkiState.value
     val history = referenceHistoryViewModel.referenceHistoryState.value
-    var stasus = statusSpravki.value.spravkiStatus
+    var stasus0 = statusSpravki.value.spravkiStatus0
+    var stasus1 = statusSpravki.value.spravkiStatus1
+    var historylist1 = referenceHistory.value.referenceHistoryList0
+    var historylist2 = referenceHistory.value.referenceHistoryList1
 
-    LaunchedEffect(stasus) {
+    /*LaunchedEffect(stasus0) {
         val status = spravkaViewModul.getStatus(0)
-        stasus = status
-    }
+        stasus0 = status
+    }*/
     val listStatusSpravka = listOf(
         "Нет:Заявка уже подана.",
         "Да:Создано",
@@ -101,7 +96,8 @@ fun SpravkaScreen(
         "Да:На подписании",
         "Да:К выдаче",
     )
-    var ind: Int = -1
+    var indStatus0: Int = -1
+    var indStatus1: Int = -1
 
     var listhistor = listOf(
         TypeStatusList("2", "23.10.2023", "00", "Создано", "Военная"),
@@ -181,46 +177,46 @@ fun SpravkaScreen(
                                 onClick = {
                                     stastusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
                                         LoadSpravka(
-                                            types.spravkiList[0].ID,
+                                            types.spravkiList[1].ID,
                                             InputSpravka0
                                         )
                                     )
+
                                     spravkaViewModul.viewModelScope.launch {
-                                        stasus = spravkaViewModul.getStatus(0)
+                                        stasus0 = spravkaViewModul.getStatus(0)
                                     }
                                     for ((i, element) in listStatusSpravka.withIndex()) {
-                                        if (element == stasus) {
-                                            ind = i
+                                        if (element == stasus0) {
+                                            indStatus0 = i
                                             break
                                         }
                                     }
-                                    Log.i("TAAAAG", stasus)
+                                    Log.i("TAAAAG", stasus0)
                                     Log.i("StastusAfterOrderSpravka", stastusAfterOrderSpravka)
                                 }
                             ) {
                                 Text(text = "Заказать")
                             }
                         }
-                        spravkaViewModul.viewModelScope.launch {
-                            stasus = spravkaViewModul.getStatus(0)
-                        }
+                       /* spravkaViewModul.viewModelScope.launch {
+                            stasus0 = spravkaViewModul.getStatus(0)
+                        }*/
                         for ((i, element) in listStatusSpravka.withIndex()) {
-                            if (element == stasus) {
-                                ind = i
+                            if (element == stasus0) {
+                                indStatus0 = i
                                 break
                             }
                         }
-                        if (ind != -1) {
-                            Log.i("TAAAAG", "Индекс совпадающего элемента: $ind")
+                        if (indStatus0 != -1) {
+                            Log.i("TAAAAG", "Индекс совпадающего элемента: $indStatus0")
                         } else {
                             //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
-                            Log.i("TAAAAG", stasus)
+                            Log.i("TAAAAG", stasus0)
 
 
                         }
                         Spacer(modifier = Modifier.size(20.dp, 20.dp))
-                        OrderStatusBar(ind - 1)
-
+                        OrderStatusBar(indStatus0 - 1)
                     }
                 }
             }
@@ -279,7 +275,7 @@ fun SpravkaScreen(
                                 onClick = {
                                     orderSpravkaViewModel.postSravka(
                                         LoadSpravka(
-                                            types.spravkiList[1].ID,
+                                            types.spravkiList[0].ID,
                                             InputSpravka1
                                         )
                                     )
@@ -290,8 +286,7 @@ fun SpravkaScreen(
                             }
                         }
                         Spacer(modifier = Modifier.size(20.dp, 20.dp))
-                        OrderStatusBar(ind - 1)
-
+                        OrderStatusBar(indStatus1 - 1)
                         //  OrderStatusBar(0, st)
 
                     }
@@ -302,7 +297,9 @@ fun SpravkaScreen(
             Spacer(modifier = Modifier.size(20.dp, 20.dp))
             //Log.i("TAAAAG",history.referenceHistoryList[0].Date )
             // Log.i("TAAAAG",history.referenceHistoryList[] )
-            ExpandableOrderTable(listhistor)
+            ExpandableOrderTable(historylist1,"История справок по обучению")
+            Spacer(modifier = Modifier.size(20.dp, 10.dp))
+            ExpandableOrderTable(historylist2,"История справок для военкомата")
             Spacer(modifier = Modifier.size(20.dp, 100.dp))
         }
 
@@ -395,7 +392,7 @@ fun SampleSpravka(
 }*/
     @Composable
     fun OrderStatusBar(currentStage: Int) {
-        val stages = listOf("Заказано", "В работе", "На подписании", "Готова")
+        val stages = listOf("Создано", "В работе", "На подписании", "Готова")
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -405,7 +402,6 @@ fun SampleSpravka(
                 .padding(0.dp, 20.dp)
         ) {
             stages.forEachIndexed { index, stage ->
-
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -590,14 +586,14 @@ fun OrderTableOne() {
 }
 
 @Composable
-fun ExpandableOrderTable(orderStatus: List<TypeStatusList>) {
+fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String) {
     var expanded by remember { mutableStateOf(false) }
 
     Column {
         Row(
             modifier = Modifier.clickable { expanded = !expanded }
         ) {
-            Text("История справок")
+            Text(hystoryType)
             Icon(
                 imageVector = if (expanded)
                     Icons.Default.KeyboardArrowDown

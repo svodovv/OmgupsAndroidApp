@@ -13,6 +13,10 @@ data class TypeSpravkaDto(
     val TypeList: List<TypeList>,
 )
 
+data class TypesSpravkiDtoItem(
+    val ID: String,
+    val Value: String,
+)
 fun TypesSpravkiDtoItem.toTypesSpravkiModel(): TypeList {
     return TypeList(
         ID = this.ID,

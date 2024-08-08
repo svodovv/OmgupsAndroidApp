@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
 import androidx.lifecycle.ViewModel
+import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetReferenceHistoryUseCase
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetTypesSpravkiUseCase
 import com.omgupsapp.common.Resource
@@ -23,17 +24,22 @@ class ReferenceHistoryViewModel @Inject constructor(
     val referenceHistoryState = _referenceHistoryState.asStateFlow()
 
     init {
-        runBlocking { getReferenceHistory(0) }
-        runBlocking { getReferenceHistory(1) }
+        runBlocking {
+            getReferenceHistory(1)
+            getReferenceHistory(2)
+        }
     }
 
-    suspend fun getReferenceHistory(id: Int){
+    suspend fun getReferenceHistory(id: Int) : List<TypeStatusList> {
         getReferenceHistoryUseCase.invoke(id).collectLatest { result ->
             when(result) {
                 is Resource.Success -> {
                     _referenceHistoryState.update {
                        // result.data?.historyStatus?.let { it1 -> it.copy(referenceHistoryList = it1) }!!
-                        it.copy(referenceHistoryList = result.data?.historyStatus ?: emptyList() )
+                        when (id){
+                            1 -> it.copy(referenceHistoryList0 = result.data?.historyStatus ?: emptyList())
+                            else -> it.copy(referenceHistoryList1 = result.data?.historyStatus ?: emptyList())
+                        }
                     }
                 }
 
@@ -53,6 +59,7 @@ class ReferenceHistoryViewModel @Inject constructor(
                 }
             }
         }
+        return referenceHistoryState.value.referenceHistoryList0.plus(referenceHistoryState.value.referenceHistoryList1)
     }
   /*  suspend fun getType(){
         getTypesSpravkiUseCase.invoke().collect {

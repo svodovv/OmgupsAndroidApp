@@ -34,13 +34,12 @@ class MyCookieJar @Inject constructor(
 
         val cookieEntities = cookieDao.getCookiesForHost(url.host)
         val cookie = cookieEntities.map { entity ->
-            Cookie.Builder()
-                .name(entity.name)
+            Cookie.Builder().name(entity.name)
                 .value(entity.value)
                 .domain(url.host)
                 .path("/")
                 .httpOnly()
-                .expiresAt(entity.expiresAt)
+                //.expiresAt(entity.expiresAt)
                 .build()
         }
 

@@ -22,15 +22,20 @@ class StatusSpravkaViewModul @Inject constructor(
 
 
     init {
-        runBlocking { getStatus(0)}
-        runBlocking { getStatus(1)}
+        runBlocking {
+            getStatus(1)
+            getStatus(2)
+        }
     }
     suspend fun getStatus(id: Int): String {
        getStatusSpravkaUseCase.invoke(id).collectLatest { result ->
            when(result) {
                is Resource.Success -> {
                    _status.update {
-                       it.copy(spravkiStatus = (result.data?.responseStatus?: String).toString())
+                       when (id) {
+                           1 -> it.copy(spravkiStatus0 = (result.data?.responseStatus ?: String).toString())
+                           else -> it.copy(spravkiStatus1 = (result.data?.responseStatus ?: String).toString())
+                       }
                    }
                }
                is Resource.Loading -> {
@@ -50,6 +55,6 @@ class StatusSpravkaViewModul @Inject constructor(
            }
 
        }
-         return status.value.spravkiStatus
+         return status.value.spravkiStatus0.plus(status.value.spravkiStatus1)
     }
 }

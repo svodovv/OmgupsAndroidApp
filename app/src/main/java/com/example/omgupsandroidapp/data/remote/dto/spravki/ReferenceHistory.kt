@@ -3,7 +3,7 @@ package com.example.omgupsandroidapp.data.remote.dto.spravki
 import com.google.gson.annotations.SerializedName
 
 data class ReferenceHistoryDto(
-    //@SerializedName("OrderStatus")
+    @SerializedName("OrderStatus")
     val historyStatus: List<TypeStatusList>
 )
 

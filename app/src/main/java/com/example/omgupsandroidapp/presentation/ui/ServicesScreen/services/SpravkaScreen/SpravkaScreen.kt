@@ -52,6 +52,7 @@ import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
+import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import kotlinx.coroutines.launch
 
@@ -72,9 +73,6 @@ fun SpravkaScreen(
 
     var InputSpravka0 by remember { mutableStateOf("") }
     var InputSpravka1 by remember { mutableStateOf("") }
-        InputSpravka1.toString()
-        InputSpravka0.toString()
-    val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
     val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
     val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statusSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
@@ -84,7 +82,7 @@ fun SpravkaScreen(
     var stasus1 = statusSpravki.value.spravkiStatus1
     var historylist1 = referenceHistory.value.referenceHistoryList0
     var historylist2 = referenceHistory.value.referenceHistoryList1
-
+    val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
     /*LaunchedEffect(stasus0) {
         val status = spravkaViewModul.getStatus(0)
         stasus0 = status
@@ -111,200 +109,226 @@ fun SpravkaScreen(
     )
 
     var stastusAfterOrderSpravka = " "
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        item {
-            ServicesTopAppBar(title = "Заказать справку", navController = navController)
-        }
-        item {
-            Card(
-                modifier = Modifier
-                    .padding(10.dp, 10.dp)
-                    .fillMaxSize(1f)
-                // .weight(0.2f)
-            ) {
-                Box(
+    if (spravki.value.spravkiList.isNotEmpty()) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                ServicesTopAppBar(title = "Заказать справку", navController = navController)
+            }
+            item {
+                Card(
                     modifier = Modifier
-                        .background(color = Color(0xFFBAEAFF))
-                        .fillMaxSize()
-                )
-                {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.Top,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                fontSize = 22.sp,
-                                color = Color.Black,
-                                text = "Справка об обучении"
-                            )
-                        }
-                        Spacer(modifier = Modifier.size(20.dp, 20.dp))
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Absolute.SpaceAround
-                        ) {
-                            TextField(
-                                modifier = Modifier
-                                    .fillMaxWidth(.2f)
-                                    .background(
-                                        color = Color.White,
-                                        shape = RoundedCornerShape(10.dp)
-                                    ),
-                                value = InputSpravka0,
-                                onValueChange = { InputSpravka0 = it },
-                                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                                singleLine = true,
-                                maxLines = 1,
-                                label = {
-                                    Text(
-                                        stringResource(R.string.current_spravok),
-                                        fontSize = 12.sp,
-                                        color = Color.White,
-                                    )
-                                },
-                            )
-                            Button(
-                                modifier = Modifier
-                                    .fillMaxWidth(.4f),
-                                onClick = {
-                                    stastusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
-                                        LoadSpravka(
-                                            types.spravkiList[1].ID,
-                                            InputSpravka0
-                                        )
-                                    )
-
-                                    spravkaViewModul.viewModelScope.launch {
-                                        stasus0 = spravkaViewModul.getStatus(0)
-                                    }
-                                    for ((i, element) in listStatusSpravka.withIndex()) {
-                                        if (element == stasus0) {
-                                            indStatus0 = i
-                                            break
-                                        }
-                                    }
-                                    Log.i("TAAAAG", stasus0)
-                                    Log.i("StastusAfterOrderSpravka", stastusAfterOrderSpravka)
-                                }
+                        .padding(10.dp, 10.dp)
+                        .fillMaxSize(1f)
+                    // .weight(0.2f)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .background(color = Color(0xFFBAEAFF))
+                            .fillMaxSize()
+                    )
+                    {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.Top,
+                                horizontalArrangement = Arrangement.Center
                             ) {
-                                Text(text = "Заказать")
+                                Text(
+                                    fontSize = 22.sp,
+                                    color = Color.Black,
+                                    text = "Справка об обучении"
+                                )
                             }
-                        }
-                       /* spravkaViewModul.viewModelScope.launch {
+                            Spacer(modifier = Modifier.size(20.dp, 20.dp))
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Absolute.SpaceAround
+                            ) {
+                                TextField(
+                                    modifier = Modifier
+                                        .fillMaxWidth(.2f)
+                                        .background(
+                                            color = Color.White,
+                                            shape = RoundedCornerShape(10.dp)
+                                        ),
+                                    value = InputSpravka0,
+                                    onValueChange = { InputSpravka0 = it },
+                                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                                    singleLine = true,
+                                    maxLines = 1,
+                                    label = {
+                                        Text(
+                                            stringResource(R.string.current_spravok),
+                                            fontSize = 12.sp,
+                                            color = Color.White,
+                                        )
+                                    },
+                                )
+                                Button(
+                                    modifier = Modifier
+                                        .fillMaxWidth(.4f),
+                                    onClick = {
+                                        stastusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
+                                            LoadSpravka(
+                                                types.spravkiList[1].ID,
+                                                InputSpravka0
+                                            )
+                                        )
+
+                                        spravkaViewModul.viewModelScope.launch {
+                                            stasus0 = spravkaViewModul.getStatus(1)
+                                        }
+                                        for ((i, element) in listStatusSpravka.withIndex()) {
+                                            if (element == stasus0) {
+                                                indStatus0 = i
+                                                break
+                                            }
+                                        }
+                                        Log.i("TAAAAG", stasus0)
+                                        Log.i("StastusAfterOrderSpravka", stastusAfterOrderSpravka)
+                                    }
+                                ) {
+                                    Text(text = "Заказать")
+                                }
+                            }
+                            /* spravkaViewModul.viewModelScope.launch {
                             stasus0 = spravkaViewModul.getStatus(0)
                         }*/
-                        for ((i, element) in listStatusSpravka.withIndex()) {
-                            if (element == stasus0) {
-                                indStatus0 = i
-                                break
-                            }
-                        }
-                        if (indStatus0 != -1) {
-                            Log.i("TAAAAG", "Индекс совпадающего элемента: $indStatus0")
-                        } else {
-                            //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
-                            Log.i("TAAAAG", stasus0)
-
-
-                        }
-                        Spacer(modifier = Modifier.size(20.dp, 20.dp))
-                        OrderStatusBar(indStatus0 - 1)
-                    }
-                }
-            }
-            Card(
-                modifier = Modifier
-                    .padding(10.dp, 10.dp)
-                //.weight(0.2f)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .background(color = Color(0xFFBAEAFF))
-                        .fillMaxSize()
-                )
-                {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.Top,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                fontSize = 22.sp,
-                                color = Color.Black,
-                                text = stringResource(id = R.string.Spravka_military)
-                            )
-                        }
-                        Spacer(modifier = Modifier.size(20.dp, 20.dp))
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Absolute.SpaceAround
-                        ) {
-                            TextField(
-                                modifier = Modifier
-                                    .fillMaxWidth(.2f)
-                                    .background(
-                                        color = Color.White,
-                                        shape = RoundedCornerShape(10.dp)
-                                    ),
-                                value = InputSpravka1,
-                                onValueChange = { InputSpravka1 = it },
-                                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                                singleLine = true,
-                                maxLines = 1,
-                                label = {
-                                    Text(
-                                        stringResource(R.string.current_spravok),
-                                        fontSize = 12.sp,
-                                        color = Color.White,
-                                    )
-                                },
-                            )
-                            Button(
-                                modifier = Modifier
-                                    .fillMaxWidth(.4f),
-                                onClick = {
-                                    orderSpravkaViewModel.postSravka(
-                                        LoadSpravka(
-                                            types.spravkiList[0].ID,
-                                            InputSpravka1
-                                        )
-                                    )
-
+                            for ((i, element) in listStatusSpravka.withIndex()) {
+                                if (element == stasus0) {
+                                    indStatus0 = i
+                                    break
                                 }
-                            ) {
-                                Text(text = "Заказать")
                             }
-                        }
-                        Spacer(modifier = Modifier.size(20.dp, 20.dp))
-                        OrderStatusBar(indStatus1 - 1)
-                        //  OrderStatusBar(0, st)
+                            if (indStatus0 != -1) {
+                                Log.i("TAAAAG", "Индекс совпадающего элемента: $indStatus0")
+                            } else {
+                                //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
+                                Log.i("TAAAAG", stasus0)
 
+
+                            }
+                            Spacer(modifier = Modifier.size(20.dp, 20.dp))
+                            OrderStatusBar(indStatus0 - 1)
+                        }
+                    }
+                }
+                Card(
+                    modifier = Modifier
+                        .padding(10.dp, 10.dp)
+                    //.weight(0.2f)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .background(color = Color(0xFFBAEAFF))
+                            .fillMaxSize()
+                    )
+                    {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.Top,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    fontSize = 22.sp,
+                                    color = Color.Black,
+                                    text = stringResource(id = R.string.Spravka_military)
+                                )
+                            }
+                            Spacer(modifier = Modifier.size(20.dp, 20.dp))
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Absolute.SpaceAround
+                            ) {
+                                TextField(
+                                    modifier = Modifier
+                                        .fillMaxWidth(.2f)
+                                        .background(
+                                            color = Color.White,
+                                            shape = RoundedCornerShape(10.dp)
+                                        ),
+                                    value = InputSpravka1,
+                                    onValueChange = { InputSpravka1 = it },
+                                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                                    singleLine = true,
+                                    maxLines = 1,
+                                    label = {
+                                        Text(
+                                            stringResource(R.string.current_spravok),
+                                            fontSize = 12.sp,
+                                            color = Color.White,
+                                        )
+                                    },
+                                )
+                                Button(
+                                    modifier = Modifier
+                                        .fillMaxWidth(.4f),
+                                    onClick = {
+                                        orderSpravkaViewModel.postSravka(
+                                            LoadSpravka(
+                                                types.spravkiList[0].ID,
+                                                InputSpravka1
+                                            )
+                                        )
+                                        spravkaViewModul.viewModelScope.launch {
+                                            stasus1 = spravkaViewModul.getStatus(1)
+                                        }
+                                        for ((i, element) in listStatusSpravka.withIndex()) {
+                                            if (element == stasus1) {
+                                                indStatus1 = i
+                                                break
+                                            }
+                                        }
+                                    }
+                                ) {
+                                    Text(text = "Заказать")
+                                }
+                            }
+                            for ((i, element) in listStatusSpravka.withIndex()) {
+                                if (element == stasus1) {
+                                    indStatus1 = i
+                                    break
+                                }
+                            }
+                            if (indStatus1 != -1) {
+                                Log.i("TAAAAG", "Индекс совпадающего элемента: $indStatus0")
+                            } else {
+                                //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
+                                Log.i("TAAAAG", stasus0)
+
+
+                            }
+                            Spacer(modifier = Modifier.size(20.dp, 20.dp))
+                            OrderStatusBar(indStatus1 - 1)
+                            //  OrderStatusBar(0, st)
+
+                        }
                     }
                 }
             }
-        }
-        item {
-            Spacer(modifier = Modifier.size(20.dp, 20.dp))
-            //Log.i("TAAAAG",history.referenceHistoryList[0].Date )
-            // Log.i("TAAAAG",history.referenceHistoryList[] )
-            ExpandableOrderTable(historylist1,"История справок по обучению")
-            Spacer(modifier = Modifier.size(20.dp, 10.dp))
-            ExpandableOrderTable(historylist2,"История справок для военкомата")
-            Spacer(modifier = Modifier.size(20.dp, 100.dp))
+            item {
+                Spacer(modifier = Modifier.size(20.dp, 20.dp))
+                //Log.i("TAAAAG",history.referenceHistoryList[0].Date )
+                // Log.i("TAAAAG",history.referenceHistoryList[] )
+                ExpandableOrderTable(historylist1, "История справок по обучению")
+                Spacer(modifier = Modifier.size(20.dp, 10.dp))
+                ExpandableOrderTable(historylist2, "История справок для военкомата")
+                Spacer(modifier = Modifier.size(20.dp, 100.dp))
+            }
+
         }
 
+    }else{
+        LoadingScreen()
     }
-
 }
 
     /*@Composable
@@ -545,7 +569,9 @@ fun OrderTableOne() {
             }
         }*/
     }*/
-    LazyColumn(modifier = Modifier.fillMaxSize().height(30.dp)) {
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .height(30.dp)) {
         item {
             Row(
                 modifier = Modifier

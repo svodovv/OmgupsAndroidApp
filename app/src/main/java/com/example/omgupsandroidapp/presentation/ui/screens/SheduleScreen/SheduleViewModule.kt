@@ -23,11 +23,11 @@ class SheduleViewModul @Inject constructor(
     val sheduleState = _sheduleState.asStateFlow()
 
     init {
-        runBlocking {  getShedule() }
+          getShedule()
     }
 
-     suspend fun getShedule(){
-        getSheduleUseCase.invoke().collectLatest { result ->
+      fun getShedule(){
+        getSheduleUseCase.invoke().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _sheduleState.update {
@@ -50,7 +50,7 @@ class SheduleViewModul @Inject constructor(
                     }
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
 }

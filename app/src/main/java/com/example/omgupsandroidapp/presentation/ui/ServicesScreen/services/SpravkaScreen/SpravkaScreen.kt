@@ -279,7 +279,7 @@ fun SpravkaScreen(
                                             )
                                         )
                                         spravkaViewModul.viewModelScope.launch {
-                                            stasus1 = spravkaViewModul.getStatus(1)
+                                            stasus1 = spravkaViewModul.getStatus(2)
                                         }
                                         for ((i, element) in listStatusSpravka.withIndex()) {
                                             if (element == stasus1) {

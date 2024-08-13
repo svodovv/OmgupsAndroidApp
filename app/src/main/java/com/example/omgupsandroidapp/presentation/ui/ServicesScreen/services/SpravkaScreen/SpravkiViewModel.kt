@@ -45,7 +45,7 @@ class SpravkiViewModel @Inject constructor(
     }
 
      suspend fun getSpravkiTypes() {
-        getTypesSpravkiUseCase.invoke().collectLatest { result ->
+        getTypesSpravkiUseCase.invoke().onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _spravkiState.update {
@@ -68,7 +68,7 @@ class SpravkiViewModel @Inject constructor(
                     }
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     /*fun postSpravka(post: SpravkaPostModel) {

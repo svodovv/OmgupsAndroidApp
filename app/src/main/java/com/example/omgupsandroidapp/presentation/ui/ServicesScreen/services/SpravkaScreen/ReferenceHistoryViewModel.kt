@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetReferenceHistoryUseCase
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetTypesSpravkiUseCase
@@ -9,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
@@ -31,7 +33,7 @@ class ReferenceHistoryViewModel @Inject constructor(
     }
 
     suspend fun getReferenceHistory(id: Int) : List<TypeStatusList> {
-        getReferenceHistoryUseCase.invoke(id).collectLatest { result ->
+        getReferenceHistoryUseCase.invoke(id).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _referenceHistoryState.update {
@@ -58,7 +60,7 @@ class ReferenceHistoryViewModel @Inject constructor(
                     }
                 }
             }
-        }
+        }.launchIn(viewModelScope)
         return referenceHistoryState.value.referenceHistoryList0.plus(referenceHistoryState.value.referenceHistoryList1)
     }
   /*  suspend fun getType(){

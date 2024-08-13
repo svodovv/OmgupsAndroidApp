@@ -1,12 +1,14 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetStatusSpravkaUseCase
 import com.omgupsapp.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
@@ -28,7 +30,7 @@ class StatusSpravkaViewModul @Inject constructor(
         }
     }
     suspend fun getStatus(id: Int): String {
-       getStatusSpravkaUseCase.invoke(id).collectLatest { result ->
+       getStatusSpravkaUseCase.invoke(id).onEach { result ->
            when(result) {
                is Resource.Success -> {
                    _status.update {
@@ -53,8 +55,7 @@ class StatusSpravkaViewModul @Inject constructor(
                    }
                }
            }
-
-       }
+       }.launchIn(viewModelScope)
          return status.value.spravkiStatus0.plus(status.value.spravkiStatus1)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.domain.repository
 
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
+import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
@@ -26,4 +27,6 @@ interface ServiceRepository {
     suspend fun getReferenceHistory(id: Int): ReferenceHistoryDto
 
     suspend fun getStatusSpravka(id: Int): StatusSpravakaDto
+
+    suspend fun getShudele(): SheduleDto
 }

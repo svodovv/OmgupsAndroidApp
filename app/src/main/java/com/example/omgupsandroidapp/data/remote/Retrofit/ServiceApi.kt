@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.data.remote.Retrofit
 
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
+import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
@@ -28,10 +29,8 @@ interface ServiceApi {
     @GET("student/getorders")
     suspend fun getOrders(): OrderDto
 
-    /*@POST("spravkaapi/spravka/create")
-    suspend fun postSpravka(
-        @Body post: LoadSpravkaDto
-    ): Response<LoadSpravkaDto>*/
+    @GET("student/getschedule")
+    suspend fun getShudule(): SheduleDto
 
     @POST("spravkaapi/spravka/create")
     suspend fun postSpravka(

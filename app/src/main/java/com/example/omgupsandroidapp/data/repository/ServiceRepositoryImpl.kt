@@ -2,6 +2,7 @@ package com.example.omgupsandroidapp.data.repository
 
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
+import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
@@ -55,4 +56,7 @@ class ServiceRepositoryImpl @Inject constructor(
         return serviceApi.getStatysSpravka(id)
     }
 
+    override suspend fun getShudele(): SheduleDto {
+        return serviceApi.getShudule()
+    }
 }

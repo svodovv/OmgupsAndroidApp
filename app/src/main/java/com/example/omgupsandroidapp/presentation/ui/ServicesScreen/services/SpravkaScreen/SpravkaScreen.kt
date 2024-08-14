@@ -436,16 +436,28 @@ fun SampleSpravka(
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Spacer(modifier = Modifier.size(10.dp, 10.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(24.dp)
-                            .background(
-                                if (currentStage < 0) {
-                                    Color.Gray
-                                } else if (index <= currentStage) Color.Green else Color.Gray,
-                                shape = CircleShape
-                            )
-                    )
+                    Row {
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .background(
+                                    if (currentStage < 0) {
+                                        Color.Gray
+                                    } else if (index <= currentStage) Color.Green else Color.Gray,
+                                    shape = CircleShape
+                                )
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .background(
+                                    if (currentStage < 0) {
+                                        Color.Gray
+                                    } else if (index <= currentStage) Color.Green else Color.Gray,
+                                    shape = CircleShape
+                                )
+                        )
+                    }
 
                 }
             }

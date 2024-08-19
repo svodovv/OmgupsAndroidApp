@@ -11,6 +11,7 @@ import com.example.omgupsandroidapp.data.local.Room.Cookie.CookieDao;
 import com.example.omgupsandroidapp.data.local.Room.Cookie.MyCookieJar;
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi;
 import com.example.omgupsandroidapp.data.repository.ServiceRepositoryImpl;
+import com.example.omgupsandroidapp.data.repository.UserProfileRepositoryImpl;
 import com.example.omgupsandroidapp.di.NetworkGsonModule;
 import com.example.omgupsandroidapp.di.NetworkGsonModule_ProvideRetrofitGsonFactory;
 import com.example.omgupsandroidapp.di.NetworkGsonModule_ProvideServiceApiFactory;
@@ -23,6 +24,7 @@ import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetStatusSpr
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.GetTypesSpravkiUseCase;
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.PostSpravkaUseCase;
 import com.example.omgupsandroidapp.domain.use_case.signIn.SignInUseCase;
+import com.example.omgupsandroidapp.domain.use_case.user.GetUserProfileUseCase;
 import com.example.omgupsandroidapp.presentation.MainActivity;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel_HiltModules_KeyModule_ProvideFactory;
@@ -42,6 +44,8 @@ import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewMod
 import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul_HiltModules_KeyModule_ProvideFactory;
 import com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel;
 import com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel;
+import com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.omgupsapp.data.local.DataStore.DataStoreManager;
 import com.omgupsapp.data.local.Room.AppDatabase;
 import com.omgupsapp.data.remote.Retrofit.AuthApi;
@@ -459,7 +463,7 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
 
     @Override
     public Set<String> getViewModelKeys() {
-      return SetBuilder.<String>newSetBuilder(11).add(AuthViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OrderSpravkaViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OrderViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ReferenceHistoryViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ScholarshipViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ServicesViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SettingsViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SheduleViewModul_HiltModules_KeyModule_ProvideFactory.provide()).add(SplashScreenViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SpravkiViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(StatusSpravkaViewModul_HiltModules_KeyModule_ProvideFactory.provide()).build();
+      return SetBuilder.<String>newSetBuilder(12).add(AuthViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OrderSpravkaViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OrderViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ReferenceHistoryViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ScholarshipViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ServicesViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SettingsViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SheduleViewModul_HiltModules_KeyModule_ProvideFactory.provide()).add(SplashScreenViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SpravkiViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(StatusSpravkaViewModul_HiltModules_KeyModule_ProvideFactory.provide()).add(UserProfileViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
     }
 
     @Override
@@ -506,6 +510,8 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
     private Provider<SpravkiViewModel> spravkiViewModelProvider;
 
     private Provider<StatusSpravkaViewModul> statusSpravkaViewModulProvider;
+
+    private Provider<UserProfileViewModel> userProfileViewModelProvider;
 
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
         ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam,
@@ -565,6 +571,10 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
       return new GetStatusSpravkaUseCase(serviceRepositoryImpl());
     }
 
+    private GetUserProfileUseCase getUserProfileUseCase() {
+      return new GetUserProfileUseCase(new UserProfileRepositoryImpl());
+    }
+
     @SuppressWarnings("unchecked")
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
@@ -579,11 +589,12 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
       this.splashScreenViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 8);
       this.spravkiViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 9);
       this.statusSpravkaViewModulProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 10);
+      this.userProfileViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 11);
     }
 
     @Override
     public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(11).put("com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel", ((Provider) authViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.OrderSpravkaViewModel", ((Provider) orderSpravkaViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel", ((Provider) orderViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.ReferenceHistoryViewModel", ((Provider) referenceHistoryViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipViewModel", ((Provider) scholarshipViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel", ((Provider) servicesViewModelProvider)).put("com.omgupsapp.presentation.ui.SettingsScreen.SettingsViewModel", ((Provider) settingsViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul", ((Provider) sheduleViewModulProvider)).put("com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel", ((Provider) splashScreenViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkiViewModel", ((Provider) spravkiViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul", ((Provider) statusSpravkaViewModulProvider)).build();
+      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(12).put("com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel", ((Provider) authViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.OrderSpravkaViewModel", ((Provider) orderSpravkaViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel", ((Provider) orderViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.ReferenceHistoryViewModel", ((Provider) referenceHistoryViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipViewModel", ((Provider) scholarshipViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel", ((Provider) servicesViewModelProvider)).put("com.omgupsapp.presentation.ui.SettingsScreen.SettingsViewModel", ((Provider) settingsViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul", ((Provider) sheduleViewModulProvider)).put("com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel", ((Provider) splashScreenViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkiViewModel", ((Provider) spravkiViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul", ((Provider) statusSpravkaViewModulProvider)).put("com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel", ((Provider) userProfileViewModelProvider)).build();
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -639,6 +650,9 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
 
           case 10: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul 
           return (T) new StatusSpravkaViewModul(viewModelCImpl.getStatusSpravkaUseCase());
+
+          case 11: // com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel 
+          return (T) new UserProfileViewModel(viewModelCImpl.getUserProfileUseCase());
 
           default: throw new AssertionError(id);
         }

@@ -11,6 +11,7 @@ import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Spra
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul_HiltModules;
 import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul_HiltModules;
 import com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel_HiltModules;
+import com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel_HiltModules;
 import com.omgupsapp.di.DataBaseModule;
 import com.omgupsapp.di.DataStoreModule;
 import com.omgupsapp.di.NetworkScalarsModule;
@@ -173,7 +174,8 @@ public final class OmgupsApplication_HiltComponents {
           SheduleViewModul_HiltModules.KeyModule.class,
           SplashScreenViewModel_HiltModules.KeyModule.class,
           SpravkiViewModel_HiltModules.KeyModule.class,
-          StatusSpravkaViewModul_HiltModules.KeyModule.class
+          StatusSpravkaViewModul_HiltModules.KeyModule.class,
+          UserProfileViewModel_HiltModules.KeyModule.class
       }
   )
   @ActivityRetainedScoped
@@ -220,7 +222,8 @@ public final class OmgupsApplication_HiltComponents {
           SheduleViewModul_HiltModules.BindsModule.class,
           SplashScreenViewModel_HiltModules.BindsModule.class,
           SpravkiViewModel_HiltModules.BindsModule.class,
-          StatusSpravkaViewModul_HiltModules.BindsModule.class
+          StatusSpravkaViewModul_HiltModules.BindsModule.class,
+          UserProfileViewModel_HiltModules.BindsModule.class
       }
   )
   @ViewModelScoped

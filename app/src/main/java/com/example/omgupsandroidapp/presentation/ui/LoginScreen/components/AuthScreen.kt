@@ -1,5 +1,6 @@
 package com.omgupsapp.presentation.ui.LoginScreen.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,9 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -34,7 +36,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
-import com.example.omgupsandroidapp.presentation.ui.LoginScreen.components.OmgupsImage
+import com.example.omgupsandroidapp.presentation.ui.screens.LoginScreen.components.OmgupsIcon
+import com.omgupsapp.presentation.NavigationGroup
 import com.omgupsapp.presentation.Screen
 import com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel
 
@@ -51,7 +54,7 @@ fun AuthScreen(
 
     LaunchedEffect(stateAuthentication) {
         if (stateAuthentication.userAuthenticated == true) {
-            navController.navigate(Screen.Service.route) {
+            navController.navigate(NavigationGroup.HomeScreens.route) {
                 popUpTo(Screen.AuthScreen.route) {
                     inclusive = true
                 }
@@ -77,114 +80,122 @@ fun AuthScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = CenterHorizontally
+                .background(MaterialTheme.colorScheme.primary),
         ) {
 
-            OmgupsImage(
-                modifier = Modifier
-                    .weight(2f)
-                    .align(CenterHorizontally)
-            )
+            Box(modifier = Modifier.fillMaxWidth().weight(4f), contentAlignment = Center) {
+                OmgupsIcon(
+                    modifier = Modifier.padding(vertical = 100.dp, horizontal = 130.dp), )
+            }
 
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = CenterHorizontally
-            ) {
-
-
-                OutlinedTextField(
-                    value = stateAuthentication.login,
-                    onValueChange = {
-                        viewModel.onChangeLogin(it)
-                        viewModel.userStateAuth()
-                        showError = false
-                    },
-
-                    label = {
-                        Text(
-                            text = stringResource(R.string.login),
-                            color = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error else Color.Unspecified
-                        )
-                    },
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Email, imeAction = ImeAction.Next
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp, bottom = 0.dp, end = 8.dp),
-
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
-                        else MaterialTheme.colorScheme.outline,
-                        unfocusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
-                        else MaterialTheme.colorScheme.outline,
-                    )
-                )
-
-                // Password input
-                OutlinedTextField(
-                    value = stateAuthentication.password,
-                    onValueChange = {
-                        viewModel.onChangePassword(it)
-                        viewModel.userStateAuth()
-                        showError = false
-                    },
-
-                    label = {
-                        Text(
-                            text = stringResource(R.string.Password),
-                            color = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error else Color.Unspecified
-                        )
-                    },
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Password, imeAction = ImeAction.Done
-                    ),
-                    visualTransformation = PasswordVisualTransformation(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
-                        else MaterialTheme.colorScheme.outline,
-                        unfocusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
-                        else MaterialTheme.colorScheme.outline,
-                    )
-                )
-
-                Column(modifier = Modifier.padding(4.dp, top = 0.dp)) {
-                    if (stateAuthentication.userAuthenticated == false) {
-                        Text(
-                            text = stringResource(R.string.ErrorInLoginOrPassword),
-                            color = MaterialTheme.colorScheme.error,
-                        )
-                    } else if (showError) {
-                        Text(
-                            text = stringResource(R.string.LoginOrPasswordIsNull),
-                            color = MaterialTheme.colorScheme.error,
-                        )
-                    } else Spacer(modifier = Modifier.padding(8.dp))
-                }
-
-
-                // Login button
-                Button(
-                    onClick = {
-                        if (stateAuthentication.login.isNotBlank() && stateAuthentication.password.isNotBlank()) {
-                            viewModel.userAuthenticated()
-                        } else showError = true
-                    },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .width(200.dp),
-                    enabled = !stateAuthentication.isLoading
+            Card(modifier = Modifier.weight(6f),shape = RoundedCornerShape(
+                topStart = 38.dp, // Закругление верхнего левого угла
+                topEnd = 0.dp,    // Верхний правый угол без закругления
+                bottomEnd = 0.dp, // Закругление нижнего правого угла
+                bottomStart = 0.dp // Нижний левый угол без закругления
+            )) {
+                Column(
+                    modifier = Modifier,
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    Text(stringResource(R.string.signIn))
+
+                    Spacer(modifier = Modifier.padding(50.dp))
+                    OutlinedTextField(
+                        value = stateAuthentication.login,
+                        onValueChange = {
+                            viewModel.onChangeLogin(it)
+                            viewModel.userStateAuth()
+                            showError = false
+                        },
+
+                        label = {
+                            Text(
+                                text = stringResource(R.string.login),
+                                color = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error else Color.Unspecified
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Email, imeAction = ImeAction.Next
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 88.dp),
+
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
+                            else MaterialTheme.colorScheme.outline,
+                            unfocusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
+                            else MaterialTheme.colorScheme.outline,
+                        )
+                    )
+
+                    // Password input
+                    OutlinedTextField(
+                        value = stateAuthentication.password,
+                        onValueChange = {
+                            viewModel.onChangePassword(it)
+                            viewModel.userStateAuth()
+                            showError = false
+                        },
+
+                        label = {
+                            Text(
+                                text = stringResource(R.string.Password),
+                                color = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error else Color.Unspecified
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Password, imeAction = ImeAction.Done
+                        ),
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 88.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
+                            else MaterialTheme.colorScheme.outline,
+                            unfocusedBorderColor = if (stateAuthentication.userAuthenticated == false) MaterialTheme.colorScheme.error
+                            else MaterialTheme.colorScheme.outline,
+                        )
+                    )
+                    Spacer(modifier = Modifier.padding(6.dp))
+                    Text(text = "Забыли пароль?", modifier = Modifier.padding(start = 88.dp))
+
+                    Spacer(modifier = Modifier.padding(18.dp))
+
+                    Column(modifier = Modifier.padding(4.dp, top = 0.dp)) {
+                        if (stateAuthentication.userAuthenticated == false) {
+                            Text(
+                                text = stringResource(R.string.ErrorInLoginOrPassword),
+                                color = MaterialTheme.colorScheme.error,
+                            )
+                        } else if (showError) {
+                            Text(
+                                text = stringResource(R.string.LoginOrPasswordIsNull),
+                                color = MaterialTheme.colorScheme.error,
+                            )
+                        } else Spacer(modifier = Modifier.padding(8.dp))
+                    }
+
+
+                    // Login button
+                    Button(
+                        onClick = {
+                            if (stateAuthentication.login.isNotBlank() && stateAuthentication.password.isNotBlank()) {
+                                viewModel.userAuthenticated()
+                            } else showError = true
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 88.dp),
+                        enabled = !stateAuthentication.isLoading,
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Text(stringResource(R.string.signIn))
+                    }
+
+
                 }
-
-
             }
         }
     } else if (stateToken.isLoading) {
@@ -216,7 +227,6 @@ fun AuthScreen(
             )
         }
     }
-
 }
 
 

@@ -675,6 +675,8 @@ int drawable abc_textfield_search_activated_mtrl_alpha 0x7f07004b
 int drawable abc_textfield_search_default_mtrl_alpha 0x7f07004c
 int drawable abc_textfield_search_material 0x7f07004d
 int drawable abc_vector_test 0x7f07004e
+int drawable baseline_keyboard_arrow_down_24 0x7f070087
+int drawable baseline_keyboard_arrow_up_24 0x7f070088
 int drawable btn_checkbox_checked_mtrl 0x7f07004f
 int drawable btn_checkbox_checked_to_unchecked_mtrl_animation 0x7f070050
 int drawable btn_checkbox_unchecked_mtrl 0x7f070051
@@ -1027,6 +1029,7 @@ int string abc_shareactionprovider_share_with_application 0x7f0f0020
 int string abc_toolbar_collapse_description 0x7f0f0021
 int string androidx_startup 0x7f0f0022
 int string app_name 0x7f0f0023
+int string arrow_in_order_card 0x7f0f007e
 int string bottom_sheet_collapse_description 0x7f0f0024
 int string bottom_sheet_dismiss_description 0x7f0f0025
 int string bottom_sheet_drag_handle_description 0x7f0f0026
@@ -1089,6 +1092,7 @@ int string not_selected 0x7f0f005e
 int string off 0x7f0f005f
 int string omgupslogo 0x7f0f0060
 int string on 0x7f0f0061
+int string pgas 0x7f0f007f
 int string profile 0x7f0f0062
 int string range_end 0x7f0f0063
 int string range_start 0x7f0f0064

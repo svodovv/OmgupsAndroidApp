@@ -16,11 +16,13 @@
     <string name="Spravka_military">Справка в военокомат</string>
     <string name="Spravka_training">Справка об обучении</string>
     <string name="app_name">omgupsApp</string>
+    <string name="arrow_in_order_card">Arrow in order card</string>
     <string name="current_spravok">Кол-во</string>
     <string name="exit">Выход</string>
     <string name="login">Логин</string>
     <string name="money">Выплаты</string>
     <string name="omgupslogo">omgupsLogo</string>
+    <string name="pgas">Государственная академмическая стипендия</string>
     <string name="profile">Профиль</string>
     <string name="shedule">Расписание</string>
     <string name="signIn">Вход</string>

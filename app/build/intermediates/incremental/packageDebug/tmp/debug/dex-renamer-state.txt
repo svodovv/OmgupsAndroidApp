@@ -1,4 +1,4 @@
-#Tue Aug 20 01:36:54 OMST 2024
+#Tue Aug 20 02:13:04 OMST 2024
 base.0=D\:\\AndoidLearn\\OmgupsAndroidApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=D\:\\AndoidLearn\\OmgupsAndroidApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.10=D\:\\AndoidLearn\\OmgupsAndroidApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\3\\classes.dex

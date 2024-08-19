@@ -8,6 +8,8 @@ color purple_700
 color teal_200
 color teal_700
 color white
+drawable baseline_keyboard_arrow_down_24
+drawable baseline_keyboard_arrow_up_24
 drawable ic_arrow_back
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -46,11 +48,13 @@ string Settings
 string Spravka_military
 string Spravka_training
 string app_name
+string arrow_in_order_card
 string current_spravok
 string exit
 string login
 string money
 string omgupslogo
+string pgas
 string profile
 string shedule
 string signIn

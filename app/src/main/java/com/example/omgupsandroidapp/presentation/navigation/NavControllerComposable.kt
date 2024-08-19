@@ -39,7 +39,8 @@ fun NavHostComposable(
         }
 
         navigation(
-            startDestination = Screen.AuthScreen.route, route = NavigationGroup.AuthGroup.route
+            startDestination = Screen.AuthScreen.route,
+            route = NavigationGroup.AuthGroup.route
 
         ) {
             composable(route = Screen.AuthScreen.route) {
@@ -49,7 +50,7 @@ fun NavHostComposable(
              */
         }
         navigation(
-            startDestination = Screen.ScheduleScreen.route,
+            startDestination = Screen.UserProfileScreen.route,
             route = NavigationGroup.HomeScreens.route
         ) {
 
@@ -96,7 +97,11 @@ fun NavHostComposable(
             composable(Screen.SpravkaScreen.route) {
                 SpravkaScreen(navController = navController, paddingValues = paddingValues)
             }
-
+            composable(route = Screen.ScheduleScreen.route) {
+                ScheduleScreen(
+                    navController = navController, paddingValues = paddingValues
+                )
+            }
         }
     }
 }

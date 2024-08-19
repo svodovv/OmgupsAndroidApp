@@ -6,9 +6,8 @@ import okhttp3.Cookie
 
 @Entity(tableName = "cookies")
 data class CookieEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
     val host: String,
+    @PrimaryKey
     val name: String,
     val value: String,
     val expiresAt: Long,

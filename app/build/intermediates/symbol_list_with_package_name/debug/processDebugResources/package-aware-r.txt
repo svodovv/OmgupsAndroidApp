@@ -425,6 +425,7 @@ color foreground_material_dark
 color foreground_material_light
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color ic_launcher_background
 color material_blue_grey_800
 color material_blue_grey_900
 color material_blue_grey_950
@@ -700,6 +701,7 @@ drawable ic_outilineprofile
 drawable ic_outline_schedule
 drawable ic_plan
 drawable ic_services
+drawable ic_servise_schedule
 drawable ic_settings
 drawable ic_spravki
 drawable ic_study_card
@@ -719,7 +721,9 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable omgups_icon_150
 drawable omgups_logo_dark
+drawable omgups_logo_dark_nouse
 drawable omgups_logo_ligth
+drawable omgups_logo_ligth_nouse
 drawable outline_home_app_logo_30
 drawable outline_menu_30
 drawable round_person_30

@@ -6,7 +6,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
@@ -23,7 +25,7 @@ fun NavigationBarComposable(
     selectedTitle: MutableState<String>
 ) {
 
-    NavigationBar {
+    NavigationBar (containerColor = MaterialTheme.colorScheme.secondary){
         itemsBottomBar.forEach {
             NavigationBarItem(
                 selected = false,
@@ -37,7 +39,7 @@ fun NavigationBarComposable(
                             MaterialTheme.colorScheme.primary.also { _ ->
                                 selectedTitle.value = it.tittle
                             }
-                        else Color.Unspecified
+                        else MaterialTheme.colorScheme.surfaceVariant
                     )
                 }, icon = {
                     BadgedBox(badge = {
@@ -49,10 +51,10 @@ fun NavigationBarComposable(
                             contentDescription = it.tittle,
                             tint = if (it.route == route)
                                 MaterialTheme.colorScheme.primary
-                            else Color.Unspecified
+                            else MaterialTheme.colorScheme.surfaceVariant
                         )
                     }
-                }
+                },
             )
 
         }

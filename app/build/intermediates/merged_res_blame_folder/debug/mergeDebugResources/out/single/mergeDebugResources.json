@@ -64,6 +64,10 @@
         "source": "com.example.omgupsandroidapp-main-65:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "com.example.omgupsandroidapp-debug-63:/drawable_omgups_logo_ligth_nouse.xml.flat",
+        "source": "com.example.omgupsandroidapp-main-65:/drawable/omgups_logo_ligth_nouse.xml"
+    },
+    {
         "merged": "com.example.omgupsandroidapp-debug-63:/drawable_ic_study_card.xml.flat",
         "source": "com.example.omgupsandroidapp-main-65:/drawable/ic_study_card.xml"
     },
@@ -88,6 +92,10 @@
         "source": "com.example.omgupsandroidapp-main-65:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
+        "merged": "com.example.omgupsandroidapp-debug-63:/drawable_ic_servise_schedule.xml.flat",
+        "source": "com.example.omgupsandroidapp-main-65:/drawable/ic_servise_schedule.xml"
+    },
+    {
         "merged": "com.example.omgupsandroidapp-debug-63:/drawable_ic_arrow_back.xml.flat",
         "source": "com.example.omgupsandroidapp-main-65:/drawable/ic_arrow_back.xml"
     },
@@ -106,6 +114,10 @@
     {
         "merged": "com.example.omgupsandroidapp-debug-63:/mipmap-hdpi_ic_launcher.webp.flat",
         "source": "com.example.omgupsandroidapp-main-65:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.omgupsandroidapp-debug-63:/drawable_omgups_logo_dark_nouse.xml.flat",
+        "source": "com.example.omgupsandroidapp-main-65:/drawable/omgups_logo_dark_nouse.xml"
     },
     {
         "merged": "com.example.omgupsandroidapp-debug-63:/drawable_ic_launcher_foreground.xml.flat",
@@ -136,12 +148,12 @@
         "source": "com.example.omgupsandroidapp-main-65:/drawable/sharp_android_30.xml"
     },
     {
-        "merged": "com.example.omgupsandroidapp-debug-63:/drawable_ic_settings.xml.flat",
-        "source": "com.example.omgupsandroidapp-main-65:/drawable/ic_settings.xml"
-    },
-    {
         "merged": "com.example.omgupsandroidapp-debug-63:/drawable_round_person_30.xml.flat",
         "source": "com.example.omgupsandroidapp-main-65:/drawable/round_person_30.xml"
+    },
+    {
+        "merged": "com.example.omgupsandroidapp-debug-63:/drawable_ic_settings.xml.flat",
+        "source": "com.example.omgupsandroidapp-main-65:/drawable/ic_settings.xml"
     },
     {
         "merged": "com.example.omgupsandroidapp-debug-63:/drawable_omgups_logo_ligth.xml.flat",

@@ -4,7 +4,7 @@
             "outputFile": "com.example.omgupsandroidapp-mergeDebugResources-61:/values-v31/values-v31.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\domovichenok\\.gradle\\caches\\transforms-3\\7a8134ec2326538b0b10eaddbb42e17b\\transformed\\core-splashscreen-1.0.1\\res\\values-v31\\values-v31.xml",
+                    "source": "C:\\Users\\domovichenok\\.gradle\\caches\\transforms-4\\1731e6ede1287a56c48173ef566deaea\\transformed\\core-splashscreen-1.0.1\\res\\values-v31\\values-v31.xml",
                     "from": {
                         "startLines": "2,9",
                         "startColumns": "4,4",

@@ -57,58 +57,60 @@ public final class CookieDao_Impl implements CookieDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT INTO `cookies` (`id`,`host`,`name`,`value`,`expiresAt`) VALUES (nullif(?, 0),?,?,?,?)";
+        return "INSERT INTO `cookies` (`host`,`name`,`value`,`expiresAt`) VALUES (?,?,?,?)";
       }
 
       @Override
       protected void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final CookieEntity entity) {
-        statement.bindLong(1, entity.getId());
         if (entity.getHost() == null) {
-          statement.bindNull(2);
+          statement.bindNull(1);
         } else {
-          statement.bindString(2, entity.getHost());
+          statement.bindString(1, entity.getHost());
         }
         if (entity.getName() == null) {
-          statement.bindNull(3);
+          statement.bindNull(2);
         } else {
-          statement.bindString(3, entity.getName());
+          statement.bindString(2, entity.getName());
         }
         if (entity.getValue() == null) {
-          statement.bindNull(4);
+          statement.bindNull(3);
         } else {
-          statement.bindString(4, entity.getValue());
+          statement.bindString(3, entity.getValue());
         }
-        statement.bindLong(5, entity.getExpiresAt());
+        statement.bindLong(4, entity.getExpiresAt());
       }
     }, new EntityDeletionOrUpdateAdapter<CookieEntity>(__db) {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE `cookies` SET `id` = ?,`host` = ?,`name` = ?,`value` = ?,`expiresAt` = ? WHERE `id` = ?";
+        return "UPDATE `cookies` SET `host` = ?,`name` = ?,`value` = ?,`expiresAt` = ? WHERE `name` = ?";
       }
 
       @Override
       protected void bind(@NonNull final SupportSQLiteStatement statement,
           @NonNull final CookieEntity entity) {
-        statement.bindLong(1, entity.getId());
         if (entity.getHost() == null) {
-          statement.bindNull(2);
+          statement.bindNull(1);
         } else {
-          statement.bindString(2, entity.getHost());
+          statement.bindString(1, entity.getHost());
         }
         if (entity.getName() == null) {
-          statement.bindNull(3);
+          statement.bindNull(2);
         } else {
-          statement.bindString(3, entity.getName());
+          statement.bindString(2, entity.getName());
         }
         if (entity.getValue() == null) {
-          statement.bindNull(4);
+          statement.bindNull(3);
         } else {
-          statement.bindString(4, entity.getValue());
+          statement.bindString(3, entity.getValue());
         }
-        statement.bindLong(5, entity.getExpiresAt());
-        statement.bindLong(6, entity.getId());
+        statement.bindLong(4, entity.getExpiresAt());
+        if (entity.getName() == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, entity.getName());
+        }
       }
     });
   }
@@ -194,7 +196,6 @@ public final class CookieDao_Impl implements CookieDao {
     __db.assertNotSuspendingTransaction();
     final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
     try {
-      final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
       final int _cursorIndexOfHost = CursorUtil.getColumnIndexOrThrow(_cursor, "host");
       final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
       final int _cursorIndexOfValue = CursorUtil.getColumnIndexOrThrow(_cursor, "value");
@@ -202,8 +203,6 @@ public final class CookieDao_Impl implements CookieDao {
       final List<CookieEntity> _result = new ArrayList<CookieEntity>(_cursor.getCount());
       while (_cursor.moveToNext()) {
         final CookieEntity _item;
-        final long _tmpId;
-        _tmpId = _cursor.getLong(_cursorIndexOfId);
         final String _tmpHost;
         if (_cursor.isNull(_cursorIndexOfHost)) {
           _tmpHost = null;
@@ -224,7 +223,7 @@ public final class CookieDao_Impl implements CookieDao {
         }
         final long _tmpExpiresAt;
         _tmpExpiresAt = _cursor.getLong(_cursorIndexOfExpiresAt);
-        _item = new CookieEntity(_tmpId,_tmpHost,_tmpName,_tmpValue,_tmpExpiresAt);
+        _item = new CookieEntity(_tmpHost,_tmpName,_tmpValue,_tmpExpiresAt);
         _result.add(_item);
       }
       return _result;

@@ -6,6 +6,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
@@ -22,17 +23,20 @@ fun TopAppBarComposable(
         title = {
             Text(
                 text = selectedTitle,
-                style = MaterialTheme.typography.displayMedium
+                style = MaterialTheme.typography.displayMedium,
+                color = MaterialTheme.colorScheme.surfaceVariant
             )
         },
         actions = {
             IconButton(onClick = { navController.navigate(Screen.LogOutScreen.route) }) {
                 Icon(
                     painterResource(id = R.drawable.ic_settings),
-                    contentDescription = "Settings icon"
+                    contentDescription = "Settings icon",
+                    tint = MaterialTheme.colorScheme.surfaceVariant
                 )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.secondary)
     )
 }
 

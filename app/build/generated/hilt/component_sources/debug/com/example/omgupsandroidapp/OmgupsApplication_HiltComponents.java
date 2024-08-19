@@ -5,6 +5,11 @@ import com.example.omgupsandroidapp.presentation.MainActivity_GeneratedInjector;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel_HiltModules;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel_HiltModules;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipViewModel_HiltModules;
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.OrderSpravkaViewModel_HiltModules;
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.ReferenceHistoryViewModel_HiltModules;
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkiViewModel_HiltModules;
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul_HiltModules;
+import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul_HiltModules;
 import com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel_HiltModules;
 import com.omgupsapp.di.DataBaseModule;
 import com.omgupsapp.di.DataStoreModule;
@@ -159,11 +164,16 @@ public final class OmgupsApplication_HiltComponents {
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class,
+          OrderSpravkaViewModel_HiltModules.KeyModule.class,
           OrderViewModel_HiltModules.KeyModule.class,
+          ReferenceHistoryViewModel_HiltModules.KeyModule.class,
           ScholarshipViewModel_HiltModules.KeyModule.class,
           ServicesViewModel_HiltModules.KeyModule.class,
           SettingsViewModel_HiltModules.KeyModule.class,
-          SplashScreenViewModel_HiltModules.KeyModule.class
+          SheduleViewModul_HiltModules.KeyModule.class,
+          SplashScreenViewModel_HiltModules.KeyModule.class,
+          SpravkiViewModel_HiltModules.KeyModule.class,
+          StatusSpravkaViewModul_HiltModules.KeyModule.class
       }
   )
   @ActivityRetainedScoped
@@ -201,11 +211,16 @@ public final class OmgupsApplication_HiltComponents {
       modules = {
           AuthViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
+          OrderSpravkaViewModel_HiltModules.BindsModule.class,
           OrderViewModel_HiltModules.BindsModule.class,
+          ReferenceHistoryViewModel_HiltModules.BindsModule.class,
           ScholarshipViewModel_HiltModules.BindsModule.class,
           ServicesViewModel_HiltModules.BindsModule.class,
           SettingsViewModel_HiltModules.BindsModule.class,
-          SplashScreenViewModel_HiltModules.BindsModule.class
+          SheduleViewModul_HiltModules.BindsModule.class,
+          SplashScreenViewModel_HiltModules.BindsModule.class,
+          SpravkiViewModel_HiltModules.BindsModule.class,
+          StatusSpravkaViewModul_HiltModules.BindsModule.class
       }
   )
   @ViewModelScoped

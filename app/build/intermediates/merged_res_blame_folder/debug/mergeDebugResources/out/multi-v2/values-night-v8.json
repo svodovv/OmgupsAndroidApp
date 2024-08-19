@@ -4,7 +4,7 @@
             "outputFile": "com.example.omgupsandroidapp-mergeDebugResources-61:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\domovichenok\\.gradle\\caches\\transforms-3\\e0fda3f6982c9653dd2e8bd76e75a5b4\\transformed\\appcompat-1.6.1\\res\\values-night-v8\\values-night-v8.xml",
+                    "source": "C:\\Users\\domovichenok\\.gradle\\caches\\transforms-4\\acde75d9dbb57df23f4d2ecf56756c04\\transformed\\appcompat-1.6.1\\res\\values-night-v8\\values-night-v8.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\domovichenok\\.gradle\\caches\\transforms-3\\7a8134ec2326538b0b10eaddbb42e17b\\transformed\\core-splashscreen-1.0.1\\res\\values-night-v8\\values-night-v8.xml",
+                    "source": "C:\\Users\\domovichenok\\.gradle\\caches\\transforms-4\\1731e6ede1287a56c48173ef566deaea\\transformed\\core-splashscreen-1.0.1\\res\\values-night-v8\\values-night-v8.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

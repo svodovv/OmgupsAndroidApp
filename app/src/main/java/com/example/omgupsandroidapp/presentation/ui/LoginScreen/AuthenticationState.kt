@@ -4,6 +4,6 @@ data class AuthenticationState(
     val userAuthenticated: Boolean? = null,
     val error: String = "",
     val isLoading: Boolean = false,
-    val login: String = "Вечный Студент",
-    val password: String = "8",
+    val login: String = "Козлова Ольга Николаевна",
+    val password: String = "0",
 )

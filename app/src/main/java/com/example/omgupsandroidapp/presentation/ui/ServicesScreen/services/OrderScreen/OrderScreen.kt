@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -59,7 +61,8 @@ fun OrderScreen(
                     Card(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp)
+                            .padding(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
                     ) {
                         Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -67,10 +70,10 @@ fun OrderScreen(
                                     text = orderState.value.orderList[index].orderTitle,
                                     style = MaterialTheme.typography.titleMedium,
                                     modifier = Modifier
-                                        .padding(16.dp)
-                                        .border(1.dp, Color.Black),
+                                        .padding(16.dp),
                                     maxLines = 2,
-                                    minLines = 2
+                                    minLines = 2,
+                                    color = MaterialTheme.colorScheme.onBackground
                                 )
 
                             Divider(
@@ -92,13 +95,16 @@ fun OrderScreen(
                                         text = "${index + 1}.",
                                         style = MaterialTheme.typography.bodyLarge,
                                         textAlign = TextAlign.Center,
-                                        modifier = Modifier.weight(1f)
+                                        modifier = Modifier.weight(1f),
+                                        color = MaterialTheme.colorScheme.onBackground
                                     )
                                     Text(
                                         text = orderName,
                                         style = MaterialTheme.typography.bodyLarge,
                                         textAlign = TextAlign.Start,
-                                        modifier = Modifier.weight(11f)
+                                        modifier = Modifier.weight(11f),
+                                        color = MaterialTheme.colorScheme.onBackground
+
                                     )
                                 }
                             }

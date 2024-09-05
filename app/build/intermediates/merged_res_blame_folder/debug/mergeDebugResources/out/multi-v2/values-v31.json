@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.omgupsandroidapp-mergeDebugResources-61:/values-v31/values-v31.xml",
+            "outputFile": "com.example.omgupsandroidapp-mergeDebugResources-62:/values-v31/values-v31.xml",
             "map": [
                 {
                     "source": "C:\\Users\\domovichenok\\.gradle\\caches\\transforms-4\\1731e6ede1287a56c48173ef566deaea\\transformed\\core-splashscreen-1.0.1\\res\\values-v31\\values-v31.xml",

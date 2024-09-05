@@ -26,5 +26,6 @@
     <string name="profile">Профиль</string>
     <string name="shedule">Расписание</string>
     <string name="signIn">Вход</string>
+    <string name="user_photo">Фото пользователя</string>
     <style name="Theme.OmgupsAndroidApp" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

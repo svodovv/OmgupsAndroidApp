@@ -1,26 +1,23 @@
 package com.example.omgupsandroidapp.data.repository
 
+import com.example.omgupsandroidapp.data.remote.Retrofit.UserInfoApi
 import com.example.omgupsandroidapp.data.remote.dto.user.UserProfileDto
+import com.example.omgupsandroidapp.data.remote.dto.user.toUserInfoModel
+import com.example.omgupsandroidapp.domain.model.user.UserInfoModel
 import com.example.omgupsandroidapp.domain.repository.UserProfileRepository
+import com.omgupsapp.common.Constants
 import javax.inject.Inject
 
-class UserProfileRepositoryImpl @Inject constructor() : UserProfileRepository {
+class UserProfileRepositoryImpl @Inject constructor(
+    private val userInfoApi: UserInfoApi
+) : UserProfileRepository {
 
-    override suspend fun getUserProfile(): UserProfileDto? {
-        return UserProfileDto(
-            imageVector = null,
-            name = "Владимир",
-            surname = "Кондратьев",
-            patronymic = "Андреевич",
-            institute = "Институт автоматики, телекоммуникаций и информационных технологий (на правах факультета ОмГУПСа)",
-            specialization = "Информационные системы и технологии",
-            direction = "Программирование и информационные технологии",
-            group = "20з",
-            formEducation = "очная",
-            typeEducation = "Является студентом",
-            statusEducation = "активен",
-            lvlEducation = "Бакалавр",
-            course = 4
-        )
+    override suspend fun getUserInfo(): UserInfoModel {
+        val responseUserInfo = userInfoApi.getUserInfo()
+        val userPhoto = userInfoApi.getPhoto()
+
+
+        return responseUserInfo.toUserInfoModel(Constants.BASE_URL + userPhoto)
     }
+
 }

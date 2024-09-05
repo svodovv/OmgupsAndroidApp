@@ -70,42 +70,42 @@
 42            </intent-filter>
 43        </activity>
 44
-45        <provider
-45-->[androidx.emoji2:emoji2:1.4.0] C:\Users\domovichenok\.gradle\caches\transforms-4\fa3f472522623fc0163a368405981b35\transformed\emoji2-1.4.0\AndroidManifest.xml:24:9-32:20
-46            android:name="androidx.startup.InitializationProvider"
-46-->[androidx.emoji2:emoji2:1.4.0] C:\Users\domovichenok\.gradle\caches\transforms-4\fa3f472522623fc0163a368405981b35\transformed\emoji2-1.4.0\AndroidManifest.xml:25:13-67
-47            android:authorities="com.example.omgupsandroidapp.androidx-startup"
-47-->[androidx.emoji2:emoji2:1.4.0] C:\Users\domovichenok\.gradle\caches\transforms-4\fa3f472522623fc0163a368405981b35\transformed\emoji2-1.4.0\AndroidManifest.xml:26:13-68
-48            android:exported="false" >
-48-->[androidx.emoji2:emoji2:1.4.0] C:\Users\domovichenok\.gradle\caches\transforms-4\fa3f472522623fc0163a368405981b35\transformed\emoji2-1.4.0\AndroidManifest.xml:27:13-37
-49            <meta-data
-49-->[androidx.emoji2:emoji2:1.4.0] C:\Users\domovichenok\.gradle\caches\transforms-4\fa3f472522623fc0163a368405981b35\transformed\emoji2-1.4.0\AndroidManifest.xml:29:13-31:52
-50                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-50-->[androidx.emoji2:emoji2:1.4.0] C:\Users\domovichenok\.gradle\caches\transforms-4\fa3f472522623fc0163a368405981b35\transformed\emoji2-1.4.0\AndroidManifest.xml:30:17-75
-51                android:value="androidx.startup" />
-51-->[androidx.emoji2:emoji2:1.4.0] C:\Users\domovichenok\.gradle\caches\transforms-4\fa3f472522623fc0163a368405981b35\transformed\emoji2-1.4.0\AndroidManifest.xml:31:17-49
-52            <meta-data
-52-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e8792504091211813876752e18ad98be\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
-53                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-53-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e8792504091211813876752e18ad98be\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
-54                android:value="androidx.startup" />
-54-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e8792504091211813876752e18ad98be\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
-55            <meta-data
-55-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\domovichenok\.gradle\caches\transforms-4\ce9b0ebdba6ff1e637dca119fab82b93\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
-56                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-56-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\domovichenok\.gradle\caches\transforms-4\ce9b0ebdba6ff1e637dca119fab82b93\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
-57                android:value="androidx.startup" />
-57-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\domovichenok\.gradle\caches\transforms-4\ce9b0ebdba6ff1e637dca119fab82b93\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
-58        </provider>
-59
-60        <service
-60-->[androidx.room:room-runtime:2.6.1] C:\Users\domovichenok\.gradle\caches\transforms-4\1eab7903bcadc01becc8c1e8b11a1674\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
-61            android:name="androidx.room.MultiInstanceInvalidationService"
-61-->[androidx.room:room-runtime:2.6.1] C:\Users\domovichenok\.gradle\caches\transforms-4\1eab7903bcadc01becc8c1e8b11a1674\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
-62            android:directBootAware="true"
-62-->[androidx.room:room-runtime:2.6.1] C:\Users\domovichenok\.gradle\caches\transforms-4\1eab7903bcadc01becc8c1e8b11a1674\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
-63            android:exported="false" />
-63-->[androidx.room:room-runtime:2.6.1] C:\Users\domovichenok\.gradle\caches\transforms-4\1eab7903bcadc01becc8c1e8b11a1674\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
+45        <service
+45-->[androidx.room:room-runtime:2.6.1] C:\Users\domovichenok\.gradle\caches\transforms-4\1eab7903bcadc01becc8c1e8b11a1674\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
+46            android:name="androidx.room.MultiInstanceInvalidationService"
+46-->[androidx.room:room-runtime:2.6.1] C:\Users\domovichenok\.gradle\caches\transforms-4\1eab7903bcadc01becc8c1e8b11a1674\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
+47            android:directBootAware="true"
+47-->[androidx.room:room-runtime:2.6.1] C:\Users\domovichenok\.gradle\caches\transforms-4\1eab7903bcadc01becc8c1e8b11a1674\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
+48            android:exported="false" />
+48-->[androidx.room:room-runtime:2.6.1] C:\Users\domovichenok\.gradle\caches\transforms-4\1eab7903bcadc01becc8c1e8b11a1674\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
+49
+50        <provider
+50-->[androidx.emoji2:emoji2:1.3.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e0a49d0e8d8db82dd17e5c70d2be8830\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+51            android:name="androidx.startup.InitializationProvider"
+51-->[androidx.emoji2:emoji2:1.3.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e0a49d0e8d8db82dd17e5c70d2be8830\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+52            android:authorities="com.example.omgupsandroidapp.androidx-startup"
+52-->[androidx.emoji2:emoji2:1.3.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e0a49d0e8d8db82dd17e5c70d2be8830\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+53            android:exported="false" >
+53-->[androidx.emoji2:emoji2:1.3.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e0a49d0e8d8db82dd17e5c70d2be8830\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+54            <meta-data
+54-->[androidx.emoji2:emoji2:1.3.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e0a49d0e8d8db82dd17e5c70d2be8830\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+55                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+55-->[androidx.emoji2:emoji2:1.3.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e0a49d0e8d8db82dd17e5c70d2be8830\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+56                android:value="androidx.startup" />
+56-->[androidx.emoji2:emoji2:1.3.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e0a49d0e8d8db82dd17e5c70d2be8830\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+57            <meta-data
+57-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e8792504091211813876752e18ad98be\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+58                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+58-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e8792504091211813876752e18ad98be\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+59                android:value="androidx.startup" />
+59-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\domovichenok\.gradle\caches\transforms-4\e8792504091211813876752e18ad98be\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+60            <meta-data
+60-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\domovichenok\.gradle\caches\transforms-4\ce9b0ebdba6ff1e637dca119fab82b93\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+61                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+61-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\domovichenok\.gradle\caches\transforms-4\ce9b0ebdba6ff1e637dca119fab82b93\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+62                android:value="androidx.startup" />
+62-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\domovichenok\.gradle\caches\transforms-4\ce9b0ebdba6ff1e637dca119fab82b93\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+63        </provider>
 64
 65        <receiver
 65-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\domovichenok\.gradle\caches\transforms-4\ce9b0ebdba6ff1e637dca119fab82b93\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20

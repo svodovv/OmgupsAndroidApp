@@ -123,6 +123,10 @@ dependencies {
 
     implementation( "com.jakewharton.threetenabp:threetenabp:1.3.0")
 
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
 }
 
 kapt {

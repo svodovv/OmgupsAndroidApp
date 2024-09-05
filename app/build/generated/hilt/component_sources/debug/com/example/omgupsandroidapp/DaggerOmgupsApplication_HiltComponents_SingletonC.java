@@ -10,11 +10,13 @@ import androidx.lifecycle.ViewModel;
 import com.example.omgupsandroidapp.data.local.Room.Cookie.CookieDao;
 import com.example.omgupsandroidapp.data.local.Room.Cookie.MyCookieJar;
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi;
+import com.example.omgupsandroidapp.data.remote.Retrofit.UserInfoApi;
 import com.example.omgupsandroidapp.data.repository.ServiceRepositoryImpl;
 import com.example.omgupsandroidapp.data.repository.UserProfileRepositoryImpl;
 import com.example.omgupsandroidapp.di.NetworkGsonModule;
 import com.example.omgupsandroidapp.di.NetworkGsonModule_ProvideRetrofitGsonFactory;
 import com.example.omgupsandroidapp.di.NetworkGsonModule_ProvideServiceApiFactory;
+import com.example.omgupsandroidapp.di.NetworkGsonModule_ProvideUserInfoApiFactory;
 import com.example.omgupsandroidapp.domain.use_case.service.order.GetOrderUseCase;
 import com.example.omgupsandroidapp.domain.use_case.service.schedule.GetSheduleUseCase;
 import com.example.omgupsandroidapp.domain.use_case.service.scholarship.GetScholarshipUseCase;
@@ -26,6 +28,8 @@ import com.example.omgupsandroidapp.domain.use_case.service.spravki.PostSpravkaU
 import com.example.omgupsandroidapp.domain.use_case.signIn.SignInUseCase;
 import com.example.omgupsandroidapp.domain.use_case.user.GetUserProfileUseCase;
 import com.example.omgupsandroidapp.presentation.MainActivity;
+import com.example.omgupsandroidapp.presentation.scaffold.LogoutViewModel;
+import com.example.omgupsandroidapp.presentation.scaffold.LogoutViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel;
@@ -463,7 +467,7 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
 
     @Override
     public Set<String> getViewModelKeys() {
-      return SetBuilder.<String>newSetBuilder(12).add(AuthViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OrderSpravkaViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OrderViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ReferenceHistoryViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ScholarshipViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ServicesViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SettingsViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SheduleViewModul_HiltModules_KeyModule_ProvideFactory.provide()).add(SplashScreenViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SpravkiViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(StatusSpravkaViewModul_HiltModules_KeyModule_ProvideFactory.provide()).add(UserProfileViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
+      return SetBuilder.<String>newSetBuilder(13).add(AuthViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(LogoutViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OrderSpravkaViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OrderViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ReferenceHistoryViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ScholarshipViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ServicesViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SettingsViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SheduleViewModul_HiltModules_KeyModule_ProvideFactory.provide()).add(SplashScreenViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SpravkiViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(StatusSpravkaViewModul_HiltModules_KeyModule_ProvideFactory.provide()).add(UserProfileViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
     }
 
     @Override
@@ -490,6 +494,8 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
     private final ViewModelCImpl viewModelCImpl = this;
 
     private Provider<AuthViewModel> authViewModelProvider;
+
+    private Provider<LogoutViewModel> logoutViewModelProvider;
 
     private Provider<OrderSpravkaViewModel> orderSpravkaViewModelProvider;
 
@@ -531,6 +537,10 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
       return new AuthenticationUseCase(singletonCImpl.provideAuthRepositoryProvider.get());
     }
 
+    private LogoutUseCase logoutUseCase() {
+      return new LogoutUseCase(singletonCImpl.provideLogoutRepositoryProvider.get());
+    }
+
     private ServiceRepositoryImpl serviceRepositoryImpl() {
       return new ServiceRepositoryImpl(singletonCImpl.provideServiceApiProvider.get());
     }
@@ -551,10 +561,6 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
       return new GetScholarshipUseCase(serviceRepositoryImpl());
     }
 
-    private LogoutUseCase logoutUseCase() {
-      return new LogoutUseCase(singletonCImpl.provideLogoutRepositoryProvider.get());
-    }
-
     private GetSheduleUseCase getSheduleUseCase() {
       return new GetSheduleUseCase(serviceRepositoryImpl());
     }
@@ -571,30 +577,35 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
       return new GetStatusSpravkaUseCase(serviceRepositoryImpl());
     }
 
+    private UserProfileRepositoryImpl userProfileRepositoryImpl() {
+      return new UserProfileRepositoryImpl(singletonCImpl.provideUserInfoApiProvider.get());
+    }
+
     private GetUserProfileUseCase getUserProfileUseCase() {
-      return new GetUserProfileUseCase(new UserProfileRepositoryImpl());
+      return new GetUserProfileUseCase(userProfileRepositoryImpl());
     }
 
     @SuppressWarnings("unchecked")
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
       this.authViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
-      this.orderSpravkaViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
-      this.orderViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
-      this.referenceHistoryViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
-      this.scholarshipViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
-      this.servicesViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
-      this.settingsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6);
-      this.sheduleViewModulProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 7);
-      this.splashScreenViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 8);
-      this.spravkiViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 9);
-      this.statusSpravkaViewModulProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 10);
-      this.userProfileViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 11);
+      this.logoutViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
+      this.orderSpravkaViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
+      this.orderViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
+      this.referenceHistoryViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
+      this.scholarshipViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
+      this.servicesViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6);
+      this.settingsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 7);
+      this.sheduleViewModulProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 8);
+      this.splashScreenViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 9);
+      this.spravkiViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 10);
+      this.statusSpravkaViewModulProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 11);
+      this.userProfileViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 12);
     }
 
     @Override
     public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(12).put("com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel", ((Provider) authViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.OrderSpravkaViewModel", ((Provider) orderSpravkaViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel", ((Provider) orderViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.ReferenceHistoryViewModel", ((Provider) referenceHistoryViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipViewModel", ((Provider) scholarshipViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel", ((Provider) servicesViewModelProvider)).put("com.omgupsapp.presentation.ui.SettingsScreen.SettingsViewModel", ((Provider) settingsViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul", ((Provider) sheduleViewModulProvider)).put("com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel", ((Provider) splashScreenViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkiViewModel", ((Provider) spravkiViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul", ((Provider) statusSpravkaViewModulProvider)).put("com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel", ((Provider) userProfileViewModelProvider)).build();
+      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(13).put("com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel", ((Provider) authViewModelProvider)).put("com.example.omgupsandroidapp.presentation.scaffold.LogoutViewModel", ((Provider) logoutViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.OrderSpravkaViewModel", ((Provider) orderSpravkaViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel", ((Provider) orderViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.ReferenceHistoryViewModel", ((Provider) referenceHistoryViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipViewModel", ((Provider) scholarshipViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel", ((Provider) servicesViewModelProvider)).put("com.omgupsapp.presentation.ui.SettingsScreen.SettingsViewModel", ((Provider) settingsViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul", ((Provider) sheduleViewModulProvider)).put("com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel", ((Provider) splashScreenViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkiViewModel", ((Provider) spravkiViewModelProvider)).put("com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul", ((Provider) statusSpravkaViewModulProvider)).put("com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel", ((Provider) userProfileViewModelProvider)).build();
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -621,37 +632,40 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
           case 0: // com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel 
           return (T) new AuthViewModel(viewModelCImpl.getCsrfTokenUseCase(), viewModelCImpl.authenticationUseCase());
 
-          case 1: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.OrderSpravkaViewModel 
+          case 1: // com.example.omgupsandroidapp.presentation.scaffold.LogoutViewModel 
+          return (T) new LogoutViewModel(viewModelCImpl.logoutUseCase());
+
+          case 2: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.OrderSpravkaViewModel 
           return (T) new OrderSpravkaViewModel(viewModelCImpl.postSpravkaUseCase());
 
-          case 2: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel 
+          case 3: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel 
           return (T) new OrderViewModel(viewModelCImpl.getOrderUseCase());
 
-          case 3: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.ReferenceHistoryViewModel 
+          case 4: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.ReferenceHistoryViewModel 
           return (T) new ReferenceHistoryViewModel(viewModelCImpl.getReferenceHistoryUseCase());
 
-          case 4: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipViewModel 
+          case 5: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipViewModel 
           return (T) new ScholarshipViewModel(viewModelCImpl.getScholarshipUseCase(), new GetTotalSumUseCase());
 
-          case 5: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel 
+          case 6: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel 
           return (T) new ServicesViewModel();
 
-          case 6: // com.omgupsapp.presentation.ui.SettingsScreen.SettingsViewModel 
+          case 7: // com.omgupsapp.presentation.ui.SettingsScreen.SettingsViewModel 
           return (T) new SettingsViewModel(viewModelCImpl.logoutUseCase());
 
-          case 7: // com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul 
+          case 8: // com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul 
           return (T) new SheduleViewModul(viewModelCImpl.getSheduleUseCase());
 
-          case 8: // com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel 
+          case 9: // com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreenViewModel 
           return (T) new SplashScreenViewModel(viewModelCImpl.signInUseCase());
 
-          case 9: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkiViewModel 
+          case 10: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkiViewModel 
           return (T) new SpravkiViewModel(viewModelCImpl.getTypesSpravkiUseCase());
 
-          case 10: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul 
+          case 11: // com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.StatusSpravkaViewModul 
           return (T) new StatusSpravkaViewModul(viewModelCImpl.getStatusSpravkaUseCase());
 
-          case 11: // com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel 
+          case 12: // com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel 
           return (T) new UserProfileViewModel(viewModelCImpl.getUserProfileUseCase());
 
           default: throw new AssertionError(id);
@@ -749,13 +763,15 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
 
     private Provider<AuthRepository> provideAuthRepositoryProvider;
 
+    private Provider<LogoutApi> logoutApiProvider;
+
+    private Provider<LogoutRepository> provideLogoutRepositoryProvider;
+
     private Provider<Retrofit> provideRetrofitGsonProvider;
 
     private Provider<ServiceApi> provideServiceApiProvider;
 
-    private Provider<LogoutApi> logoutApiProvider;
-
-    private Provider<LogoutRepository> provideLogoutRepositoryProvider;
+    private Provider<UserInfoApi> provideUserInfoApiProvider;
 
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
@@ -773,10 +789,11 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
       this.authApiProvider = DoubleCheck.provider(new SwitchingProvider<AuthApi>(singletonCImpl, 1));
       this.provideDataStoreManagerProvider = DoubleCheck.provider(new SwitchingProvider<DataStoreManager>(singletonCImpl, 7));
       this.provideAuthRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AuthRepository>(singletonCImpl, 0));
-      this.provideRetrofitGsonProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 9));
-      this.provideServiceApiProvider = DoubleCheck.provider(new SwitchingProvider<ServiceApi>(singletonCImpl, 8));
-      this.logoutApiProvider = DoubleCheck.provider(new SwitchingProvider<LogoutApi>(singletonCImpl, 11));
-      this.provideLogoutRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<LogoutRepository>(singletonCImpl, 10));
+      this.logoutApiProvider = DoubleCheck.provider(new SwitchingProvider<LogoutApi>(singletonCImpl, 9));
+      this.provideLogoutRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<LogoutRepository>(singletonCImpl, 8));
+      this.provideRetrofitGsonProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 11));
+      this.provideServiceApiProvider = DoubleCheck.provider(new SwitchingProvider<ServiceApi>(singletonCImpl, 10));
+      this.provideUserInfoApiProvider = DoubleCheck.provider(new SwitchingProvider<UserInfoApi>(singletonCImpl, 12));
     }
 
     @Override
@@ -836,17 +853,20 @@ public final class DaggerOmgupsApplication_HiltComponents_SingletonC {
           case 7: // com.omgupsapp.data.local.DataStore.DataStoreManager 
           return (T) DataStoreModule_ProvideDataStoreManagerFactory.provideDataStoreManager(ApplicationContextModule_ProvideApplicationFactory.provideApplication(singletonCImpl.applicationContextModule));
 
-          case 8: // com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi 
-          return (T) NetworkGsonModule_ProvideServiceApiFactory.provideServiceApi(singletonCImpl.provideRetrofitGsonProvider.get());
-
-          case 9: // @javax.inject.Named("gson") retrofit2.Retrofit 
-          return (T) NetworkGsonModule_ProvideRetrofitGsonFactory.provideRetrofitGson(singletonCImpl.provideOkHttpClientProvider.get());
-
-          case 10: // com.omgupsapp.domain.repository.LogoutRepository 
+          case 8: // com.omgupsapp.domain.repository.LogoutRepository 
           return (T) NetworkScalarsModule_ProvideLogoutRepositoryFactory.provideLogoutRepository(singletonCImpl.logoutApiProvider.get(), singletonCImpl.provideDataStoreManagerProvider.get(), singletonCImpl.provideCookieJarProvider.get());
 
-          case 11: // com.omgupsapp.data.remote.Retrofit.LogoutApi 
+          case 9: // com.omgupsapp.data.remote.Retrofit.LogoutApi 
           return (T) NetworkScalarsModule_LogoutApiFactory.logoutApi(singletonCImpl.provideRetrofitProvider.get());
+
+          case 10: // com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi 
+          return (T) NetworkGsonModule_ProvideServiceApiFactory.provideServiceApi(singletonCImpl.provideRetrofitGsonProvider.get());
+
+          case 11: // @javax.inject.Named("gson") retrofit2.Retrofit 
+          return (T) NetworkGsonModule_ProvideRetrofitGsonFactory.provideRetrofitGson(singletonCImpl.provideOkHttpClientProvider.get());
+
+          case 12: // com.example.omgupsandroidapp.data.remote.Retrofit.UserInfoApi 
+          return (T) NetworkGsonModule_ProvideUserInfoApiFactory.provideUserInfoApi(singletonCImpl.provideRetrofitGsonProvider.get());
 
           default: throw new AssertionError(id);
         }

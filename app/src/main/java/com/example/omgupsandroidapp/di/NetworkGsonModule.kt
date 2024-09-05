@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.di
 
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi
+import com.example.omgupsandroidapp.data.remote.Retrofit.UserInfoApi
 import com.omgupsapp.common.Constants
 import dagger.Module
 import dagger.Provides
@@ -30,8 +31,14 @@ object NetworkGsonModule {
 
     @Provides
     @Singleton
-       fun provideServiceApi(   @Named("gson") retrofit: Retrofit): ServiceApi {
+       fun provideServiceApi(@Named("gson") retrofit: Retrofit): ServiceApi {
         return retrofit.create(ServiceApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserInfoApi( @Named("gson") retrofit: Retrofit): UserInfoApi {
+        return retrofit.create(UserInfoApi::class.java)
     }
 
 }

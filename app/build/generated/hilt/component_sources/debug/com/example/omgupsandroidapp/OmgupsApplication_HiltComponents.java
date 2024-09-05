@@ -2,6 +2,7 @@ package com.example.omgupsandroidapp;
 
 import com.example.omgupsandroidapp.di.NetworkGsonModule;
 import com.example.omgupsandroidapp.presentation.MainActivity_GeneratedInjector;
+import com.example.omgupsandroidapp.presentation.scaffold.LogoutViewModel_HiltModules;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel_HiltModules;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderViewModel_HiltModules;
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipViewModel_HiltModules;
@@ -163,6 +164,7 @@ public final class OmgupsApplication_HiltComponents {
       modules = {
           AuthViewModel_HiltModules.KeyModule.class,
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
+          LogoutViewModel_HiltModules.KeyModule.class,
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class,
           OrderSpravkaViewModel_HiltModules.KeyModule.class,
@@ -213,6 +215,7 @@ public final class OmgupsApplication_HiltComponents {
       modules = {
           AuthViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
+          LogoutViewModel_HiltModules.BindsModule.class,
           OrderSpravkaViewModel_HiltModules.BindsModule.class,
           OrderViewModel_HiltModules.BindsModule.class,
           ReferenceHistoryViewModel_HiltModules.BindsModule.class,

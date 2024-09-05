@@ -1,8 +1,7 @@
 package com.omgupsapp.presentation.ui.userProfileScreen.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,28 +9,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
+import com.example.omgupsandroidapp.presentation.components.coilImage.CoilImage
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel
+import com.example.omgupsandroidapp.presentation.utils.portable
 
 @Composable
 fun UserProfileScreen(
@@ -47,90 +45,65 @@ fun UserProfileScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.secondary)
             .padding(paddingValues)
-            .verticalScroll(scrollState)
+            .verticalScroll(scrollState),
+        verticalArrangement = Arrangement.Center
     ) {
         if (userProfileState.userProfile != null) {
 
             userProfileState.userProfile.let { userProfile ->
 
-                    Column(
-                        modifier = Modifier
-                            .weight(3f)
-                            .padding(16.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 8.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            if (userProfile.imageVector == null) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_outilineprofile),
-                                    contentDescription = "non image user profile",
-                                    modifier = Modifier
-                                        .size(100.dp)
-                                        .clip(RoundedCornerShape(50.dp))
-                                        .align(Alignment.Center),
-                                    tint = MaterialTheme.colorScheme.surfaceVariant
-                                )
-                            } else {
-                                /* AsyncImage(
-                                     model = userProfile.imageVector,
-                                     contentDescription = userProfile.direction,
-                                     modifier = Modifier
-                                         .size(100.dp)
-                                         .clip(RoundedCornerShape(50.dp))
-                                         .align(Alignment.Center)
-                                 )*/
-                            }
-                        }
-                        Text(
-                            text = userProfile.name + " " + userProfile.surname,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.CenterHorizontally),
-                            style = MaterialTheme.typography.titleLarge,
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.surfaceVariant
-                        )
-                        Text(
-                            text = userProfile.patronymic,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.CenterHorizontally),
-                            style = MaterialTheme.typography.titleLarge,
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.surfaceVariant
+                Column(
+                    modifier = Modifier
+                        .weight(3f)
+                        .padding(16.dp)
+                ) {
 
-                        )
+
+                    CoilImage(
+                        modifier = Modifier.size(100.dp).align(Alignment.CenterHorizontally),
+                        imageUrl = userProfile.photoUrl,
+                        contentDescription = stringResource(R.string.user_photo),
+                        defaultImageResId = R.drawable.ic_outilineprofile
+                    )
+
+                    Text(
+                        text = userProfile.username.portable(2),
+                        modifier = Modifier.fillMaxWidth(),
+                        style = MaterialTheme.typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    )
+
 
                 }
 
                 Card(
-                    modifier = Modifier.fillMaxSize().weight(7f), shape = RoundedCornerShape(
-                        topStart = 38.dp,
-                        topEnd =  38.dp,
-                        bottomEnd = 0.dp,
-                        bottomStart = 0.dp
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(7f), shape = RoundedCornerShape(
+                        topStart = 38.dp, topEnd = 38.dp, bottomEnd = 0.dp, bottomStart = 0.dp
                     )
                 ) {
 
                     Column(modifier = Modifier.padding(8.dp)) {
-                        RowInProfile(rowName = "Институт:", title = userProfile.institute, dividerIsVisible = false)
-                        RowInProfile(rowName = "Специальность:", title = userProfile.specialization)
-                        RowInProfile(rowName = "Направление:", title = userProfile.direction)
-                        RowInProfile(rowName = "Статус обучения:",title = userProfile.statusEducation)
+                        RowInProfile(
+                            rowName = "Институт:",
+                            title = userProfile.faculty,
+                            dividerIsVisible = false
+                        )
                         RowInProfile(rowName = "Группа:", title = userProfile.group)
-                        RowInProfile(rowName = "Форма обучения:", title = userProfile.formEducation)
-                        RowInProfile(rowName = "Тип обучения:", title = userProfile.typeEducation)
-                        RowInProfile(rowName = "Уровень образования:",title = userProfile.lvlEducation)
                         RowInProfile(rowName = "Курс:", title = userProfile.course.toString())
+                        RowInProfile(rowName = "Статус обучения:", title = userProfile.status)
+                        RowInProfile(rowName = "Форма обучения:", title = userProfile.formEducation)
+                        RowInProfile(rowName = "Зачетная книжка:", title = userProfile.recordBook)
+                        RowInProfile(rowName = "№ Приказа:", title = userProfile.orderNumber)
+
+
                     }
                 }
             }
         } else {
-            LoadingScreen()
+            LoadingScreen(modifier = Modifier.fillMaxSize().align(Alignment.CenterHorizontally))
         }
     }
 }
@@ -165,3 +138,4 @@ private fun RowInProfile(
         }
     }
 }
+

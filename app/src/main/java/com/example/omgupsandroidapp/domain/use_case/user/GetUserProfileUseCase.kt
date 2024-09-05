@@ -15,7 +15,7 @@ class GetUserProfileUseCase @Inject constructor(
     operator fun invoke() = flow {
         try {
             emit(Resource.Loading())
-            val userProfile = userProfileRepositoryImpl.getUserProfile()?.toUserProfileModel()
+            val userProfile = userProfileRepositoryImpl.getUserInfo()
             emit(Resource.Success(userProfile))
         } catch (e: IOException) {
             emit(Resource.Error(e.localizedMessage ?: "IO Exception"))

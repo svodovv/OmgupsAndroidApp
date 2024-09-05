@@ -17,7 +17,8 @@ import com.omgupsapp.presentation.Screen
 @Composable
 fun TopAppBarComposable(
     navController: NavController,
-    selectedTitle: String
+    selectedTitle: String,
+    logOutClick: () -> Unit
     ) {
     TopAppBar(
         title = {
@@ -28,7 +29,10 @@ fun TopAppBarComposable(
             )
         },
         actions = {
-            IconButton(onClick = { navController.navigate(Screen.LogOutScreen.route) }) {
+            IconButton(onClick = {
+                logOutClick()
+                navController.navigate(Screen.LogOutScreen.route)
+            }) {
                 Icon(
                     painterResource(id = R.drawable.ic_settings),
                     contentDescription = "Settings icon",

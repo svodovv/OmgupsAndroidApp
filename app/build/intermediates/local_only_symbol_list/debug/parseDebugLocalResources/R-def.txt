@@ -58,6 +58,7 @@ string pgas
 string profile
 string shedule
 string signIn
+string user_photo
 style Theme.OmgupsAndroidApp
 xml backup_rules
 xml data_extraction_rules

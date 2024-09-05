@@ -6,8 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.omgupsandroidapp.presentation.scaffold.LogoutViewModel
 
 import com.omgupsapp.presentation.BottomNavigationItem
 
@@ -15,6 +17,7 @@ import com.omgupsapp.presentation.BottomNavigationItem
 fun ScaffoldComposable(
     navController: NavHostController,
     itemsBottomBar: List<BottomNavigationItem>,
+    viewModel: LogoutViewModel = hiltViewModel(),
     content: @Composable (PaddingValues) -> Unit
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -24,7 +27,8 @@ fun ScaffoldComposable(
         GetTopBar(
             navController = navController,
             route = navBackStackEntry?.destination?.route.toString(),
-            selectedTitle = selectedTitle.value
+            selectedTitle = selectedTitle.value,
+            logOutClick = viewModel::logout
         )
     }, bottomBar = {
         GetNavigationBar(

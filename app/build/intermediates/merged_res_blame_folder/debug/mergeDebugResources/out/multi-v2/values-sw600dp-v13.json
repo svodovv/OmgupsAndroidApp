@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.omgupsandroidapp-mergeDebugResources-61:/values-sw600dp-v13/values-sw600dp-v13.xml",
+            "outputFile": "com.example.omgupsandroidapp-mergeDebugResources-62:/values-sw600dp-v13/values-sw600dp-v13.xml",
             "map": [
                 {
                     "source": "C:\\Users\\domovichenok\\.gradle\\caches\\transforms-4\\acde75d9dbb57df23f4d2ecf56756c04\\transformed\\appcompat-1.6.1\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",

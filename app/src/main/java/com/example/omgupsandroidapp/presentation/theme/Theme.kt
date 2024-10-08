@@ -36,7 +36,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Blue,
+    primary = BlueHard,
     background = Cultered,
     onBackground = Color.Black,
     surface = SonicSilver,

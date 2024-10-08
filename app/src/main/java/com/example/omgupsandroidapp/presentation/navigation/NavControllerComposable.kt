@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.navigation
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderScreen
@@ -16,6 +17,7 @@ import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Spra
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.StudentBookScreen.StudentBookScreen
 import com.example.omgupsandroidapp.presentation.ui.SettingsScreen.copmposable.SettingsScreen
 import com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreen
+import com.example.omgupsandroidapp.presentation.ui.screens.LogoutScreen.LogoutAlertDialog
 import com.omgupsapp.presentation.NavigationGroup
 import com.omgupsapp.presentation.Screen
 import com.omgupsapp.presentation.ui.LoginScreen.components.AuthScreen
@@ -49,17 +51,26 @@ fun NavHostComposable(
                 Если появятся такие страницы как забыли пароль или регистрация, все должно быть тут
              */
         }
+
+        /*navigation(
+            startDestination = Screen.Service.route,
+            route = NavigationGroup.SettingsGroup.route
+        ) {
+            composable(Screen.SettingsScreen.route){
+                LogoutAlertDialog(onDismissRequest = { /*TODO*/ }, navController = navController)
+            }
+        }*/
+
         navigation(
             startDestination = Screen.UserProfileScreen.route,
             route = NavigationGroup.HomeScreens.route
         ) {
 
-            composable(route = Screen.LogOutScreen.route) {
+            composable(route = Screen.SettingsScreen.route) {
                 SettingsScreen(
                     navController = navController, paddingValues = paddingValues
                 )
             }
-
 
 
             composable(route = Screen.ScheduleScreen.route) {

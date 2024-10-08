@@ -18,7 +18,7 @@ import com.omgupsapp.presentation.Screen
 fun TopAppBarComposable(
     navController: NavController,
     selectedTitle: String,
-    logOutClick: () -> Unit
+    //logOutClick: () -> Unit
     ) {
     TopAppBar(
         title = {
@@ -30,8 +30,8 @@ fun TopAppBarComposable(
         },
         actions = {
             IconButton(onClick = {
-                logOutClick()
-                navController.navigate(Screen.LogOutScreen.route)
+                //logOutClick()
+                navController.navigate(Screen.SettingsScreen.route)
             }) {
                 Icon(
                     painterResource(id = R.drawable.ic_settings),
@@ -40,7 +40,7 @@ fun TopAppBarComposable(
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.secondary)
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.onSecondary)
     )
 }
 

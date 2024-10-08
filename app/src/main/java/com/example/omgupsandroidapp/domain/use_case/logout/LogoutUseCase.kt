@@ -10,7 +10,7 @@ class LogoutUseCase @Inject constructor(
     val repository: LogoutRepository
 ) {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    operator fun invoke() = coroutineScope.launch {
+    fun logOut() = coroutineScope.launch {
         repository.logout()
     }
 }

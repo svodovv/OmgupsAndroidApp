@@ -9,19 +9,22 @@ sealed class Screen(val route: String) {
     data object UserProfileScreen : Screen("user_profile_screen")
     data object Service : Screen("home_screen")
     data object ScheduleScreen : Screen("schedule_screen")
-
     data object SplashScreen: Screen("splash_screen")
-
     data object ScholarshipScreen: Screen("money_screen")
     data object OrderScreen: Screen("order_screen")
     data object PlanScreen: Screen("plan_screen")
     data object SpravkaScreen: Screen("spravka_screen")
     data object StudentBookScreen: Screen("student_book_screen")
+
+    //SettingsScreen
+    data object SettingsScreen : Screen("settings_screen")
 }
 
 sealed class NavigationGroup(val route: String) {
     data object AuthGroup : NavigationGroup("auth_screens")
 
-    data object HomeScreens : NavigationGroup("home_screens")
+    data object  HomeScreens : NavigationGroup("home_screens")
+
+    data object SettingsGroup : NavigationGroup("settings_screen")
 
 }

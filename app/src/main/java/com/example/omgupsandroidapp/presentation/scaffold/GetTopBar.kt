@@ -9,14 +9,14 @@ fun GetTopBar(
     navController: NavController,
     route: String,
     selectedTitle: String,
-    logOutClick: () -> Unit
+    //logOutClick: () -> Unit
 
 ) {
     if (route == Screen.UserProfileScreen.route || route == Screen.ScheduleScreen.route || route == Screen.Service.route) {
         TopAppBarComposable(
             navController = navController,
             selectedTitle = selectedTitle,
-            logOutClick = logOutClick
+            //logOutClick = logOutClick
         )
     } else {
             //

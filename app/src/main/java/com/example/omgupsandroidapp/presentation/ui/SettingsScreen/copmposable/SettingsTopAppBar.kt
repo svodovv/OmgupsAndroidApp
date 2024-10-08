@@ -6,6 +6,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,9 +25,9 @@ fun SettingsTopAppBar(
     TopAppBar(title = {
         Text(
             text = stringResource(R.string.Settings),
-            style = MaterialTheme.typography.displayMedium,
+            color = MaterialTheme.colorScheme.surfaceVariant,
+            style = MaterialTheme.typography.displayMedium
         )
-
     },
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
@@ -34,6 +37,7 @@ fun SettingsTopAppBar(
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.onSecondary)
     )
 }

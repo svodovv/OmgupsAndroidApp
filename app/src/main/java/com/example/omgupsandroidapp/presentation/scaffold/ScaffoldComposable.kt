@@ -28,7 +28,7 @@ fun ScaffoldComposable(
             navController = navController,
             route = navBackStackEntry?.destination?.route.toString(),
             selectedTitle = selectedTitle.value,
-            logOutClick = viewModel::logout
+           // logOutClick = viewModel::logOut
         )
     }, bottomBar = {
         GetNavigationBar(

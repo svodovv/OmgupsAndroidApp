@@ -46,6 +46,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -113,7 +114,9 @@ fun AuthScreen(
             .background(MaterialTheme.colorScheme.primary)
     ) {
 
-        Box(modifier = Modifier.fillMaxSize().weight(4f), contentAlignment = Center) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .weight(4f), contentAlignment = Center) {
             OmgupsIcon(
                 modifier = Modifier.padding(vertical = 100.dp, horizontal = 130.dp),
             )
@@ -134,8 +137,18 @@ fun AuthScreen(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState()),
             ) {
-
-                Spacer(modifier = Modifier.padding(50.dp))
+                Text(
+                    text = "Вход",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp),
+                    fontSize =
+                    25.sp,
+                    color = Color.Black
+                        //.align(Alignment.CenterHorizontally)
+                )
+                //Spacer(modifier = Modifier.padding(50.dp))
 
                 /* ScrollableTextField(
                         value = stateAuthentication.login,

@@ -25,7 +25,7 @@ fun NavigationBarComposable(
     selectedTitle: MutableState<String>
 ) {
 
-    NavigationBar (containerColor = MaterialTheme.colorScheme.secondary){
+    NavigationBar (containerColor = MaterialTheme.colorScheme.surfaceVariant){
         itemsBottomBar.forEach {
             NavigationBarItem(
                 selected = false,
@@ -39,7 +39,7 @@ fun NavigationBarComposable(
                             MaterialTheme.colorScheme.primary.also { _ ->
                                 selectedTitle.value = it.tittle
                             }
-                        else MaterialTheme.colorScheme.surfaceVariant
+                        else MaterialTheme.colorScheme.surface
                     )
                 }, icon = {
                     BadgedBox(badge = {
@@ -51,7 +51,7 @@ fun NavigationBarComposable(
                             contentDescription = it.tittle,
                             tint = if (it.route == route)
                                 MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.surfaceVariant
+                            else MaterialTheme.colorScheme.surface
                         )
                     }
                 },

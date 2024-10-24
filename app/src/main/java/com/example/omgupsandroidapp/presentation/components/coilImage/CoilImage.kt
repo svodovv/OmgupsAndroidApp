@@ -33,7 +33,7 @@ fun CoilImage(
             .crossfade(true)
             .build()
     )
-    Box(modifier = modifier) {
+    Box(modifier = modifier/*.padding(vertical = 10.dp, horizontal = 13.dp)*/) {
         Image(
             painter = painter,
             contentDescription = contentDescription,

@@ -2,6 +2,7 @@ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Sch
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,6 +53,7 @@ fun ScholarshipScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(paddingValues)
     ) {
         ServicesTopAppBar(title = "Выплаты", navController = navController)

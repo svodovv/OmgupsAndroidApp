@@ -26,6 +26,6 @@ fun ServicesTopAppBar(title: String, navController: NavController) {
             )
         }
     },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.secondary)
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
         )
 }

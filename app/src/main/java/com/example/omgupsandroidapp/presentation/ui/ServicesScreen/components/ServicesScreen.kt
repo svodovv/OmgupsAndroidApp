@@ -1,6 +1,8 @@
 package com.omgupsapp.presentation.ui.homeScreen.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +12,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,48 +38,53 @@ fun ServiceScreen(
 ) {
     val serviceList = servicesViewModel.serviceList
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            //.verticalScroll(rememberScrollState())
             .padding(paddingValues)
     ) {
+
         serviceList.forEach {
-            Card(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .weight(1f)
-                    .clickable {
-                        navController.navigate(it.route)
-                    }
-            ) {
-                Row(
+            item {
+                Card(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                        .padding(8.dp)
+                        ///.weight(1f)
+                        .clickable {
+                            navController.navigate(it.route)
+                        }
                 ) {
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .weight(2f)
-                            .padding(start = 16.dp),
-                        contentAlignment = Alignment.CenterStart
+                            .fillMaxSize()
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        Icon(
-                            painter = painterResource(id = it.selectedIcon),
-                            contentDescription = it.serviceName,
+                        Box(
+                            modifier = Modifier
+                                .weight(2f)
+                                .padding(start = 16.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Icon(
+                                painter = painterResource(id = it.selectedIcon),
+                                contentDescription = it.serviceName,
+                            )
+                        }
+                        Text(
+                            text = it.serviceName,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.weight(3f),
+                            textAlign = TextAlign.Start
                         )
                     }
-                    Text(
-                        text = it.serviceName,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.weight(3f),
-                        textAlign = TextAlign.Start
-                    )
                 }
             }
         }
-        Spacer(modifier = Modifier.size(150.dp))
+        //Spacer(modifier = Modifier.size(150.dp))
     }
 
 }

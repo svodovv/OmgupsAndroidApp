@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.presentation.ui.SettingsScreen.copmposable
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -55,7 +56,9 @@ fun SettingsScreen(
                 .align(CenterHorizontally)
         )
         Column(modifier = Modifier.fillMaxSize()) {
-            Row {
+            Row (
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
               //  if (logOutState.value) {
                     /*LogoutAlertDialog(
                         onDismissRequest = {
@@ -63,25 +66,19 @@ fun SettingsScreen(
                         }, navController = navController
                     )*/
               //  }
-                Text(
-                    text = stringResource(R.string.exit),
-                    color = Color.Black,
-                    modifier = Modifier.clickable {
-                        openDialog.value = true
-                       // logOutViewModel.logout()
-                        /*navController.navigate(Screen.SplashScreen.route) {
-                            popUpTo(0) {
-                                inclusive = true
-                            }
-                        }*/
-                    },
-                    style = MaterialTheme.typography.displayMedium
-                )
+                TextButton(onClick = {openDialog.value = true}) {
+                    Text(
+                        text = stringResource(R.string.exit),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.displayMedium
+                    )
+                }
                 if (openDialog.value){
                     AlertDialog(icon = {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_alert_dialog),
-                            contentDescription = "logOut alert dialog"
+                            contentDescription = "logOut alert dialog",
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     },
                         onDismissRequest = {openDialog},

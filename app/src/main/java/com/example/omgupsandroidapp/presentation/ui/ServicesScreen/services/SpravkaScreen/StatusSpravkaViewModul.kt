@@ -26,7 +26,7 @@ class StatusSpravkaViewModul @Inject constructor(
     init {
         runBlocking {
             getStatus(1)
-            getStatus(2)
+           // getStatus(2)
         }
     }
     suspend fun getStatus(id: Int): String {
@@ -34,10 +34,11 @@ class StatusSpravkaViewModul @Inject constructor(
            when(result) {
                is Resource.Success -> {
                    _status.update {
-                       when (id) {
+                       it.copy(spravkiStatus0 = (result.data?.responseStatus ?: String).toString())
+                       /*when (id) {
                            1 -> it.copy(spravkiStatus0 = (result.data?.responseStatus ?: String).toString())
                            else -> it.copy(spravkiStatus1 = (result.data?.responseStatus ?: String).toString())
-                       }
+                       }*/
                    }
                }
                is Resource.Loading -> {

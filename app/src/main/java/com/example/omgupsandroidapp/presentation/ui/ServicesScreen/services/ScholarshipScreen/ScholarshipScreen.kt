@@ -53,7 +53,7 @@ fun ScholarshipScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(paddingValues)
     ) {
         ServicesTopAppBar(title = "Выплаты", navController = navController)
@@ -63,7 +63,7 @@ fun ScholarshipScreen(
                 modifier = Modifier
                     .wrapContentSize()
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 var isVisible by remember {
                     mutableStateOf(true)
@@ -119,7 +119,6 @@ fun ScholarshipScreen(
                                     style = MaterialTheme.typography.bodySmall
                                 )
                             }
-
                         }
                     }
 
@@ -178,7 +177,7 @@ fun ScholarshipScreen(
 }
 
 @Composable
-private fun TextWithDynamicLineBreak(text: String) {
+fun TextWithDynamicLineBreak(text: String) {
     // Разбиваем текст на слова
     val words = text.split(" ")
 

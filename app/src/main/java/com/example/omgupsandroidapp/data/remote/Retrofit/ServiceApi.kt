@@ -16,19 +16,22 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 
 interface ServiceApi {
-
+    @Headers("Cache-Control: max-age=3600")
     @GET("student/getstipend")
     suspend fun getScholarship(): ScholarshipDto
 
+    @Headers("Cache-Control: max-age=3600")
     @GET("student/getorders")
     suspend fun getOrders(): OrderDto
 
+    @Headers("Cache-Control: max-age=3600")
     @GET("student/getschedule")
     suspend fun getShudule(): SheduleDto
 

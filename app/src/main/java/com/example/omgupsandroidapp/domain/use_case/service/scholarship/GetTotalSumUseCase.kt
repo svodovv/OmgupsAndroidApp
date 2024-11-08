@@ -26,7 +26,7 @@ class GetTotalSumUseCase @Inject constructor() {
                 val endDate = LocalDate.parse(endDateStr, formatter)
                 val quantityMonth = ChronoUnit.MONTHS.between(
                         startDate.withDayOfMonth(1), endDate.withDayOfMonth(1)
-                    ).toInt()
+                    ).toInt() + 1
 
                 quantityMonth * scholarship.sum.toInt()
             }

@@ -19,4 +19,6 @@ interface CookieDao {
 
     @Query("DELETE FROM cookies WHERE expiresAt < :currentTime")
     suspend fun deleteExpiredCookies(currentTime: Long)
+
+
 }

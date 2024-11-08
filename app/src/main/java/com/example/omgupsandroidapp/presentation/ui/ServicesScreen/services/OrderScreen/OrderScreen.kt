@@ -62,7 +62,7 @@ fun OrderScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                     ) {
                         Column(modifier = Modifier.fillMaxWidth()) {
 

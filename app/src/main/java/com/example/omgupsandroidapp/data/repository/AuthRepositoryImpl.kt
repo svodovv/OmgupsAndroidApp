@@ -41,21 +41,24 @@ class AuthRepositoryImpl @Inject constructor(
             rememberMe = "1"
         )
         if (response.isSuccessful){
-         /*   val title = response.body()?.let {
+            dataStoreManager.saveLoggedIn(true)
+            val title = response.body()?.let {
                 parseTitleInHtmlDoc(it)
             }
-            if (title != null && title.contains("кабинет")) {
+
+            if (title != null && title.contains("lk")) {
                 dataStoreManager.saveLoggedIn(true)
                 return true
-            }*/
+            }
 
-            val userIsAuth = response.body()?.let {
-                parseLkTestAuth(it, "Учебные")
+
+            /*val userIsAuth = response.body()?.let {
+                parseLkTestAuth(it, " ОмГУПС | Университет путей сообщения ")
             }
             if (userIsAuth == true){
                 dataStoreManager.saveLoggedIn(true)
                 return true
-            }
+            }*/
         }
         return false
     }

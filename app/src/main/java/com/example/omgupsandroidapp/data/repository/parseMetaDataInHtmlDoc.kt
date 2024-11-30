@@ -1,5 +1,6 @@
 package com.omgupsapp.data.repository
 
+import android.util.Log
 import org.jsoup.Jsoup
 
 internal fun parseMetaDataInHtmlDoc(htmlContent: String, metaName: String): String? {
@@ -13,12 +14,16 @@ internal fun parseMetaDataInHtmlDoc(htmlContent: String, metaName: String): Stri
 }
 
 internal fun parseTitleInHtmlDoc(htmlContent: String): String? {
+    val example = htmlContent
+    val withOutSpaces = example.replace(" ", "")
+        //Log.e("htmlContent", withOutSpaces)
     return Jsoup.parse(htmlContent).title()
 }
 
 internal fun parseLkTestAuth(html: String, entryName: String): Boolean {
     val doc = Jsoup.parse(html)
-    val cardBody = doc.select("div.card-body").first()
+    val cardBody = doc.select( "а.profile-group"/*"div.card-body"*/).first()
+    Log.e("htmlContent", html)
     val text = cardBody?.text()?.trim()
 
     return text != null && text.contains(entryName)

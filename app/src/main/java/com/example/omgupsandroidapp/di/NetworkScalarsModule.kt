@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import com.example.omgupsandroidapp.OmgupsApplication
 import com.example.omgupsandroidapp.data.local.Room.Cookie.CookieDao
 import com.example.omgupsandroidapp.data.local.Room.Cookie.MyCookieJar
-import com.example.omgupsandroidapp.di.NetworkGsonModule.cachingInterceptor
+//import com.example.omgupsandroidapp.di.NetworkGsonModule.cachingInterceptor
 import com.omgupsapp.common.Constants
 import com.omgupsapp.data.local.DataStore.DataStoreManager
 import com.omgupsapp.data.remote.Retrofit.AuthApi
@@ -280,7 +280,7 @@ object NetworkScalarsModule {
     }
 }*/
 
-
+/*
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkScalarsModule {
@@ -344,3 +344,141 @@ object NetworkScalarsModule {
     }
 
 }
+*/
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkScalarsModule {
+
+    @Provides
+    @Singleton
+    fun provideMyCookieJar(cookieDao: CookieDao): MyCookieJar {
+        return MyCookieJar(cookieDao)
+    }
+
+    @Provides
+    @Singleton
+    @Named("scalarsOkHttp")
+    fun provideScalarsOkHttpClient(
+        cookieJar: MyCookieJar,
+        @ApplicationContext context: Context
+    ): OkHttpClient {
+
+        // Define cache size and directory
+        val cacheSize = (100 * 1024 * 1024).toLong() // 10 MB
+        val cacheDir = File(context.cacheDir, "http-cache-scalars")
+        val cache = Cache(cacheDir, cacheSize)
+
+        return OkHttpClient.Builder()
+            .cache(cache) // Set cache
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+            .cookieJar(cookieJar)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("scalars")
+    fun provideRetrofit(
+        @Named("scalarsOkHttp")
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun authApi(@Named("scalars") retrofit: Retrofit): AuthApi {
+        return retrofit.create(AuthApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        api: AuthApi, dataStoreManager: DataStoreManager
+    ): AuthRepository {
+        return AuthRepositoryImpl(api, dataStoreManager)
+    }
+
+    @Provides
+    @Singleton
+    fun logoutApi(@Named("scalars") retrofit: Retrofit): LogoutApi {
+        return retrofit.create(LogoutApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogoutRepository(
+        api: LogoutApi, dataStoreManager: DataStoreManager, cookieDao: CookieDao
+    ): LogoutRepository {
+        return LogoutRepositoryImpl(
+            api = api, dataStoreManager = dataStoreManager, cookieDao = cookieDao
+        )
+    }
+}
+
+/*@Module
+@InstallIn(SingletonComponent::class)
+object NetworkScalarsModule {
+
+
+    @Provides
+    @Singleton
+    fun provideMyCookieJar(cookieDao: CookieDao): MyCookieJar {
+        return MyCookieJar(cookieDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(cookieJar: MyCookieJar): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .cookieJar(cookieJar).build()
+    }
+
+
+    @Provides
+    @Singleton
+    @Named("Scalars")
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder().baseUrl(Constants.BASE_URL).client(okHttpClient)
+            .addConverterFactory(ScalarsConverterFactory.create()).build()
+    }
+
+    @Provides
+    @Singleton
+    fun authApi(@Named("Scalars") retrofit: Retrofit): AuthApi {
+        return retrofit.create(AuthApi::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        api: AuthApi, dataStoreManager: DataStoreManager
+    ): AuthRepository {
+        return AuthRepositoryImpl(api, dataStoreManager)
+    }
+
+    @Provides
+    @Singleton
+    fun logoutApi(@Named("Scalars") retrofit: Retrofit): LogoutApi {
+        return retrofit.create(LogoutApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogoutRepository(
+        api: LogoutApi, dataStoreManager: DataStoreManager, cookieDao: CookieDao
+    ): LogoutRepository {
+        return LogoutRepositoryImpl(
+            api = api, dataStoreManager = dataStoreManager, cookieDao = cookieDao
+        )
+    }
+}*/

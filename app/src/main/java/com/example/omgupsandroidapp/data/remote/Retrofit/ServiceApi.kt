@@ -1,6 +1,9 @@
 package com.example.omgupsandroidapp.data.remote.Retrofit
 
+import com.example.omgupsandroidapp.data.local.Room.Cache.ScheduleEntity
+import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.AcademicPlanDto
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
+import com.example.omgupsandroidapp.data.remote.dto.schedule.ShedelItem
 import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
@@ -23,25 +26,30 @@ import retrofit2.http.Query
 
 
 interface ServiceApi {
-    @Headers("Cache-Control: max-age=3600")
+
+    @GET("userapi/academic-plan/get-plans")
+    suspend fun getAcademicPlan(): AcademicPlanDto
+
+    //@Headers("Cache-Control: max-age=3600")
     @GET("student/getstipend")
     suspend fun getScholarship(): ScholarshipDto
 
-    @Headers("Cache-Control: max-age=3600")
+    //@Headers("Cache-Control: max-age=3600")
     @GET("student/getorders")
     suspend fun getOrders(): OrderDto
 
-    @Headers("Cache-Control: max-age=3600")
+    //@Headers("Cache-Control: max-age=3600")
     @GET("student/getschedule")
-    suspend fun getShudule(): SheduleDto
+    suspend fun getShudule(): List<ScheduleEntity>
 
     @POST("spravkaapi/spravka/create")
     suspend fun postSpravka(
         @Body post: LoadSpravkaDto
     ): LoadSpravkaDto
 
-   @GET("spravkaapi/spravka/get-history")
-   suspend fun getReferenceHistory(@Query("type") id: Int): ReferenceHistoryDto
+    @GET("spravkaapi/spravka/get-history")
+    suspend fun getReferenceHistory(@Query("type") id: Int): ReferenceHistoryDto
+
     @GET("spravkaapi/spravka/get-types")
     suspend fun getTypesSpravki(): TypeSpravkaDto
 

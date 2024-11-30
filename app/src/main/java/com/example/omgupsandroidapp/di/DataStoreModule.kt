@@ -18,6 +18,4 @@ object DataStoreModule {
         return DataStoreManager(app)
     }
 
-
-
 }

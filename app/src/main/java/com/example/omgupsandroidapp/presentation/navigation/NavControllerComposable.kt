@@ -10,9 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navigation
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.AcademicPlanScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderScreen
-import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.PlanScreen.PlanScreen
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.AcademicPlanScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkaScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.StudentBookScreen.StudentBookScreen
 import com.example.omgupsandroidapp.presentation.ui.SettingsScreen.copmposable.SettingsScreen
@@ -99,7 +100,7 @@ fun NavHostComposable(
             }
 
             composable(Screen.PlanScreen.route) {
-                PlanScreen(navController = navController, paddingValues = paddingValues)
+                AcademicPlanScreen(navController = navController, paddingValues = paddingValues)
             }
 
             composable(Screen.StudentBookScreen.route) {

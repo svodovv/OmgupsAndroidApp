@@ -1,6 +1,7 @@
 package com.omgupsapp.presentation.ui.SheduleScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.omgupsandroidapp.data.remote.dto.schedule.ShedelItem
 import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
@@ -56,6 +58,8 @@ fun ScheduleScreen(
             .background(MaterialTheme.colorScheme.primaryContainer)
             //.padding(2.dp)
     ) {
+        Log.e("htmlContent", sheduleState.value.sheduleList.toString())
+
         //ServicesTopAppBar(title = "Расписание", navController = navController)
         if (sheduleState.value.sheduleList.isNotEmpty()) {
             LazyColumn(

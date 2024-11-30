@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.datastore.preferences.protobuf.Api
+import com.example.fooddeliverygosport.di.interceptors.OnlineInterceptor
 import com.example.omgupsandroidapp.OmgupsApplication
 import com.example.omgupsandroidapp.data.local.Room.Cookie.CookieDao
 import com.example.omgupsandroidapp.data.local.Room.Cookie.MyCookieJar
@@ -314,7 +315,7 @@ object NetworkGsonModule {
 
 }*/
 
-@Module
+/*@Module
 @Suppress("unused")
 @InstallIn(SingletonComponent::class)
 object NetworkGsonModule {
@@ -517,3 +518,106 @@ object NetworkGsonModule {
 
 
 }
+ */
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkGsonModule {
+
+    @Provides
+    @Singleton
+    @Named("gsonOkHttp")
+    fun provideGsonOkHttpClient(
+        cookieJar: MyCookieJar,
+        @ApplicationContext context: Context,
+        onlineInterceptor: OnlineInterceptor,
+    ): OkHttpClient {
+
+        val cacheSize = (100 * 1024 * 1024).toLong() // 10 MB
+        val cacheDir = File(context.cacheDir, "http-cache")
+        val cache = Cache(cacheDir, cacheSize)
+
+        // Interceptor for providing a max-age for cached responses when online
+        val onlineCacheInterceptor = Interceptor { chain ->
+            val response = chain.proceed(chain.request())
+            response.newBuilder()
+                .header("Cache-Control", "public, max-age=86400, stale-while-revalidate=864000")
+//                .header("Cache-Control", "public, max-age=" + 86400) // Cache for 1 minute
+                .build()
+        }
+
+        // Interceptor for using stale cache if offline
+        val offlineCacheInterceptor = Interceptor { chain ->
+            var request = chain.request()
+            if (!onlineInterceptor.isNetworkAvailable(context)) { // Assuming isNetworkAvailable() checks connectivity
+                request = request.newBuilder()
+                    .cacheControl(CacheControl.FORCE_CACHE) // Force use of cache if offline
+                    .header("Cache-Control", "public, only-if-cached, max-stale=86400")
+                    .build()
+            }
+            chain.proceed(request)
+        }
+
+        return OkHttpClient.Builder()
+            .cache(cache)
+            .addInterceptor(offlineCacheInterceptor) // Use stale cache when offline
+            .addNetworkInterceptor(onlineCacheInterceptor) // Use cache when online
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+            .cookieJar(cookieJar)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("gson")
+    fun provideRetrofitGson(
+        @Named("gsonOkHttp") okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideServiceApi(@Named("gson") retrofit: Retrofit): ServiceApi {
+        return retrofit.create(ServiceApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserInfoApi(@Named("gson") retrofit: Retrofit): UserInfoApi {
+        return retrofit.create(UserInfoApi::class.java)
+    }
+}
+
+/*@Module
+@InstallIn(SingletonComponent::class)
+object NetworkGsonModule {
+
+
+    @Provides
+    @Singleton
+    @Named("gson")
+    fun provideRetrofitGson(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder().baseUrl(Constants.BASE_URL).client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideServiceApi(@Named("gson") retrofit: Retrofit): ServiceApi {
+        return retrofit.create(ServiceApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserInfoApi( @Named("gson") retrofit: Retrofit): UserInfoApi {
+        return retrofit.create(UserInfoApi::class.java)
+    }
+
+}*/

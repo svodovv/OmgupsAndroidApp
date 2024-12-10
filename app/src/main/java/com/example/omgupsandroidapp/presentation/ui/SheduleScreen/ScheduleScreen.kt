@@ -138,7 +138,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
-                            Text("8:0")
+                            Text("8:00")
                         }
                         Row {
                             Text("9:35")

@@ -1,6 +1,7 @@
 package com.example.omgupsandroidapp.domain.use_case.service.academicPlan
 
 import android.util.Log
+import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.toAcademicPlanDtoItem
 import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.toAcademicPlanModel
 import com.example.omgupsandroidapp.data.repository.ServiceRepositoryImpl
 import com.omgupsapp.common.Resource
@@ -15,10 +16,10 @@ class AcademicPlanUseCase @Inject constructor(
     operator fun invoke() = flow {
         try{
             emit(Resource.Loading())
-            val academicPlanList = serviceRepositoryImpl.getAcademicPlan().map {
-                it.toAcademicPlanModel()
+            val academicPlanListAll = serviceRepositoryImpl.getAcademicPlan().map {
+                it.toAcademicPlanDtoItem()
             }
-            emit(Resource.Success(academicPlanList))
+            emit(Resource.Success(academicPlanListAll))
         } catch (e: IOException) {
             emit(Resource.Error(e.localizedMessage ?: "IO Exception"))
             Log.e("GetScholarshipUseCase", "IO Exception $e")

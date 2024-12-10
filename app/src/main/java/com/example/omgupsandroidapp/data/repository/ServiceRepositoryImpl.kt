@@ -4,6 +4,7 @@ import com.example.omgupsandroidapp.data.local.Room.Cache.DataScheduleDao
 import com.example.omgupsandroidapp.data.local.Room.Cache.ScheduleEntity
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi
 import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.AcademicPlanDto
+import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.AcademicPlanDtoItem
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto

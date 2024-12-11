@@ -3,9 +3,13 @@ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Aca
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -74,11 +78,11 @@ fun AcademicPlanScreen(
                     ) {
                         Text(
                             text = currentacademicPlan[course].name,
-                            // style = MaterialTheme.typography,
                             modifier = Modifier.padding(bottom = 8.dp),
                             textAlign = TextAlign.Center
                         )
                         academicPlan[course].forEach { discpSemestr ->
+
                             Row(
                                 modifier = Modifier
                                     .fillMaxSize(),
@@ -87,13 +91,7 @@ fun AcademicPlanScreen(
                             {
                                 Text(text = discpSemestr.key)
                             }
-                            /*Divider(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        horizontal = 8.dp,
-                                    ), thickness = 1.dp, Color.Black
-                            )*/
+                            Spacer(modifier = Modifier.padding(5.dp))
                             Row(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -106,29 +104,22 @@ fun AcademicPlanScreen(
                             ) {
                                 Column(
                                     modifier = Modifier
-                                        .padding(8.dp)
-                                        .weight(6f),
-                                    verticalArrangement = Arrangement.Center
+                                        .weight(0.7f),
+                                    horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                    Row {
                                         Text(text = "Вид нагрузки/Контроля")
-                                    }
                                 }
                                 Column(
                                     modifier = Modifier
-                                        .weight(4f),
-                                    verticalArrangement = Arrangement.Bottom
+                                        .weight(0.3f),
+                                    horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     Text(text = "Количество часов")
                                 }
+                                Spacer(modifier = Modifier.padding(end = 10.dp))
                             }
 
-
-                            var mapDis: MutableMap<String, Discipline>;
-                            //Log.e("htmlContent", entris.value[0].toString())
-
-
-                            for (size in discpSemestr.value.indices) {
+                           /* for (size in discpSemestr.value.indices) {
 
 
                                 if (discpSemestr.value[size].name.toString() == discpSemestr.value[size].name.toString())
@@ -145,9 +136,11 @@ fun AcademicPlanScreen(
                                             )
                                         )
                                     )
-                            }
-                            Log.e("htmlContent", discipline.toString())
-                                discipline.forEach { disciplina ->
+                            }*/
+                            val result = discpSemestr.value.groupBy { it.name }
+                            Log.e("htmlContent", result.toString())
+                            Spacer(modifier = Modifier.padding(5.dp))
+                            result.forEach { disciplina ->
                                     Card(
                                         /*modifier = Modifier
                                         .size(300.dp)
@@ -164,7 +157,8 @@ fun AcademicPlanScreen(
                                                 .background(
                                                     MaterialTheme.colorScheme.surfaceVariant,
                                                     shape = RoundedCornerShape(20.dp)
-                                                ),
+                                                )
+                                                .padding(5.dp),
                                         ) {
 
                                             Row(
@@ -173,50 +167,81 @@ fun AcademicPlanScreen(
                                             ) {
                                                 Text(
                                                     text = disciplina.key.toString(),
-                                                    color = Color.Black
+                                                    color = Color.Black,
+                                                    textAlign = TextAlign.Center
                                                 )
                                             }
-                                            for (sizeload in disciplina.value.indices) {
-                                            Row(
-                                                horizontalArrangement = Arrangement.Center
+                                            Column(
+                                                modifier = Modifier.fillMaxSize(),
                                             )
                                             {
-                                                    Column(
-                                                        modifier = Modifier.fillMaxSize()
+                                                for (sizeload in disciplina.value.indices) {
+                                                    Row(
+                                                        modifier = Modifier.fillMaxSize(),
+                                                        verticalAlignment = Alignment.CenterVertically
                                                     ) {
-                                                        Row(
-                                                            horizontalArrangement = Arrangement.Center
+                                                        Column(
+                                                            modifier = Modifier.fillMaxWidth(
+                                                                0.7f
+                                                            ),
+                                                            horizontalAlignment = Alignment.CenterHorizontally
                                                         ) {
                                                             Text(
-                                                                text = discpSemestr.value[sizeload].load.toString()
+                                                                text = disciplina.value[sizeload].load.toString(),
+                                                                textAlign = TextAlign.Center
                                                             )
                                                         }
-                                                        Row(
-                                                            horizontalArrangement = Arrangement.Center
+                                                        /*Row(
+                                                                modifier = Modifier.fillMaxWidth(
+                                                                    0.6f
+                                                                ),
+                                                                horizontalArrangement = Arrangement.Center
+
+                                                            ) {
+                                                                Text(
+                                                                    text = disciplina.value[sizeload].IsControl.toString()
+                                                                )
+                                                            }*/
+
+
+                                                        /*VerticalDivider(
+                                                            modifier = Modifier
+                                                                .width(1.dp)
+                                                                .height(IntrinsicSize.Min), // Ограничиваем высоту делителя
+                                                            thickness = 1.dp,
+                                                            color = Color.Black
+                                                        )*/
+                                                        Box(
+                                                            modifier = Modifier
+                                                                .fillMaxHeight()
+                                                                .width(1 .dp)
+                                                                .background(color = Color.Black)
+                                                        )
+                                                        Column(
+                                                            modifier = Modifier.fillMaxSize(),
+                                                                //0.3f).background(color = Color.Red),
+                                                            horizontalAlignment = Alignment.CenterHorizontally
                                                         ) {
-                                                            Text(
-                                                                text = discpSemestr.value[sizeload].IsControl.toString()
-                                                            )
+                                                            if (disciplina.value[sizeload].load == "Зачет" || disciplina.value[sizeload].load == "Экзамен"
+                                                                && disciplina.value[sizeload].IsControl == true ) {
+                                                                Text(
+                                                                    text = "+",
+                                                                    color = Color.Black,
+                                                                )
+                                                            }else{
+                                                                Text(
+                                                                    text = disciplina.value[sizeload].amount.toString(),
+                                                                    color = Color.Black,
+                                                                    //textAlign = TextAlign.Center
+                                                                )
+                                                            }
                                                         }
                                                     }
-                                                    VerticalDivider(
-                                                        modifier = Modifier
-                                                            .fillMaxWidth()
-                                                            .padding(
-                                                                horizontal = 8.dp,
-                                                            ), thickness = 1.dp, Color.Black
-                                                    )
-                                                    Column() {
-                                                        Row(
-                                                            modifier = Modifier
-                                                                .weight(4f)
-                                                        ) {
-                                                            Text(text = discpSemestr.value[sizeload].amount.toString())
-                                                        }
                                                     }
                                                 }
                                             }
                                         }
+                                Spacer(modifier = Modifier.padding(5.dp))
                                     }
                                 }
                                 /*for (size in entris.value.indices) {
@@ -287,7 +312,6 @@ fun AcademicPlanScreen(
                     }
                 }
             }*/
-            }
 
         }else{
             LoadingScreen()

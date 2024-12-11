@@ -1,6 +1,10 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen
 
+//import androidx.compose.material3.HorizontalDivider
+//import androidx.compose.material3.VerticalDivider
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,14 +25,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,12 +46,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.Discipline
 import com.example.omgupsandroidapp.domain.model.service.AcademicPlanModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import java.sql.Driver
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AcademicPlanScreen(
     navController: NavController,
@@ -79,17 +91,24 @@ fun AcademicPlanScreen(
                         Text(
                             text = currentacademicPlan[course].name,
                             modifier = Modifier.padding(bottom = 8.dp),
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Black
                         )
                         academicPlan[course].forEach { discpSemestr ->
 
                             Row(
                                 modifier = Modifier
-                                    .fillMaxSize(),
+                                    .fillMaxSize()
+                                    .padding(start = 16.dp),
                                 horizontalArrangement = Arrangement.Start
                             )
                             {
-                                Text(text = discpSemestr.key)
+                                Text(
+                                    text = discpSemestr.key,
+                                    color = Color.Blue,
+                                    fontWeight = FontWeight.Black
+                                )
                             }
                             Spacer(modifier = Modifier.padding(5.dp))
                             Row(
@@ -151,6 +170,9 @@ fun AcademicPlanScreen(
                                     colors = CardDefaults.cardColors(containerColor =MaterialTheme.colorScheme.surfaceVariant)
                                         //verticalAlignment = Alignment.CenterVertically*/
                                     ) {
+                                        var isVisible by remember {
+                                            mutableStateOf(false)
+                                        }
                                         Column(
                                             modifier = Modifier
                                                 .fillMaxSize()
@@ -160,38 +182,76 @@ fun AcademicPlanScreen(
                                                 )
                                                 .padding(5.dp),
                                         ) {
-
                                             Row(
                                                 modifier = Modifier.fillMaxSize(),
                                                 horizontalArrangement = Arrangement.Center
                                             ) {
-                                                Text(
-                                                    text = disciplina.key.toString(),
-                                                    color = Color.Black,
-                                                    textAlign = TextAlign.Center
-                                                )
-                                            }
-                                            Column(
-                                                modifier = Modifier.fillMaxSize(),
-                                            )
-                                            {
-                                                for (sizeload in disciplina.value.indices) {
-                                                    Row(
-                                                        modifier = Modifier.fillMaxSize(),
-                                                        verticalAlignment = Alignment.CenterVertically
-                                                    ) {
-                                                        Column(
-                                                            modifier = Modifier.fillMaxWidth(
-                                                                0.7f
+                                                Column(
+                                                    modifier = Modifier.weight(0.9f),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Text(
+                                                        text = disciplina.key.toString(),
+                                                        color = Color.Black,
+                                                        textAlign = TextAlign.Center,
+                                                        fontWeight = FontWeight.Bold
+                                                    )
+                                                }
+                                                Column(
+                                                    modifier = Modifier.weight(0.1f)
+                                                ) {
+                                                    IconButton(onClick = {
+                                                        isVisible = !isVisible
+                                                    }) {
+                                                        Icon(
+                                                            painter = painterResource(
+                                                                id = if (isVisible) R.drawable.baseline_keyboard_arrow_down_24
+                                                                else R.drawable.baseline_keyboard_arrow_up_24
                                                             ),
-                                                            horizontalAlignment = Alignment.CenterHorizontally
-                                                        ) {
-                                                            Text(
-                                                                text = disciplina.value[sizeload].load.toString(),
-                                                                textAlign = TextAlign.Center
-                                                            )
-                                                        }
-                                                        /*Row(
+                                                            contentDescription = stringResource(R.string.arrow_in_order_card),
+                                                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                                        )
+                                                    }
+                                                }
+                                            }
+
+
+                                                AnimatedVisibility(isVisible) {
+                                                    Column(
+                                                        modifier = Modifier.fillMaxSize(),
+                                                    )
+                                                    {
+
+                                                        for (sizeload in disciplina.value.indices) {
+                                                            Row(
+                                                                modifier = Modifier.fillMaxSize(),
+                                                                verticalAlignment = Alignment.CenterVertically
+                                                            ) {
+                                                                Column(
+                                                                    modifier = Modifier.fillMaxWidth(
+                                                                        0.7f
+                                                                    ),
+                                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                                ) {
+
+                                                                    if (disciplina.value[sizeload].load == "Зачет" || disciplina.value[sizeload].load == "Экзамен"
+                                                                        && disciplina.value[sizeload].IsControl == true
+                                                                    ) {
+                                                                        Text(
+                                                                            text = "Вид контроля",
+                                                                            color = Color.Black,
+                                                                            fontWeight= FontWeight.Bold
+                                                                        )
+                                                                    } else {
+                                                                        Text(
+                                                                            text = disciplina.value[sizeload].load.toString(),
+                                                                            textAlign = TextAlign.Center,
+                                                                            color = Color.Black,
+                                                                        )
+                                                                    }
+
+                                                                }
+                                                                /*Row(
                                                                 modifier = Modifier.fillMaxWidth(
                                                                     0.6f
                                                                 ),
@@ -204,43 +264,46 @@ fun AcademicPlanScreen(
                                                             }*/
 
 
-                                                        /*VerticalDivider(
+                                                                /*VerticalDivider(
                                                             modifier = Modifier
                                                                 .width(1.dp)
                                                                 .height(IntrinsicSize.Min), // Ограничиваем высоту делителя
                                                             thickness = 1.dp,
                                                             color = Color.Black
                                                         )*/
-                                                        Box(
-                                                            modifier = Modifier
-                                                                .fillMaxHeight()
-                                                                .width(1 .dp)
-                                                                .background(color = Color.Black)
-                                                        )
-                                                        Column(
-                                                            modifier = Modifier.fillMaxSize(),
-                                                                //0.3f).background(color = Color.Red),
-                                                            horizontalAlignment = Alignment.CenterHorizontally
-                                                        ) {
-                                                            if (disciplina.value[sizeload].load == "Зачет" || disciplina.value[sizeload].load == "Экзамен"
-                                                                && disciplina.value[sizeload].IsControl == true ) {
-                                                                Text(
-                                                                    text = "+",
-                                                                    color = Color.Black,
+                                                                Box(
+                                                                    modifier = Modifier
+                                                                        .fillMaxHeight()
+                                                                        .width(1.dp)
+                                                                        .background(color = Color.Black)
                                                                 )
-                                                            }else{
-                                                                Text(
-                                                                    text = disciplina.value[sizeload].amount.toString(),
-                                                                    color = Color.Black,
-                                                                    //textAlign = TextAlign.Center
-                                                                )
+                                                                Column(
+                                                                    modifier = Modifier.fillMaxSize(),
+                                                                    //0.3f).background(color = Color.Red),
+                                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                                ) {
+                                                                    if (disciplina.value[sizeload].IsControl == true) {
+                                                                        Text(
+                                                                            text = disciplina.value[sizeload].load.toString(),
+                                                                            color = Color.Black,
+                                                                            fontWeight= FontWeight.Bold
+                                                                        )
+                                                                    } else {
+                                                                        Text(
+                                                                            text = disciplina.value[sizeload].amount.toString(),
+                                                                            color = Color.Black,
+                                                                            //textAlign = TextAlign.Center
+                                                                        )
+                                                                    }
+                                                                }
+                                                                Spacer(modifier = Modifier.padding(5.dp))
                                                             }
                                                         }
-                                                    }
                                                     }
                                                 }
                                             }
                                         }
+
                                 Spacer(modifier = Modifier.padding(5.dp))
                                     }
                                 }

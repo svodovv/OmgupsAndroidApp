@@ -6,8 +6,8 @@ data class SheduleModel (
     @SerializedName("day_of_week")
     var day_of_week: String,
     @SerializedName("guid")
-    val guid: String,
-    @SerializedName("id")
+   // val guid: String,
+  //  @SerializedName("id")
     val id: Int,
     @SerializedName("sgroup")
     val sgroup: String,

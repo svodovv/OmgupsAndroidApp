@@ -10,7 +10,7 @@ open class SheduleDto : ArrayList<ShedelItem>()
 @Entity(tableName = "schedule")
 data class ShedelItem(
     val day_of_week: String,
-    val guid: String,
+   // val guid: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val sgroup: String,
@@ -22,7 +22,7 @@ data class ShedelItem(
 fun ShedelItem.toSheduleModel(): SheduleModel {
     return SheduleModel(
         day_of_week = day_of_week,
-        guid = guid,
+      //  guid = guid,
         id = id,
         sgroup = sgroup,
         subj = subj,

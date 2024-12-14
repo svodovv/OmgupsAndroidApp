@@ -12,7 +12,7 @@ class RoomScheduleDataSourse(private val dataScheduleDao : DataScheduleDao) : Sc
         return dataScheduleDao.saveAllSchedule(response.map {
             ScheduleEntity(
                 day_of_week = it.day_of_week,
-                guid = it.guid,
+                //guid = it.guid,
                 id = it.id,
                 sgroup = it.sgroup,
                 subj = it.subj,

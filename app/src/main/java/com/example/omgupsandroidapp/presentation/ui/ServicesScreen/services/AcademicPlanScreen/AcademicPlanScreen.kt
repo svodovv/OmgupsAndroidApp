@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -53,7 +54,7 @@ import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import java.sql.Driver
 
-@OptIn(ExperimentalFoundationApi::class)
+/*@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AcademicPlanScreen(
     navController: NavController,
@@ -133,7 +134,7 @@ fun AcademicPlanScreen(
                                         .weight(0.3f),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                    Text(text = "Количество часов")
+                                    Text(text = "Количество часов",textAlign = TextAlign.Center)
                                 }
                                 Spacer(modifier = Modifier.padding(end = 10.dp))
                             }
@@ -184,11 +185,12 @@ fun AcademicPlanScreen(
                                         ) {
                                             Row(
                                                 modifier = Modifier.fillMaxSize(),
-                                                horizontalArrangement = Arrangement.Center
+                                                horizontalArrangement = Arrangement.Center,
                                             ) {
                                                 Column(
-                                                    modifier = Modifier.weight(0.9f),
-                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                    modifier = Modifier.weight(0.8f),
+                                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                                    verticalArrangement = Arrangement.Top
                                                 ) {
                                                     Text(
                                                         text = disciplina.key.toString(),
@@ -196,17 +198,19 @@ fun AcademicPlanScreen(
                                                         textAlign = TextAlign.Center,
                                                         fontWeight = FontWeight.Bold
                                                     )
+
                                                 }
                                                 Column(
-                                                    modifier = Modifier.weight(0.1f)
+                                                    modifier = Modifier.fillMaxSize(0.075f)
                                                 ) {
                                                     IconButton(onClick = {
                                                         isVisible = !isVisible
-                                                    }) {
+                                                    },
+                                                        modifier = Modifier.size(35.dp)) {
                                                         Icon(
                                                             painter = painterResource(
-                                                                id = if (isVisible) R.drawable.baseline_keyboard_arrow_down_24
-                                                                else R.drawable.baseline_keyboard_arrow_up_24
+                                                                id = if (isVisible) R.drawable. baseline_keyboard_arrow_up_24
+                                                                else R.drawable.baseline_keyboard_arrow_down_24
                                                             ),
                                                             contentDescription = stringResource(R.string.arrow_in_order_card),
                                                             tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -217,12 +221,10 @@ fun AcademicPlanScreen(
 
 
                                                 AnimatedVisibility(isVisible) {
-                                                    Column(
-                                                        modifier = Modifier.fillMaxSize(),
-                                                    )
+                                                    Column()
                                                     {
-
                                                         for (sizeload in disciplina.value.indices) {
+                                                            Spacer(modifier = Modifier.padding(2.dp))
                                                             Row(
                                                                 modifier = Modifier.fillMaxSize(),
                                                                 verticalAlignment = Alignment.CenterVertically
@@ -233,15 +235,11 @@ fun AcademicPlanScreen(
                                                                     ),
                                                                     horizontalAlignment = Alignment.CenterHorizontally
                                                                 ) {
-
-                                                                    if (disciplina.value[sizeload].load == "Зачет" || disciplina.value[sizeload].load == "Экзамен"
+                                                                    if (disciplina.value[sizeload].load == "Зачет"
+                                                                        || disciplina.value[sizeload].load == "Экзамен"
                                                                         && disciplina.value[sizeload].IsControl == true
                                                                     ) {
-                                                                        Text(
-                                                                            text = "Вид контроля",
-                                                                            color = Color.Black,
-                                                                            fontWeight= FontWeight.Bold
-                                                                        )
+
                                                                     } else {
                                                                         Text(
                                                                             text = disciplina.value[sizeload].load.toString(),
@@ -271,23 +269,15 @@ fun AcademicPlanScreen(
                                                             thickness = 1.dp,
                                                             color = Color.Black
                                                         )*/
-                                                                Box(
-                                                                    modifier = Modifier
-                                                                        .fillMaxHeight()
-                                                                        .width(1.dp)
-                                                                        .background(color = Color.Black)
-                                                                )
+
                                                                 Column(
                                                                     modifier = Modifier.fillMaxSize(),
                                                                     //0.3f).background(color = Color.Red),
                                                                     horizontalAlignment = Alignment.CenterHorizontally
                                                                 ) {
-                                                                    if (disciplina.value[sizeload].IsControl == true) {
-                                                                        Text(
-                                                                            text = disciplina.value[sizeload].load.toString(),
-                                                                            color = Color.Black,
-                                                                            fontWeight= FontWeight.Bold
-                                                                        )
+                                                                    if (disciplina.value[sizeload].load == "Зачет"
+                                                                        || disciplina.value[sizeload].load == "Экзамен"
+                                                                        && disciplina.value[sizeload].IsControl == true) {
                                                                     } else {
                                                                         Text(
                                                                             text = disciplina.value[sizeload].amount.toString(),
@@ -296,14 +286,59 @@ fun AcademicPlanScreen(
                                                                         )
                                                                     }
                                                                 }
-                                                                Spacer(modifier = Modifier.padding(5.dp))
+                                                               // Spacer(modifier = Modifier.padding(5.dp))
                                                             }
                                                         }
                                                     }
                                                 }
+                                            for (sizeload in disciplina.value.indices) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxWidth(0.9f),
+                                                    //.background(color = Color.Red),
+                                                    //verticalAlignment = Alignment.Top,
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Row(
+                                                        modifier = Modifier
+                                                            .fillMaxSize(),
+                                                        horizontalArrangement = Arrangement.Center
+                                                        //verticalArrangement = Arrangement.Top,
+                                                        //horizontalAlignment = Alignment.CenterHorizontally
+                                                    ) {
+                                                        if (disciplina.value[sizeload].load == "Зачет" || disciplina.value[sizeload].load == "Экзамен"
+                                                            && disciplina.value[sizeload].IsControl == true
+                                                        ) {
+                                                            Text(
+                                                                text = "Вид контроля : ",
+                                                                color = Color.Black,
+                                                                fontWeight = FontWeight.Bold
+                                                            )
+                                                        }
+
+                                                        /* Column(
+                                                        modifier = Modifier.fillMaxWidth(),
+                                                        //0.3f),
+                                                        horizontalAlignment = Alignment.CenterHorizontally
+                                                    ) {*/
+                                                        if (disciplina.value[sizeload].IsControl == true
+                                                            && disciplina.value[sizeload].load != "Курсовая работа"
+                                                        ) {
+                                                            Text(
+                                                                text = disciplina.value[sizeload].load.toString(),
+                                                                color = Color.Black,
+                                                                fontWeight = FontWeight.Bold
+                                                            )
+                                                        } else {
+
+                                                        }
+                                                    }
+                                                   // }
+                                                    //
+                                                // Spacer(modifier = Modifier.padding(5.dp))
+                                                }
+                                            }
                                             }
                                         }
-
                                 Spacer(modifier = Modifier.padding(5.dp))
                                     }
                                 }
@@ -386,4 +421,4 @@ fun AcademicPlanScreen(
 fun CreateSubjectBox(semestr: String, subchect :List<AcademicPlanModel>)
 {
 
-}
+}*/

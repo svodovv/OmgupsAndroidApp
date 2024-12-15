@@ -6,14 +6,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -31,6 +37,7 @@ import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul
+import org.xmlpull.v1.sax2.Driver
 import java.util.Calendar
 import java.util.Locale
 
@@ -116,7 +123,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
         modifier = Modifier
             .padding(10.dp, 10.dp)
             .fillMaxSize(1f)
-            .background(color = Color(0xFF3D6CB9), shape = RoundedCornerShape(16.dp))
+            .background(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(16.dp))
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,
@@ -161,7 +168,8 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                                     color = Color(0xFFBAEAFF)
                                 )
                         ) {
-                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
+                            //val sh = scheduleItem.subj.substringBefore(" a.")
+                            Text(scheduleItem.subj.substringBefore(" a."), color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
                         }
                     }
                 }
@@ -195,7 +203,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                                 .fillMaxSize()
                                 .background(
                                     shape = RoundedCornerShape(8.dp),
-                                    color = Color(0xFFBAEAFF)
+                                    color = MaterialTheme.colorScheme.surfaceVariant
                                 )
                         ) {
                             Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
@@ -232,7 +240,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                                 .fillMaxSize()
                                 .background(
                                     shape = RoundedCornerShape(8.dp),
-                                    color = Color(0xFFBAEAFF)
+                                    color = MaterialTheme.colorScheme.surfaceVariant
                                 )
                         ) {
                             Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
@@ -269,7 +277,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                                 .fillMaxSize()
                                 .background(
                                     shape = RoundedCornerShape(8.dp),
-                                    color = Color(0xFFBAEAFF)
+                                    color = MaterialTheme.colorScheme.surfaceVariant
                                 )
                         ) {
                             Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
@@ -291,7 +299,15 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                         Row {
                             Text("17:15")
                         }
+                        VerticalDivider(
+                            modifier = Modifier
+                                .width(1.dp)
+                                .height(IntrinsicSize.Min), // Ограничиваем высоту делителя
+                            thickness = 10.dp,
+                            color = Color.Black
+                        )
                     }
+
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
@@ -306,7 +322,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                                 .fillMaxSize()
                                 .background(
                                     shape = RoundedCornerShape(8.dp),
-                                    color = Color(0xFFBAEAFF)
+                                    color = MaterialTheme.colorScheme.surfaceVariant
                                 )
                         ) {
                             Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))

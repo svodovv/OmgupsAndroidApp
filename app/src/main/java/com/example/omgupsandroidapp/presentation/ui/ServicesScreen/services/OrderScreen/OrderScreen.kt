@@ -3,6 +3,7 @@ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Ord
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +19,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -38,7 +42,7 @@ fun OrderScreen(
 ) {
     val orderState = orderViewModel.orderState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { orderState.value.orderList.size })
-
+    var currentPage = remember { mutableStateOf(0) }
 
     Column(
         modifier = Modifier
@@ -64,6 +68,7 @@ fun OrderScreen(
                             .padding(16.dp),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                     ) {
+
                         Column(modifier = Modifier.fillMaxWidth()) {
 
                                 Text(
@@ -109,7 +114,13 @@ fun OrderScreen(
                                 }
                             }
                         }
+
                     }
+                }
+                Column(
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    DynamicRowPage(pagerState.currentPage,pagerState.pageCount)
                 }
             }
         } else {

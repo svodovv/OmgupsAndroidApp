@@ -3,6 +3,7 @@ package com.omgupsapp.presentation.ui.SheduleScreen
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,13 +16,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.Divider
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,12 +35,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.omgupsandroidapp.data.remote.dto.schedule.ShedelItem
 import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
-import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul
-import org.xmlpull.v1.sax2.Driver
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.Calendar
 import java.util.Locale
 
@@ -123,7 +125,10 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
         modifier = Modifier
             .padding(10.dp, 10.dp)
             .fillMaxSize(1f)
-            .background(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(16.dp))
+            .background(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = RoundedCornerShape(16.dp)
+            )
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,
@@ -132,11 +137,14 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                 .padding(20.dp, 10.dp),
 
             ) {
-            Text(dayOfWeek, fontSize = 20.sp)
+
+            Text(getCurrentDate(dayOfWeek), fontSize = 20.sp)
         }
         for (scheduleItem in schedule) {
             when (scheduleItem.time) {
-                0 -> Row {
+                0 -> Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ){
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
@@ -151,6 +159,12 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                             Text("9:35")
                         }
                     }
+                    VerticalDivider(
+                        Modifier
+                            .width(0.dp)
+                            .height(38.dp)
+                            .border(width = 2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    )
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
@@ -158,6 +172,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center,
@@ -165,127 +180,27 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                                 .fillMaxSize()
                                 .background(
                                     shape = RoundedCornerShape(8.dp),
-                                    color = Color(0xFFBAEAFF)
+                                    color = MaterialTheme.colorScheme.surfaceVariant
                                 )
                         ) {
                             //val sh = scheduleItem.subj.substringBefore(" a.")
-                            Text(scheduleItem.subj.substringBefore(" a."), color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
-                        }
-                    }
-                }
-
-                1 -> Row {
-                    Column(
-                        modifier = Modifier
-                            .padding(10.dp, 10.dp)
-                            .fillMaxSize(.25f),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Row {
-                            Text("9:45")
-                        }
-                        Row {
-                            Text("11:20")
-                        }
-                    }
-                    Column(
-                        modifier = Modifier
-                            .padding(10.dp, 10.dp)
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    shape = RoundedCornerShape(8.dp),
-                                    color = MaterialTheme.colorScheme.surfaceVariant
-                                )
-                        ) {
                             Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
                         }
                     }
                 }
 
-                2 -> Row {
-                    Column(
-                        modifier = Modifier
-                            .padding(10.dp, 10.dp)
-                            .fillMaxSize(.25f),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Row {
-                            Text("11:30")
-                        }
-                        Row {
-                            Text("13:05")
-                        }
-                    }
-                    Column(
-                        modifier = Modifier
-                            .padding(10.dp, 10.dp)
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    shape = RoundedCornerShape(8.dp),
-                                    color = MaterialTheme.colorScheme.surfaceVariant
-                                )
-                        ) {
-                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
-                        }
-                    }
-                }
+                1 -> OneDayShedule("9:45","11:20", scheduleItem)
 
-                3 -> Row {
-                    Column(
-                        modifier = Modifier
-                            .padding(10.dp, 10.dp)
-                            .fillMaxSize(.25f),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Row {
-                            Text("13:55")
-                        }
-                        Row {
-                            Text("15:30")
-                        }
-                    }
-                    Column(
-                        modifier = Modifier
-                            .padding(10.dp, 10.dp)
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    shape = RoundedCornerShape(8.dp),
-                                    color = MaterialTheme.colorScheme.surfaceVariant
-                                )
-                        ) {
-                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
-                        }
-                    }
-                }
 
-                4 -> Row {
+                2 -> OneDayShedule("11:30","13:05", scheduleItem)
+
+
+                3 -> OneDayShedule("13:55","15:30", scheduleItem)
+
+
+                4 -> OneDayShedule("15:40","17:15", scheduleItem)/*Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
@@ -307,7 +222,12 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                             color = Color.Black
                         )
                     }
-
+                    VerticalDivider(
+                        Modifier
+                            .width(0.dp)
+                            .height(38.dp)
+                            .border(width = 2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    )
                     Column(
                         modifier = Modifier
                             .padding(10.dp, 10.dp)
@@ -328,7 +248,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
                             Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
                         }
                     }
-                }
+                }*/
             }
         }
     }
@@ -352,40 +272,86 @@ fun TextInLazyColumns(
 
 @Composable
 fun OneDayShedule(
-    day_of_week: String,
+    beginTime : String,
+    endingTime: String,
+    scheduleItem : SheduleModel,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = Modifier
-            .padding(10.dp, 10.dp)
-            .fillMaxSize(1f)
-            .background(color = Color.Black, shape = RoundedCornerShape(16.dp))
+    Row(
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            horizontalArrangement = Arrangement.Start,
+        Column(
             modifier = Modifier
-                .fillMaxSize()
+                .padding(10.dp, 10.dp)
+                .fillMaxSize(.25f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
+            Row {
+                Text("15:40")
+            }
+            Row {
+                Text("17:15")
+            }
+            VerticalDivider(
+                modifier = Modifier
+                    .width(1.dp)
+                    .height(IntrinsicSize.Min), // Ограничиваем высоту делителя
+                thickness = 10.dp,
+                color = Color.Black
+            )
+        }
+        VerticalDivider(
+            Modifier
+                .width(0.dp)
+                .height(38.dp)
+                .border(width = 2.dp, MaterialTheme.colorScheme.primaryContainer)
+        )
+        Column(
+            modifier = Modifier
+                .padding(10.dp, 10.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(
+                        shape = RoundedCornerShape(8.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    )
             ) {
-
-                Row {
-                    Text(text = day_of_week)
-                }
-
+                Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
             }
         }
     }
 
 }
 
-fun getCurrentDate(): String {
+@Composable
+fun getCurrentDate(currentDay:String): String {
     val calendar = Calendar.getInstance()
     val day = calendar.get(Calendar.DAY_OF_MONTH)
-    val day_of_week = calendar.get(Calendar.DAY_OF_WEEK)
+    var dayresult by remember {
+        mutableStateOf("")
+    }
+    when(currentDay){
+        "Понедельник" -> dayresult = "${day.plus(0)}.Понедельник"
+        "Вторник" -> dayresult =  "${day.plus(1)}.Вторник"
+        "Среда" -> dayresult = "${day.plus(2)}.Cреда"
+        "Четверг" -> dayresult = "${day.plus(3)}.Четверг"
+        "Пятница" ->dayresult =  "${day.plus(4)}.Пятница"
+        "Суббота" ->dayresult =  "${day.plus(5)}.4Суббота"
+    }
+    return dayresult
+
+
+   /* val day_of_week =  LocalDate.now().dayOfWeek.name
+    val time = LocalDate.now().atTime(LocalTime.now())
     val month = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
-    val year = calendar.get(Calendar.YEAR)
-    return "$day." + "$month"
+    val year = calendar.get(Calendar.YEAR)*/
+        // return "$day." + "$day_of_week" + "$time"
 }

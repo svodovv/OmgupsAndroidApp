@@ -328,25 +328,36 @@ fun OneDayShedule(
             }
         }
     }
-
 }
 
 @Composable
 fun getCurrentDate(currentDay:String): String {
     val calendar = Calendar.getInstance()
     val day = calendar.get(Calendar.DAY_OF_MONTH)
+    val month = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
     var dayresult by remember {
         mutableStateOf("")
     }
-    when(currentDay){
-        "Понедельник" -> dayresult = "${day.plus(0)}.Понедельник"
-        "Вторник" -> dayresult =  "${day.plus(1)}.Вторник"
-        "Среда" -> dayresult = "${day.plus(2)}.Cреда"
-        "Четверг" -> dayresult = "${day.plus(3)}.Четверг"
-        "Пятница" ->dayresult =  "${day.plus(4)}.Пятница"
-        "Суббота" ->dayresult =  "${day.plus(5)}.4Суббота"
-    }
-    return dayresult
+    var pn = "Понедельник"
+    var vt = "Вторник"
+    var mapDay = mapOf("Понедельник" to 1,"Вторник" to 2,"Среда" to 3,"Четверг" to 4,"Пятница" to 5,"Суббота" to 6,"Воскресенье" to 7)
+
+
+
+        mapDay.forEach { entity ->
+            when (currentDay) {
+                    entity.key -> dayresult = "${day.plus(1).minus(entity.value)}.${month}Понедельник"
+                    entity.key -> dayresult = "${day.plus(2).minus(entity.value)}.${month}Вторник"
+                    entity.key -> dayresult = "${day.plus(3).minus(entity.value)}.${month}Cреда"
+                    entity.key -> dayresult = "${day.plus(4).minus(entity.value)}.${month}Четверг"
+                    entity.key -> dayresult = "${day.plus(5).minus(entity.value)}.${month}Пятница"
+                    entity.key -> dayresult = "${day.plus(6).minus(entity.value)}.${month}Суббота"
+                    entity.key -> dayresult = "${day.plus(7).minus(entity.value)}.${month}Воскресенье"
+                }
+            }
+    Log.e("day", dayresult)
+            return dayresult
+
 
 
    /* val day_of_week =  LocalDate.now().dayOfWeek.name

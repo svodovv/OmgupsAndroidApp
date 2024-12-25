@@ -54,7 +54,7 @@ interface ServiceApi {
     @GET("spravkaapi/spravka/get-types")
     suspend fun getTypesSpravki(): TypeSpravkaDto
 
-    @GET("/spravkaapi/spravka/get-status")
+    @GET("spravkaapi/spravka/get-status")
     suspend fun getStatysSpravka(@Query("type") id: Int): StatusSpravakaDto
 
 

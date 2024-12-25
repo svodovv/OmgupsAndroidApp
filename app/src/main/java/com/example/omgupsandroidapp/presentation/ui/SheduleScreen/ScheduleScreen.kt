@@ -10,11 +10,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,9 +40,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
 import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.WeekFields
 import java.util.Calendar
 import java.util.Locale
 
@@ -59,8 +66,12 @@ fun ScheduleScreen(
 
     val nechet = sheduleState.value.sheduleList.filter { it.type_of_week == 0 }
     val chet = sheduleState.value.sheduleList.filter { it.type_of_week == 1 }
+    val mapWeek = mapOf("Нечетная неделя" to nechet,
+        "Четная неделя" to chet)
+    val allSchedule = listOf(mapWeek)
+    val pagerState = rememberPagerState(pageCount = { 2 })
     val dayOfWeek = listOf("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота")
-
+    val day =  LocalDate.now().dayOfWeek.value
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +81,15 @@ fun ScheduleScreen(
         Log.e("htmlContent", sheduleState.value.sheduleList.toString())
 
         //ServicesTopAppBar(title = "Расписание", navController = navController)
+        Log.e("checkWeek()", checkWeek().toString())
         if (sheduleState.value.sheduleList.isNotEmpty()) {
+            HorizontalPager(
+                state = pagerState,
+                //0key = { sheduleState.value.sheduleList[it].type_of_week },
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.Top,
+                beyondViewportPageCount = 2
+            ) { indexpage ->
             LazyColumn(
                 modifier = Modifier
                     .padding(0.dp, 60.dp)
@@ -79,40 +98,183 @@ fun ScheduleScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                    Column() {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(15.dp, 0.dp)
+                        Column(
                         ) {
-                            Text("Нечетная неделя", fontSize = 25.sp)
-                        }
-                        dayOfWeek.map { dayWeek ->
-                            val days = nechet.filter { it.day_of_week == dayWeek }
-                            Row {
-                                createDayBox(dayOfWeek = dayWeek, schedule = days)
+                            Spacer(modifier = Modifier.padding(5.dp))
+                            DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
+                            if (checkWeek() == 0 && indexpage == 0) {
+                               // allSchedule[].forEach { week ->
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(20.dp, 0.dp)
+                                ) {
+                                    Text("Нечетная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = nechet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day)
+                                    }
+                                }
+                                Spacer(modifier = Modifier.padding(vertical = 20.dp))
+                                /*
+                                dayOfWeek.map { dayWeek ->
+                                    val nechetdays = week.value.filter { it.type_of_week == checkWeek() }
+                                    val days = nechetdays.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day)
+                                    }
+                                }*/
+                                /*dayOfWeek.map { dayWeek ->
+                                    val days = nechet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day)
+                                    }
+                                }*/
+                                /*Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(15.dp, 0.dp)
+                                ) {
+                                    Text("Четная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = chet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day - 7)
+                                    }
+                                }*/
+                            //}
+                            }else if ( checkWeek() == 0 && indexpage == 1){
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(20.dp, 0.dp)
+                                ) {
+                                    Text("Четная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = chet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day - 7)
+                                    }
+                                }
+                                Spacer(modifier = Modifier.padding(vertical = 20.dp))
+                            }else if (checkWeek() == 1 && indexpage == 0){
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(20.dp, 0.dp)
+                                ) {
+                                    Text("Четная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = chet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day)
+                                    }
+                                }
+                                Spacer(modifier = Modifier.padding(vertical = 20.dp))
+                            }else if (checkWeek() == 1 && indexpage == 1){
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(20.dp, 0.dp)
+                                ) {
+                                    Text("Нечетная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = nechet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day-7)
+                                    }
+                                }
+                                Spacer(modifier = Modifier.padding(vertical = 20.dp))
+                            }
+                    }
+                       /* Column(
+                        ) {
+
+                            if (checkWeek() == 0) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(15.dp, 0.dp)
+                                ) {
+                                    Text("Нечетная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = nechet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day)
+                                    }
+                                }
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(15.dp, 0.dp)
+                                ) {
+                                    Text("Четная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = chet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day - 7)
+                                    }
+                                }
+                            } else {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(15.dp, 0.dp)
+                                ) {
+                                    Text("Четная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = chet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day)
+                                    }
+                                }
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(15.dp, 0.dp)
+                                ) {
+                                    Text("Нечетная неделя", fontSize = 25.sp)
+                                }
+                                dayOfWeek.map { dayWeek ->
+                                    val days = nechet.filter { it.day_of_week == dayWeek }
+                                    Row {
+                                        createDayBox(dayOfWeek = dayWeek, schedule = days, day - 7)
+                                    }
+                                }
                             }
                         }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(15.dp, 0.dp)
-                        ) {
-                            Text("Четная неделя", fontSize = 25.sp)
-                        }
-                        dayOfWeek.map { dayWeek ->
-                            val days = chet.filter { it.day_of_week == dayWeek }
-                            Row {
-                                createDayBox(dayOfWeek = dayWeek, schedule = days)
-                            }
-                        }
+                    */
                     }
                 }
             }
+
         } else {
             LoadingScreen()
         }
@@ -120,7 +282,8 @@ fun ScheduleScreen(
 }
 
 @Composable
-fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
+fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>,currentDay: Int) {
+
     Column(
         modifier = Modifier
             .padding(10.dp, 10.dp)
@@ -138,7 +301,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>) {
 
             ) {
 
-            Text(getCurrentDate(dayOfWeek), fontSize = 20.sp)
+            Text(getCurrentDate(dayOfWeek,currentDay.toLong()), fontSize = 20.sp)
         }
         for (scheduleItem in schedule) {
             when (scheduleItem.time) {
@@ -330,39 +493,78 @@ fun OneDayShedule(
     }
 }
 
-@Composable
-fun getCurrentDate(currentDay:String): String {
+/*@Composable
+fun getCurrentDate(currentDay:String,valu: Int): String {
     val calendar = Calendar.getInstance()
     val day = calendar.get(Calendar.DAY_OF_MONTH)
     val month = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
-    var dayresult by remember {
-        mutableStateOf("")
+    var dayresult = ""
+    //var mapDay = mapOf("Понедельник" to 1,"Вторник" to 2,"Среда" to 3,"Четверг" to 4,"Пятница" to 5,"Суббота" to 6,"Воскресенье" to 7)
+
+
+
+    //mapDay.forEach{entity ->
+    when (currentDay) {
+        "Понедельник" -> dayresult = "${day.minus(valu) + 1}.${month}Понедельник"
+        "Вторник" -> dayresult = "${day.minus(valu) + 2}.${month}Вторник"
+        "Среда" -> dayresult = "${day.minus(valu) + 3}.${month}Cреда"
+        "Четверг" -> dayresult = "${day.minus(valu) + 4}.${month}Четвер"
+        "Пятница" -> dayresult = "${day.minus(valu) + 5}.${month}Пятница"
+        "Суббота" -> dayresult = "${day.minus(valu) + 6}.${month}Суббота"
+        "Воскресенье" -> dayresult = "${day.minus(valu) + 7}.${month}Воскресенье"
     }
-    var pn = "Понедельник"
-    var vt = "Вторник"
-    var mapDay = mapOf("Понедельник" to 1,"Вторник" to 2,"Среда" to 3,"Четверг" to 4,"Пятница" to 5,"Суббота" to 6,"Воскресенье" to 7)
+    // }
 
 
+    return dayresult
+    // println(mapDay)
+    /* val day_of_week =  LocalDate.now().dayOfWeek.name
+     val time = LocalDate.now().atTime(LocalTime.now())
+     val month = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+     val year = calendar.get(Calendar.YEAR)*/
+    // return "$day." + "$day_of_week" + "$time"
+}*/
 
-        mapDay.forEach { entity ->
-            when (currentDay) {
-                    entity.key -> dayresult = "${day.plus(1).minus(entity.value)}.${month}Понедельник"
-                    entity.key -> dayresult = "${day.plus(2).minus(entity.value)}.${month}Вторник"
-                    entity.key -> dayresult = "${day.plus(3).minus(entity.value)}.${month}Cреда"
-                    entity.key -> dayresult = "${day.plus(4).minus(entity.value)}.${month}Четверг"
-                    entity.key -> dayresult = "${day.plus(5).minus(entity.value)}.${month}Пятница"
-                    entity.key -> dayresult = "${day.plus(6).minus(entity.value)}.${month}Суббота"
-                    entity.key -> dayresult = "${day.plus(7).minus(entity.value)}.${month}Воскресенье"
-                }
-            }
-    Log.e("day", dayresult)
-            return dayresult
+fun getCurrentDate(currentDay:String,valu: Long): String {
+    var dayresult = ""
 
+    val dtf = DateTimeFormatter.ofPattern("dd.MM.EEEE")
+    val now = LocalDate.now()// Текущая дата
 
+    when (currentDay) {
+        "Понедельник" -> dayresult = now.minusDays(valu).plusDays(1).format(dtf).toString()
+        "Вторник" -> dayresult = now.minusDays(valu).plusDays(2).format(dtf).toString()
+        "Среда"  -> dayresult = now.minusDays(valu).plusDays(3).format(dtf).toString()
+        "Четверг" -> dayresult = now.minusDays(valu).plusDays(4).format(dtf).toString()
+        "Пятница" -> dayresult = now.minusDays(valu).plusDays(5).format(dtf).toString()
+        "Суббота" -> dayresult = now.minusDays(valu).plusDays(6).format(dtf).toString()
+        "Воскресенье" -> dayresult = now.minusDays(valu).plusDays(7).format(dtf).toString()
+    }
+    return dayresult
 
-   /* val day_of_week =  LocalDate.now().dayOfWeek.name
-    val time = LocalDate.now().atTime(LocalTime.now())
-    val month = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
-    val year = calendar.get(Calendar.YEAR)*/
-        // return "$day." + "$day_of_week" + "$time"
+}
+
+fun checkWeek():Int {
+    val currentTime = LocalDateTime.now()
+    val currentYear = currentTime.year
+
+    // Определяем дату начала учебного года
+    val startOfSchoolYear: LocalDate
+    if (currentTime.monthValue < 9) {
+        startOfSchoolYear = LocalDate.of(currentYear - 1, 9, 1)
+    } else {
+        startOfSchoolYear = LocalDate.of(currentYear, 9, 1)
+    }
+
+    // Получаем номер недели для начала учебного года и текущей даты
+    val weekFields = WeekFields.of(Locale.getDefault())
+    val startWeek = startOfSchoolYear.get(weekFields.weekOfWeekBasedYear())
+    val currentWeek = currentTime.toLocalDate().get(weekFields.weekOfWeekBasedYear())
+
+    // Проверяем, четная ли неделя
+    if ((currentWeek - startWeek + 1) % 2 == 0) {
+        return  1
+    } else {
+        return 0
+    }
 }

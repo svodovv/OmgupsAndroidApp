@@ -3,7 +3,7 @@ package com.example.omgupsandroidapp.domain.model.user
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.google.gson.annotations.SerializedName
 
-data class UserProfileModel(
+/*data class UserProfileModel(
     val imageVector: ImageVector?,
     val name: String,
     val surname: String,
@@ -17,12 +17,10 @@ data class UserProfileModel(
     val statusEducation: String,
     val  lvlEducation: String,
     val course: Int
-) {
-
-}
+) */
 
 data class UserInfoModel(
-    val photoUrl: String,
+   // val photoUrl: String,
     val course: Int,
     val faculty: String,
     val formEducation: String,
@@ -32,3 +30,12 @@ data class UserInfoModel(
     val status: String,
     val username: String
 )
+
+data class UserPhotoUrlModel(
+    val photoUrl: String,
+    val status: Int
+)
+
+/*data class UserPhotoModel(
+    val photoUrl: String
+)*/

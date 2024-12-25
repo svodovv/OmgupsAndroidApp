@@ -1,11 +1,11 @@
 package com.example.omgupsandroidapp.data.remote.dto.user
 
+import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.domain.model.user.UserInfoModel
-import com.example.omgupsandroidapp.domain.model.user.UserProfileModel
+import com.example.omgupsandroidapp.domain.model.user.UserPhotoUrlModel
 import com.google.gson.annotations.SerializedName
 
 data class UserInfoDto(
-
     @SerializedName("Course")
     val course: Int,
     @SerializedName("Faculty")
@@ -17,16 +17,16 @@ data class UserInfoDto(
     @SerializedName("OrderNumber")
     val orderNumber: String,
     @SerializedName("RecordBook")
-    val recordBook: String,
+     val recordBook: String,
     @SerializedName("Status")
     val status: String,
     @SerializedName("Username")
     val username: String
 )
 
-fun UserInfoDto.toUserInfoModel(photoUrl: String): UserInfoModel {
+fun UserInfoDto.toUserInfoModel(): UserInfoModel {
     return UserInfoModel(
-        photoUrl = photoUrl,
+        //photoUrl = photoUrl,
         course = course,
         faculty = faculty,
         formEducation = formEducation,
@@ -35,5 +35,19 @@ fun UserInfoDto.toUserInfoModel(photoUrl: String): UserInfoModel {
         recordBook = recordBook,
         status = status,
         username = username
+    )
+}
+
+data class UserPhotoDto(
+    @SerializedName("path")
+    val photoUrl: String,
+    @SerializedName("status")
+    val status: Int
+)
+
+fun UserPhotoDto.toUserPhotoUrl(photoUrl : String): UserPhotoUrlModel {
+    return UserPhotoUrlModel(
+        photoUrl = photoUrl,
+        status = status
     )
 }

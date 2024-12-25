@@ -2,6 +2,7 @@ package com.omgupsapp.presentation.ui.userProfileScreen.composable
 
 import android.content.ClipData.Item
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
@@ -27,10 +28,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
@@ -54,8 +57,11 @@ fun UserProfileScreen(
     userProfileViewModel: UserProfileViewModel = hiltViewModel()
 ) {
     val userProfileState = userProfileViewModel.userProfileState.collectAsStateWithLifecycle().value
+    val userPhotoProfileState = userProfileViewModel.userPhotoState.collectAsStateWithLifecycle().value
     val scrollState = rememberScrollState()
     val orientation = LocalConfiguration.current.orientation
+
+    Log.e("htmlContent", userPhotoProfileState.userPhoto.photoUrl)
     when (orientation) {
         Configuration.ORIENTATION_PORTRAIT -> {
             Column(
@@ -66,85 +72,86 @@ fun UserProfileScreen(
                     .padding(paddingValues)
             ) {
                 if (userProfileState.userProfile != null) {
-
-                    userProfileState.userProfile.let { userProfile ->
-                        Box(
-                            modifier = Modifier.weight(3f),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
+                    userPhotoProfileState.let { userPhoto ->
+                        userProfileState.userProfile.let { userProfile ->
+                            Box(
+                                modifier = Modifier.weight(3f),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Row(
-                                    horizontalArrangement = Arrangement.Center
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                    Box(modifier = Modifier.size(135.dp)) {
-                                        CoilImage(
-                                            modifier = Modifier.fillMaxSize(),
-                                            imageUrl = userProfile.photoUrl,
-                                            contentDescription = stringResource(R.string.user_photo),
-                                            defaultImageResId = R.drawable.ic_outilineprofile
+                                    Row(
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
+                                        Box(modifier = Modifier.size(135.dp).background(shape = Shape.)) {
+                                            CoilImage(
+                                                modifier = Modifier.fillMaxSize(),
+                                                imageUrl = userPhoto.userPhoto.photoUrl,
+                                                contentDescription = stringResource(R.string.user_photo),
+                                                defaultImageResId = R.drawable.ic_outilineprofile
+                                            )
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.padding(5.dp))
+                                    Row(
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
+                                        Text(
+                                            text = userProfile.username.portable(2),
+                                            modifier = Modifier.fillMaxWidth(),
+                                            style = MaterialTheme.typography.titleLarge,
+                                            textAlign = TextAlign.Center,
+                                            color = MaterialTheme.colorScheme.surfaceVariant
                                         )
                                     }
                                 }
-                                Spacer(modifier = Modifier.padding(5.dp))
-                                Row(
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Text(
-                                        text = userProfile.username.portable(2),
-                                        modifier = Modifier.fillMaxWidth(),
-                                        style = MaterialTheme.typography.titleLarge,
-                                        textAlign = TextAlign.Center,
-                                        color = MaterialTheme.colorScheme.surfaceVariant
-                                    )
-                                }
                             }
-                        }
-                        Card(
-                            modifier = Modifier
-                                .weight(6f)
-                                .fillMaxSize(), shape = RoundedCornerShape(
-                                topStart = 38.dp,
-                                topEnd = 38.dp,
-                                bottomEnd = 0.dp,
-                                bottomStart = 0.dp
-                            )
-                        ) {
-
-                            Column(
+                            Card(
                                 modifier = Modifier
-                                    .background(MaterialTheme.colorScheme.surfaceVariant)
-                                    .fillMaxHeight()
-                                    .padding(10.dp)
+                                    .weight(6f)
+                                    .fillMaxSize(), shape = RoundedCornerShape(
+                                    topStart = 38.dp,
+                                    topEnd = 38.dp,
+                                    bottomEnd = 0.dp,
+                                    bottomStart = 0.dp
+                                )
                             ) {
-                                RowInProfile(
-                                    rowName = "Институт:",
-                                    title = userProfile.faculty,
-                                    dividerIsVisible = false
-                                )
-                                RowInProfile(rowName = "Группа:", title = userProfile.group)
-                                RowInProfile(
-                                    rowName = "Курс:",
-                                    title = userProfile.course.toString()
-                                )
-                                RowInProfile(
-                                    rowName = "Статус обучения:",
-                                    title = userProfile.status
-                                )
-                                RowInProfile(
-                                    rowName = "Форма обучения:",
-                                    title = userProfile.formEducation
-                                )
-                                RowInProfile(
-                                    rowName = "Зачетная книжка:",
-                                    title = userProfile.recordBook
-                                )
-                                RowInProfile(
-                                    rowName = "№ Приказа:",
-                                    title = userProfile.orderNumber
-                                )
 
+                                Column(
+                                    modifier = Modifier
+                                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                                        .fillMaxHeight()
+                                        .padding(10.dp)
+                                ) {
+                                    RowInProfile(
+                                        rowName = "Институт:",
+                                        title = userProfile.faculty,
+                                        dividerIsVisible = false
+                                    )
+                                    RowInProfile(rowName = "Группа:", title = userProfile.group)
+                                    RowInProfile(
+                                        rowName = "Курс:",
+                                        title = userProfile.course.toString()
+                                    )
+                                    RowInProfile(
+                                        rowName = "Статус обучения:",
+                                        title = userProfile.status
+                                    )
+                                    RowInProfile(
+                                        rowName = "Форма обучения:",
+                                        title = userProfile.formEducation
+                                    )
+                                    RowInProfile(
+                                        rowName = "Зачетная книжка:",
+                                        title = userProfile.recordBook
+                                    )
+                                    RowInProfile(
+                                        rowName = "№ Приказа:",
+                                        title = userProfile.orderNumber
+                                    )
+
+                                }
                             }
                         }
                     }
@@ -166,7 +173,7 @@ fun UserProfileScreen(
                     .padding(paddingValues)
             ) {
                 if (userProfileState.userProfile != null) {
-
+                    userPhotoProfileState.let { userPhoto ->
                     userProfileState.userProfile.let { userProfile ->
                     //    item {
                             Box(
@@ -182,7 +189,7 @@ fun UserProfileScreen(
                                         Box(modifier = Modifier.size(135.dp)) {
                                             CoilImage(
                                                 modifier = Modifier.fillMaxSize(),
-                                                imageUrl = userProfile.photoUrl,
+                                                imageUrl = userPhoto.userPhoto.photoUrl,
                                                 contentDescription = stringResource(R.string.user_photo),
                                                 defaultImageResId = R.drawable.ic_outilineprofile
                                             )
@@ -253,6 +260,7 @@ fun UserProfileScreen(
                             }
                         //}
                     }
+                        }
                         }
                 } else {
                     //item {

@@ -464,7 +464,8 @@ fun AcademicPlanScreen(
                 state = pagerState,
                 key ={ academicPlanState.value.AcademicPlanList[it].name },
                 modifier = Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.Top
+                verticalAlignment = Alignment.Top,
+                beyondViewportPageCount = pagerState.pageCount
             ) { index ->
                 currentPage.value = index
 

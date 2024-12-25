@@ -2,7 +2,7 @@ package com.example.omgupsandroidapp.data.remote.dto.user
 
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.omgupsandroidapp.domain.model.user.UserProfileModel
+
 
 data class UserProfileDto(
     val imageVector: ImageVector?,
@@ -20,7 +20,9 @@ data class UserProfileDto(
     val course: Int,
 )
 
-fun UserProfileDto.toUserProfileModel(): UserProfileModel {
+
+
+/*fun UserProfileDto.toUserProfileModel(): UserProfileModel {
     return UserProfileModel(
         imageVector = imageVector,
         name = name,
@@ -36,4 +38,4 @@ fun UserProfileDto.toUserProfileModel(): UserProfileModel {
         lvlEducation = lvlEducation,
         course = course,
     )
-}
+}*/

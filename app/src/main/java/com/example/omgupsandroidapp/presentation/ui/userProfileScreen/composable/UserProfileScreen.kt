@@ -84,7 +84,7 @@ fun UserProfileScreen(
                                     Row(
                                         horizontalArrangement = Arrangement.Center
                                     ) {
-                                        Box(modifier = Modifier.size(135.dp).background(shape = Shape.)) {
+                                        Box(modifier = Modifier.size(135.dp).background(shape = RoundedCornerShape(135.dp), color = MaterialTheme.colorScheme.primaryContainer)) {
                                             CoilImage(
                                                 modifier = Modifier.fillMaxSize(),
                                                 imageUrl = userPhoto.userPhoto.photoUrl,
@@ -186,7 +186,7 @@ fun UserProfileScreen(
                                     Row(
                                         horizontalArrangement = Arrangement.Center
                                     ) {
-                                        Box(modifier = Modifier.size(135.dp)) {
+                                        Box(modifier = Modifier.size(135.dp).background(shape = RoundedCornerShape(135.dp), color = MaterialTheme.colorScheme.primaryContainer)) {
                                             CoilImage(
                                                 modifier = Modifier.fillMaxSize(),
                                                 imageUrl = userPhoto.userPhoto.photoUrl,

@@ -50,7 +50,7 @@ import java.time.temporal.WeekFields
 import java.util.Calendar
 import java.util.Locale
 
-@SuppressLint("CoroutineCreationDuringComposition")
+@SuppressLint("CoroutineCreationDuringComposition", "NewApi")
 @Composable
 fun ScheduleScreen(
     navController: NavController,
@@ -72,14 +72,21 @@ fun ScheduleScreen(
     val pagerState = rememberPagerState(pageCount = { 2 })
     val dayOfWeek = listOf("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота")
     val day =  LocalDate.now().dayOfWeek.value
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(MaterialTheme.colorScheme.primaryContainer),
             //.padding(2.dp)
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.padding(0.dp, 35.dp))
+        Row(modifier = Modifier) {
+            DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
+        }
+        Spacer(modifier = Modifier.padding(0.dp, 2.dp))
         Log.e("htmlContent", sheduleState.value.sheduleList.toString())
-
         //ServicesTopAppBar(title = "Расписание", navController = navController)
         Log.e("checkWeek()", checkWeek().toString())
         if (sheduleState.value.sheduleList.isNotEmpty()) {
@@ -92,7 +99,7 @@ fun ScheduleScreen(
             ) { indexpage ->
             LazyColumn(
                 modifier = Modifier
-                    .padding(0.dp, 60.dp)
+                    //.padding(0.dp, 60.dp)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -101,7 +108,7 @@ fun ScheduleScreen(
                         Column(
                         ) {
                             Spacer(modifier = Modifier.padding(5.dp))
-                            DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
+
                             if (checkWeek() == 0 && indexpage == 0) {
                                // allSchedule[].forEach { week ->
                                 Row(
@@ -119,7 +126,7 @@ fun ScheduleScreen(
                                         createDayBox(dayOfWeek = dayWeek, schedule = days, day)
                                     }
                                 }
-                                Spacer(modifier = Modifier.padding(vertical = 20.dp))
+                                Spacer(modifier = Modifier.padding(vertical = 45.dp))
                                 /*
                                 dayOfWeek.map { dayWeek ->
                                     val nechetdays = week.value.filter { it.type_of_week == checkWeek() }
@@ -166,7 +173,7 @@ fun ScheduleScreen(
                                         createDayBox(dayOfWeek = dayWeek, schedule = days, day - 7)
                                     }
                                 }
-                                Spacer(modifier = Modifier.padding(vertical = 20.dp))
+                                Spacer(modifier = Modifier.padding(vertical = 45.dp))
                             }else if (checkWeek() == 1 && indexpage == 0){
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
@@ -183,7 +190,7 @@ fun ScheduleScreen(
                                         createDayBox(dayOfWeek = dayWeek, schedule = days, day)
                                     }
                                 }
-                                Spacer(modifier = Modifier.padding(vertical = 20.dp))
+                                Spacer(modifier = Modifier.padding(vertical = 45.dp))
                             }else if (checkWeek() == 1 && indexpage == 1){
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
@@ -200,7 +207,7 @@ fun ScheduleScreen(
                                         createDayBox(dayOfWeek = dayWeek, schedule = days, day-7)
                                     }
                                 }
-                                Spacer(modifier = Modifier.padding(vertical = 20.dp))
+                                Spacer(modifier = Modifier.padding(vertical = 45.dp))
                             }
                     }
                        /* Column(
@@ -433,6 +440,8 @@ fun TextInLazyColumns(
     }
 }
 
+
+
 @Composable
 fun OneDayShedule(
     beginTime : String,
@@ -525,7 +534,8 @@ fun getCurrentDate(currentDay:String,valu: Int): String {
     // return "$day." + "$day_of_week" + "$time"
 }*/
 
-fun getCurrentDate(currentDay:String,valu: Long): String {
+@SuppressLint("NewApi")
+fun getCurrentDate(currentDay:String, valu: Long): String {
     var dayresult = ""
 
     val dtf = DateTimeFormatter.ofPattern("dd.MM.EEEE")
@@ -544,6 +554,7 @@ fun getCurrentDate(currentDay:String,valu: Long): String {
 
 }
 
+@SuppressLint("NewApi")
 fun checkWeek():Int {
     val currentTime = LocalDateTime.now()
     val currentYear = currentTime.year

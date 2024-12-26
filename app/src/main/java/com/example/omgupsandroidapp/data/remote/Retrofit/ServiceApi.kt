@@ -43,18 +43,18 @@ interface ServiceApi {
     @GET("student/getschedule")
     suspend fun getShudule(): List<ScheduleEntity>
 
-    @POST("spravkaapi/spravka/create")
+    @POST("userapi/spravka/create")
     suspend fun postSpravka(
         @Body post: LoadSpravkaDto
     ): LoadSpravkaDto
 
-    @GET("spravkaapi/spravka/get-history")
+    @GET("userapi/spravka/get-history")
     suspend fun getReferenceHistory(@Query("type") id: Int): ReferenceHistoryDto
 
-    @GET("spravkaapi/spravka/get-types")
+    @GET("userapi/spravka/get-types")
     suspend fun getTypesSpravki(): TypeSpravkaDto
 
-    @GET("spravkaapi/spravka/get-status")
+    @GET("userapi/spravka/get-status")
     suspend fun getStatysSpravka(@Query("type") id: Int): StatusSpravakaDto
 
 

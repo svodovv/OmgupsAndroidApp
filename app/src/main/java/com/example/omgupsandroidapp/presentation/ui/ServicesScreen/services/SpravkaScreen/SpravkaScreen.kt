@@ -452,7 +452,7 @@ fun SpravkaScreen(
                     // Log.i("TAAAAG",history.referenceHistoryList[] )
                     ExpandableOrderTable(historylist1, "История справок по обучению")
                     Spacer(modifier = Modifier.size(20.dp, 10.dp))
-                    ExpandableOrderTable(listhistor, "История справок для военкомата")
+                    ExpandableOrderTable(historylist2, "История справок для военкомата")
                     Spacer(modifier = Modifier.size(20.dp, 100.dp))
                 }
 
@@ -817,9 +817,10 @@ fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String)
                         .padding(start = 8.dp, end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TextWithDynamicLineBreak(
-                        text = stringResource(R.string.History_spavki)
-                    )
+                    Text(text = hystoryType)
+                    /*TextWithDynamicLineBreak(
+                        text = stringResource()
+                    )*/
                     Spacer(
                         modifier = Modifier.weight(1f)
                     )

@@ -120,6 +120,16 @@ fun SpravkaScreen(
         "Да:На подписании",
         "Да:К выдаче",
     )
+
+    val listStatusSpravkaMilitary = listOf(
+        "Нет:Заявка уже подана.",
+        "Да:Создано",
+        "Да:В работе",
+        "Да:На подписании",
+        "Да:К выдаче",
+
+    )
+
     var indStatus0: Int = -1
     var indStatus1: Int = -1
 
@@ -380,7 +390,7 @@ fun SpravkaScreen(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Absolute.SpaceAround
                                 ) {
-                                    OutlinedTextField(
+                                    /*OutlinedTextField(
                                         modifier = Modifier
                                             .fillMaxWidth(.2f)
                                             .background(
@@ -399,7 +409,64 @@ fun SpravkaScreen(
                                                 color = Color.Black,
                                             )
                                         },
-                                    )
+                                    )*/
+                                    ExposedDropdownMenuBox(
+                                        expanded = expanded,
+                                        onExpandedChange = {
+                                            expanded = it
+                                        },
+                                        modifier = Modifier
+                                            .border(
+                                                2.dp,
+                                                shape = RoundedCornerShape(10.dp),
+                                                color = MaterialTheme.colorScheme.primary
+                                            )
+                                            .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                                    ) {
+                                        TextField(
+                                            value = InputSpravka1,
+                                            onValueChange = { },
+                                            readOnly = true,
+                                            trailingIcon = {
+                                                ExposedDropdownMenuDefaults.TrailingIcon(
+                                                    expanded = expanded
+                                                )
+                                            },
+                                            colors = ExposedDropdownMenuDefaults.textFieldColors(
+                                                unfocusedIndicatorColor = Color.Transparent,
+                                                focusedIndicatorColor = Color.Transparent,
+                                                unfocusedContainerColor = Color.Transparent,
+                                                focusedContainerColor = Color.Transparent
+                                            ),
+                                            modifier = Modifier
+                                                .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                                                .fillMaxWidth(.25f)
+                                                .menuAnchor()
+                                        )
+                                        /*IconButton(onClick = { expanded = true }) {
+                                                     Icon(Icons.Default., contentDescription = "Показать меню")
+                                                 }*/
+                                        ExposedDropdownMenu(
+                                            expanded = expanded,
+                                            onDismissRequest = { expanded = false },
+                                            modifier = Modifier
+                                                .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                                        ) {
+                                            DropdownMenuItem(onClick = {
+                                                InputSpravka1 = 1.toString()
+                                                expanded = false
+                                            },
+                                                text = { Text("1") }
+                                            )
+                                            Divider()
+                                            DropdownMenuItem(onClick = {
+                                                InputSpravka0 = 2.toString()
+                                                expanded = false
+                                            },
+                                                text = { Text("2") }
+                                            )
+                                        }
+                                    }
                                     Button(
                                         modifier = Modifier
                                             .fillMaxWidth(.4f),
@@ -447,13 +514,13 @@ fun SpravkaScreen(
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.size(20.dp, 20.dp))
+                    Spacer(modifier = Modifier.size(10.dp, 5.dp))
                     //Log.i("TAAAAG",history.referenceHistoryList[0].Date )
                     // Log.i("TAAAAG",history.referenceHistoryList[] )
                     ExpandableOrderTable(historylist1, "История справок по обучению")
-                    Spacer(modifier = Modifier.size(20.dp, 10.dp))
+                    Spacer(modifier = Modifier.size(10.dp, 5.dp))
                     ExpandableOrderTable(historylist2, "История справок для военкомата")
-                    Spacer(modifier = Modifier.size(20.dp, 100.dp))
+                    Spacer(modifier = Modifier.size(10.dp, 5.dp))
                 }
 
             }

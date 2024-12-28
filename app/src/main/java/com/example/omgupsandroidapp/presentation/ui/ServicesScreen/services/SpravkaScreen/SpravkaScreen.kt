@@ -38,6 +38,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
 ///import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -74,6 +75,9 @@ import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.TextWithDynamicLineBreak
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.omgupsapp.presentation.ui.LoginScreen.components.EditNumberField
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.exp
 
@@ -94,7 +98,8 @@ fun SpravkaScreen(
 
     var InputSpravka0 by remember { mutableStateOf("") }
     var InputSpravka1 by remember { mutableStateOf("") }
-    var expanded by remember { mutableStateOf(false) }
+    var expanded_1 by remember { mutableStateOf(false) }
+    var expanded_2 by remember { mutableStateOf(false) }
     val coffeeDrinks = arrayOf("1", "2")
     var selectedText by remember { mutableStateOf(coffeeDrinks[0]) }
 
@@ -129,6 +134,8 @@ fun SpravkaScreen(
         "Да:К выдаче",
 
     )
+    var stastusAfterOrderSpravka by remember { mutableStateOf("") }
+
 
     var indStatus0: Int = -1
     var indStatus1: Int = -1
@@ -144,7 +151,6 @@ fun SpravkaScreen(
         TypeStatusList("2", "23.10.2023", "00", "В работе", "Студент")
     )
 
-    var stastusAfterOrderSpravka = " "
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -228,9 +234,9 @@ fun SpravkaScreen(
 
 
                                     ExposedDropdownMenuBox(
-                                        expanded = expanded,
+                                        expanded = expanded_1,
                                         onExpandedChange = {
-                                            expanded = it
+                                            expanded_1 = it
                                         },
                                         modifier = Modifier
                                             .border(
@@ -246,7 +252,7 @@ fun SpravkaScreen(
                                             readOnly = true,
                                             trailingIcon = {
                                                 ExposedDropdownMenuDefaults.TrailingIcon(
-                                                    expanded = expanded
+                                                    expanded = expanded_1
                                                 )
                                             },
                                             colors = ExposedDropdownMenuDefaults.textFieldColors(
@@ -264,21 +270,21 @@ fun SpravkaScreen(
                                                      Icon(Icons.Default., contentDescription = "Показать меню")
                                                  }*/
                                         ExposedDropdownMenu(
-                                            expanded = expanded,
-                                            onDismissRequest = { expanded = false },
+                                            expanded = expanded_1,
+                                            onDismissRequest = { expanded_1 = false },
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
                                         ) {
                                             DropdownMenuItem(onClick = {
-                                                InputSpravka0 = 1.toString()
-                                                expanded = false
+                                                InputSpravka0 = "1"
+                                                expanded_1 = false
                                             },
                                                 text = { Text("1") }
                                             )
-                                            Divider()
+                                            HorizontalDivider()
                                             DropdownMenuItem(onClick = {
-                                                InputSpravka0 = 2.toString()
-                                                expanded = false
+                                                InputSpravka0 = "2"
+                                                expanded_1 = false
                                             },
                                                 text = { Text("2") }
                                             )
@@ -307,18 +313,18 @@ fun SpravkaScreen(
                                         )
                                     },
                                 )*/
-                                    Button(
+                                    /*Button(
                                         modifier = Modifier
                                             .fillMaxWidth(.45f),
                                         onClick = {
+                                            GlobalScope.async {
                                             stastusAfterOrderSpravka =
                                                 orderSpravkaViewModel.postSravka(
                                                     LoadSpravka(
                                                         types.spravkiList[0].ID,
-                                                        InputSpravka0
+                                                        InputSpravka0.toInt()
                                                     )
                                                 )
-
                                             spravkaViewModul.viewModelScope.launch {
                                                 stasus0 = spravkaViewModul.getStatus(1)
                                             }
@@ -333,6 +339,38 @@ fun SpravkaScreen(
                                                 "StastusAfterOrderSpravka",
                                                 stastusAfterOrderSpravka
                                             )
+                                        }
+                                    ) {
+                                        Text(text = "Заказать")
+                                    }*/
+                                    Button(
+                                        modifier = Modifier
+                                            .fillMaxWidth(.45f),
+                                        onClick = {
+                                            val job = GlobalScope.async {
+                                                // Первый запрос
+                                                val stastusAfterOrderSpravka =
+                                                    orderSpravkaViewModel.postSravka(
+                                                        LoadSpravka(
+                                                            types.spravkiList[0].ID,
+                                                            InputSpravka0.toInt()
+                                                        )
+                                                    )
+                                                // Второй запрос после завершения первого
+                                                val stasus0 = spravkaViewModul.getStatus(1)
+                                                for ((i, element) in listStatusSpravka.withIndex()) {
+                                                    if (element == stasus0) {
+                                                        indStatus0 = i
+                                                        break
+                                                    }
+                                                }
+                                                Log.i("TAAAAG", stasus0)
+                                                Log.i(
+                                                    "StastusAfterOrderSpravka",
+                                                    stastusAfterOrderSpravka
+                                                )
+                                            }
+                                            job.start()
                                         }
                                     ) {
                                         Text(text = "Заказать")
@@ -411,9 +449,9 @@ fun SpravkaScreen(
                                         },
                                     )*/
                                     ExposedDropdownMenuBox(
-                                        expanded = expanded,
+                                        expanded = expanded_2,
                                         onExpandedChange = {
-                                            expanded = it
+                                            expanded_2 = it
                                         },
                                         modifier = Modifier
                                             .border(
@@ -429,7 +467,7 @@ fun SpravkaScreen(
                                             readOnly = true,
                                             trailingIcon = {
                                                 ExposedDropdownMenuDefaults.TrailingIcon(
-                                                    expanded = expanded
+                                                    expanded = expanded_2
                                                 )
                                             },
                                             colors = ExposedDropdownMenuDefaults.textFieldColors(
@@ -447,21 +485,21 @@ fun SpravkaScreen(
                                                      Icon(Icons.Default., contentDescription = "Показать меню")
                                                  }*/
                                         ExposedDropdownMenu(
-                                            expanded = expanded,
-                                            onDismissRequest = { expanded = false },
+                                            expanded = expanded_2,
+                                            onDismissRequest = { expanded_2 = false },
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
                                         ) {
                                             DropdownMenuItem(onClick = {
-                                                InputSpravka1 = 1.toString()
-                                                expanded = false
+                                                InputSpravka1 = "1"
+                                                expanded_2 = false
                                             },
                                                 text = { Text("1") }
                                             )
-                                            Divider()
+                                            HorizontalDivider()
                                             DropdownMenuItem(onClick = {
-                                                InputSpravka0 = 2.toString()
-                                                expanded = false
+                                                InputSpravka1 = "2"
+                                                expanded_2 = false
                                             },
                                                 text = { Text("2") }
                                             )
@@ -469,12 +507,12 @@ fun SpravkaScreen(
                                     }
                                     Button(
                                         modifier = Modifier
-                                            .fillMaxWidth(.4f),
+                                            .fillMaxWidth(.45f),
                                         onClick = {
                                             orderSpravkaViewModel.postSravka(
                                                 LoadSpravka(
                                                     types.spravkiList[0].ID,
-                                                    InputSpravka1
+                                                    InputSpravka1.toInt()
                                                 )
                                             )
                                             spravkaViewModul.viewModelScope.launch {

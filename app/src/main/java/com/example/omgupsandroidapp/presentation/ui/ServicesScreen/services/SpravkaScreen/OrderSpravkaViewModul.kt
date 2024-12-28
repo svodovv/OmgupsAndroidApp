@@ -1,4 +1,4 @@
-package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
+ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -49,7 +49,8 @@ class OrderSpravkaViewModel @Inject constructor(
                         is Resource.Success -> {
                             _orderSpravka.update {
                                // it.copy(spravkaForm = result.data?.spravkaForm ?: emptyList())
-                                it.copy(stasusAfterOrder = orderSpravka.value.stasusAfterOrder )
+                                //it.copy(stasusAfterOrder = orderSpravka.value.stasusAfterOrder )
+                                it.copy( stasusAfterOrder = (result.data?.status ?: "123").toString())
                             }
                         }
                         is Resource.Loading -> {

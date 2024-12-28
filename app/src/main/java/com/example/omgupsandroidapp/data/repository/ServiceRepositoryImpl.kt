@@ -12,6 +12,7 @@ import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDtoItem
 import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.SpravkaResponse
 import com.example.omgupsandroidapp.data.remote.dto.spravki.StatusSpravakaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 
@@ -42,7 +43,7 @@ class ServiceRepositoryImpl @Inject constructor(
         return serviceApi.postSpravka(post.toDtoLoadSpravka())
     }*/
 
-    override suspend fun postSpravka(post: LoadSpravka): LoadSpravkaDto {
+    override suspend fun postSpravka(post: LoadSpravka): SpravkaResponse {
         return serviceApi.postSpravka(post.toDtoLoadSpravka())
     }
 

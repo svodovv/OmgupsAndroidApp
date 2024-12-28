@@ -6,11 +6,15 @@ data class LoadSpravka(
     @SerializedName("type")
     val type: String,
     @SerializedName("count")
-    val count: String
+    val count: Int
 )
 
 data class LoadSpravkaDto (
     val SpravkaForm : LoadSpravka,
+)
+
+data class SpravkaResponse(
+    val status: String
 )
 
 fun LoadSpravka.toDtoLoadSpravka() : LoadSpravkaDto {

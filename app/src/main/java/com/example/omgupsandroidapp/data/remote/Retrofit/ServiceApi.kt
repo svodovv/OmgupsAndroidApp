@@ -11,6 +11,7 @@ import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 
 import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
+import com.example.omgupsandroidapp.data.remote.dto.spravki.SpravkaResponse
 import com.example.omgupsandroidapp.data.remote.dto.spravki.StatusSpravakaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeSpravkaDto
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
@@ -46,7 +47,7 @@ interface ServiceApi {
     @POST("userapi/spravka/create")
     suspend fun postSpravka(
         @Body post: LoadSpravkaDto
-    ): LoadSpravkaDto
+    ): SpravkaResponse
 
     @GET("userapi/spravka/get-history")
     suspend fun getReferenceHistory(@Query("type") id: Int): ReferenceHistoryDto

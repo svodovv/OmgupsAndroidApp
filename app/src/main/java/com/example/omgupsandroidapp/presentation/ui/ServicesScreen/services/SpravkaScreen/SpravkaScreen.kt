@@ -24,11 +24,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.MoreVert
+
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -43,24 +39,20 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,14 +64,9 @@ import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
-import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.TextWithDynamicLineBreak
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
-import com.omgupsapp.presentation.ui.LoginScreen.components.EditNumberField
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.exp
+
 
 
 @SuppressLint("StateFlowValueCalledInComposition", "CoroutineCreationDuringComposition")
@@ -94,8 +81,6 @@ fun SpravkaScreen(
     orderSpravkaViewModel: OrderSpravkaViewModel = hiltViewModel()
 
 ) {
-
-
     var InputSpravka0 by remember { mutableStateOf("0") }
     var InputSpravka1 by remember { mutableStateOf("0") }
     var expanded_1 by remember { mutableStateOf(false) }
@@ -105,9 +90,9 @@ fun SpravkaScreen(
    // val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statusSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
     val types = spravkiViewModel.spravkiState.value
-    val history = referenceHistoryViewModel.referenceHistoryState.value
+    //val history = referenceHistoryViewModel.referenceHistoryState.value
     var stasus0 = statusSpravki.value.spravkiStatus0
-    val stasus1 = statusSpravki.value.spravkiStatus1
+    var stasus1 = statusSpravki.value.spravkiStatus1
     val historylist1 = referenceHistory.value.referenceHistoryList0
     val historylist2 = referenceHistory.value.referenceHistoryList1
     val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
@@ -121,29 +106,10 @@ fun SpravkaScreen(
         "Да:К выдаче" to 4,
         "Да:Передано в военкомат" to 4)
 
-    val listStatusSpravka = listOf(
-        "Нет:Заявка уже подана.",
-        "Да:Создано",
-        "Да:В работе",
-        "Да:На подписании",
-        "Да:К выдаче",
-    )
+    var indStatus0 by remember { mutableIntStateOf(0) }
+    var indStatus1 by remember { mutableIntStateOf(0) }
 
-    val listStatusSpravkaMilitary = listOf(
-        "Нет:Заявка уже подана.",
-        "Да:Создано",
-        "Да:В работе",
-        "Да:На подписании",
-        "Да:К выдаче",
-        "Да:Передано в военкомат"
-    )
-    var stastusAfterOrderSpravka by remember { mutableStateOf("") }
-
-
-    var indStatus0: Int = -1
-    var indStatus1: Int = -1
-
-    var listhistor = listOf(
+    /*var listhistor = listOf(
         TypeStatusList("2", "23.10.2023", "00", "Создано", "Военная"),
         TypeStatusList("2", "23.10.2023", "00", "В работе", "Студент"),
         TypeStatusList("2", "23.10.2023", "00", "Создано", "Военная"),
@@ -152,7 +118,7 @@ fun SpravkaScreen(
         TypeStatusList("2", "23.10.2023", "00", "В работе", "Студент"),
         TypeStatusList("2", "23.10.2023", "00", "Создано", "Военная"),
         TypeStatusList("2", "23.10.2023", "00", "В работе", "Студент")
-    )
+    )*/
 
     Column(
         modifier = Modifier
@@ -163,7 +129,9 @@ fun SpravkaScreen(
     {
         ServicesTopAppBar(title = "Заказать справку", navController = navController)
 
-        if (spravki.value.spravkiList.isNotEmpty()) {
+        if (spravki.value.spravkiList.isNotEmpty() &&
+            statusSpravki.value.spravkiStatus0.isNotEmpty() &&
+            statusSpravki.value.spravkiStatus1.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -267,7 +235,7 @@ fun SpravkaScreen(
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
                                                 .fillMaxWidth(.25f)
-                                                .menuAnchor()
+                                                // .menuAnchor(type, enabled)
                                         )
                                         /*IconButton(onClick = { expanded = true }) {
                                                      Icon(Icons.Default., contentDescription = "Показать меню")
@@ -349,30 +317,27 @@ fun SpravkaScreen(
                                         modifier = Modifier
                                             .fillMaxWidth(.45f),
                                         onClick = {
-                                            val job = GlobalScope.async {
-                                                // Первый запрос
-                                                val stastusAfterOrderSpravka =
-                                                    orderSpravkaViewModel.postSravka(
-                                                        LoadSpravka(
-                                                            types.spravkiList[0].ID,
-                                                            InputSpravka0.toInt()
-                                                        )
+                                            var stastusAfterOrderSpravka =
+                                                orderSpravkaViewModel.postSravka(
+                                                    LoadSpravka(
+                                                        types.spravkiList[0].ID,
+                                                        InputSpravka0.toInt()
                                                     )
-                                                // Второй запрос после завершения первого
-                                                val stasus0 = spravkaViewModul.getStatus(1)
-                                                for ((i, element) in listStatusSpravka.withIndex()) {
-                                                    if (element == stasus0) {
-                                                        indStatus0 = i
-                                                        break
-                                                    }
-                                                }
-                                                Log.i("TAAAAG", stasus0)
-                                                Log.i(
-                                                    "StastusAfterOrderSpravka",
-                                                    stastusAfterOrderSpravka
-                                                )
+                                                ).toString()
+                                            spravkaViewModul.viewModelScope.launch {
+                                                stasus0 = spravkaViewModul.getStatus(1)
                                             }
-                                            job.start()
+                                            for ((i, element) in listStatusSpravka.withIndex()) {
+                                                if (element == stasus0) {
+                                                    indStatus0 = i
+                                                    break
+                                                }
+                                            }
+                                            Log.i("TAAAAG", stasus0)
+                                            Log.i(
+                                                "StastusAfterOrderSpravka",
+                                                stastusAfterOrderSpravka
+                                            )
                                         }
                                     ) {
                                         Text(text = "Заказать")
@@ -391,17 +356,26 @@ fun SpravkaScreen(
                                                 Log.i("StatusAfterOrderSpravka", statusAfterOrderSpravka)
                                                 stasus0 = statusAfterOrderSpravka
                                                 Log.i("stasus0", stasus0)
+                                                mapStatus.forEach{
+                                                    if (it.key == stasus0)
+                                                        indStatus0 = it.value
+                                                }
+                                                Log.i("indStatus0", indStatus0.toString())
                                             }
                                         }
                                     ) {
                                         Text(text = "Заказать")
                                     }
                                 }
-
                                 mapStatus.forEach{
-                                   if (it.key == stasus0)
+                                    if (it.key == stasus0)
                                         indStatus0 = it.value
                                 }
+                                /*mapStatus.forEach{
+                                   if (it.key == stasus0)
+                                        indStatus0 = it.value
+                                }*/
+                                    // Log.i("indStatus0", indStatus0.toString())
                                 /*for ((i, element) in listStatusSpravka.withIndex()) {
                                     if (element == stasus0) {
                                         indStatus0 = i
@@ -531,7 +505,7 @@ fun SpravkaScreen(
                                             )
                                         }
                                     }
-                                    Button(
+                                   /* Button(
                                         modifier = Modifier
                                             .fillMaxWidth(.45f),
                                         onClick = {
@@ -554,9 +528,37 @@ fun SpravkaScreen(
                                         }
                                     ) {
                                         Text(text = "Заказать")
+                                    }*/
+                                    Button(
+                                        modifier = Modifier.fillMaxWidth(.45f),
+                                        onClick = {
+                                            orderSpravkaViewModel.viewModelScope.launch {
+                                                // Первый запрос
+                                                val statusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
+                                                    LoadSpravka(
+                                                        types.spravkiList[1].ID,
+                                                        InputSpravka1.toInt()
+                                                    )
+                                                )
+                                                Log.i("StatusAfterOrderSpravka", statusAfterOrderSpravka)
+                                                stasus1 = statusAfterOrderSpravka
+                                                Log.i("stasus1", stasus1)
+                                                mapStatus.forEach{
+                                                    if (it.key == stasus1)
+                                                        indStatus1 = it.value
+                                                }
+                                                Log.i("indStatus0", indStatus0.toString())
+                                            }
+                                        }
+                                    ) {
+                                        Text(text = "Заказать")
                                     }
                                 }
-                                for ((i, element) in listStatusSpravka.withIndex()) {
+                                mapStatus.forEach{
+                                    if (it.key == stasus1)
+                                        indStatus1 = it.value
+                                }
+                                /*for ((i, element) in listStatusSpravka.withIndex()) {
                                     if (element == stasus1) {
                                         indStatus1 = i
                                         break
@@ -569,7 +571,7 @@ fun SpravkaScreen(
                                 } else {
                                     //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
                                     Log.i("TAAAAG", stasus0)
-                                }
+                                }*/
                                 Spacer(modifier = Modifier.size(20.dp, 20.dp))
                                 OrderStatusBar(indStatus1 - 1)
                                 if (stasus1 == "Да:Передано в военкомат") {
@@ -785,6 +787,7 @@ fun SampleSpravka(
 fun OrderTable(orderStatus: TypeStatusList) {
 
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxSize()
             .padding(start = 8.dp, end = 8.dp)
@@ -928,13 +931,13 @@ fun OrderTableOne() {
                     style = MaterialTheme.typography.bodySmall
                 )
             }
-        Divider(
+        /*HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp),
             thickness = 1.dp,
             color = Color.Black
-        )
+        )*/
     }
 }
 
@@ -994,6 +997,7 @@ fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String)
         AnimatedVisibility(visible = isVisible) {
             //Spacer(modifier = Modifier.padding(20.dp)
                 //Spacer(modifier = Modifier.padding(20.dp))
+
                 OrderTable(it)
             }
         }

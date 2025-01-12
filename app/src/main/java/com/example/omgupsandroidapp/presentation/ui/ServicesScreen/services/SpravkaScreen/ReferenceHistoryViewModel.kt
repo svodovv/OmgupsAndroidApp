@@ -26,13 +26,11 @@ class ReferenceHistoryViewModel @Inject constructor(
     val referenceHistoryState = _referenceHistoryState.asStateFlow()
 
     init {
-        runBlocking {
             getReferenceHistory(1)
             getReferenceHistory(2)
-        }
     }
 
-    suspend fun getReferenceHistory(id: Int) : List<TypeStatusList> {
+     fun getReferenceHistory(id: Int) : List<TypeStatusList> {
         getReferenceHistoryUseCase.invoke(id).onEach { result ->
             when(result) {
                 is Resource.Success -> {

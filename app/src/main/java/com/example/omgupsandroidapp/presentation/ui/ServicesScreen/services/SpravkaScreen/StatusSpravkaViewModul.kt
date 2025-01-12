@@ -24,10 +24,10 @@ class StatusSpravkaViewModul @Inject constructor(
 
 
     init {
-        runBlocking {
+       // runBlocking {
             getStatus(1)
             getStatus(2)
-        }
+        //}
     }
      fun getStatus(id: Int): String {
        getStatusSpravkaUseCase.invoke(id).onEach { result ->

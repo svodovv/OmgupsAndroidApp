@@ -39,12 +39,12 @@ class SpravkiViewModel @Inject constructor(
 
     val _spravkiState = MutableStateFlow(SpravkiState())
     val spravkiState = _spravkiState.asStateFlow()
-    //var myResponse: MutableLiveData<Response<SpravkaPostModel>> = MutableLiveData()
+
     init {
-        runBlocking {  getSpravkiTypes()}
+        getSpravkiTypes()
     }
 
-     suspend fun getSpravkiTypes() {
+      fun getSpravkiTypes() {
         getTypesSpravkiUseCase.invoke().onEach { result ->
             when(result) {
                 is Resource.Success -> {

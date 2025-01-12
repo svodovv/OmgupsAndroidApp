@@ -22,17 +22,10 @@ class PostSpravkaUseCase @Inject constructor(
             emit(Resource.Loading())
             val spravkaForm = serviceRepositoryImpl.postSpravka(sparavka)
             emit(Resource.Success(spravkaForm))
-        }catch (e: IOException){
-            emit(Resource.Error(e.localizedMessage ?: "IO Exception"))
-            Log.e("GetScholarshipUseCase", "spravkaForm")
         }
         catch (e: IOException){
             emit(Resource.Error(e.localizedMessage ?: "IO Exception"))
             Log.e("GetScholarshipUseCase", "spravkaForm")
-        }
-        catch (e: IOException){
-            emit(Resource.Error(e.localizedMessage ?: "IO Exception"))
-            Log.e("GetScholarshipUseCase", "IO Exception $e")
         }
         catch (e: HttpException){
             emit(Resource.Error(e.localizedMessage ?: "HTTP Exception"))

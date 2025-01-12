@@ -83,7 +83,7 @@ import kotlin.math.exp
 
 
 @SuppressLint("StateFlowValueCalledInComposition", "CoroutineCreationDuringComposition")
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SpravkaScreen(
     navController: NavController,
@@ -96,28 +96,31 @@ fun SpravkaScreen(
 ) {
 
 
-    var InputSpravka0 by remember { mutableStateOf("") }
-    var InputSpravka1 by remember { mutableStateOf("") }
+    var InputSpravka0 by remember { mutableStateOf("0") }
+    var InputSpravka1 by remember { mutableStateOf("0") }
     var expanded_1 by remember { mutableStateOf(false) }
     var expanded_2 by remember { mutableStateOf(false) }
-    val coffeeDrinks = arrayOf("1", "2")
-    var selectedText by remember { mutableStateOf(coffeeDrinks[0]) }
 
-    val referenceHistory =
-        referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
-    val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
+    val referenceHistory = referenceHistoryViewModel.referenceHistoryState.collectAsStateWithLifecycle()
+   // val spravka = orderSpravkaViewModel.orderSpravka.collectAsStateWithLifecycle()
     val statusSpravki = spravkaViewModul.status.collectAsStateWithLifecycle()
     val types = spravkiViewModel.spravkiState.value
     val history = referenceHistoryViewModel.referenceHistoryState.value
     var stasus0 = statusSpravki.value.spravkiStatus0
-    var stasus1 = statusSpravki.value.spravkiStatus1
-    var historylist1 = referenceHistory.value.referenceHistoryList0
-    var historylist2 = referenceHistory.value.referenceHistoryList1
+    val stasus1 = statusSpravki.value.spravkiStatus1
+    val historylist1 = referenceHistory.value.referenceHistoryList0
+    val historylist2 = referenceHistory.value.referenceHistoryList1
     val spravki = spravkiViewModel.spravkiState.collectAsStateWithLifecycle()
-    /*LaunchedEffect(stasus0) {
-        val status = spravkaViewModul.getStatus(0)
-        stasus0 = status
-    }*/
+
+    val mapStatus = mapOf(
+        "Нет:Заявка уже подана." to 0,
+        "Да:Создано" to 1,
+        "Да:Заявка создана." to 1,
+        "Да:В работе" to 2,
+        "Да:На подписании" to 3,
+        "Да:К выдаче" to 4,
+        "Да:Передано в военкомат" to 4)
+
     val listStatusSpravka = listOf(
         "Нет:Заявка уже подана.",
         "Да:Создано",
@@ -132,7 +135,7 @@ fun SpravkaScreen(
         "Да:В работе",
         "Да:На подписании",
         "Да:К выдаче",
-
+        "Да:Передано в военкомат"
     )
     var stastusAfterOrderSpravka by remember { mutableStateOf("") }
 
@@ -288,7 +291,6 @@ fun SpravkaScreen(
                                             },
                                                 text = { Text("2") }
                                             )
-
                                         }
                                     }
 
@@ -343,7 +345,7 @@ fun SpravkaScreen(
                                     ) {
                                         Text(text = "Заказать")
                                     }*/
-                                    Button(
+                                    /*Button(
                                         modifier = Modifier
                                             .fillMaxWidth(.45f),
                                         onClick = {
@@ -374,26 +376,48 @@ fun SpravkaScreen(
                                         }
                                     ) {
                                         Text(text = "Заказать")
+                                    }*/
+                                    Button(
+                                        modifier = Modifier.fillMaxWidth(.45f),
+                                        onClick = {
+                                            orderSpravkaViewModel.viewModelScope.launch {
+                                                // Первый запрос
+                                                val statusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
+                                                    LoadSpravka(
+                                                        types.spravkiList[0].ID,
+                                                        InputSpravka0.toInt()
+                                                    )
+                                                )
+                                                Log.i("StatusAfterOrderSpravka", statusAfterOrderSpravka)
+                                                stasus0 = statusAfterOrderSpravka
+                                                Log.i("stasus0", stasus0)
+                                            }
+                                        }
+                                    ) {
+                                        Text(text = "Заказать")
                                     }
                                 }
-                                /* spravkaViewModul.viewModelScope.launch {
-                            stasus0 = spravkaViewModul.getStatus(0)
-                        }*/
-                                for ((i, element) in listStatusSpravka.withIndex()) {
+
+                                mapStatus.forEach{
+                                   if (it.key == stasus0)
+                                        indStatus0 = it.value
+                                }
+                                /*for ((i, element) in listStatusSpravka.withIndex()) {
                                     if (element == stasus0) {
                                         indStatus0 = i
                                         break
                                     }
-                                }
-                                if (indStatus0 != -1) {
+                                }*/
+                                /*if (indStatus0 != -1) {
                                     Log.i("TAAAAG", "Индекс совпадающего элемента: $indStatus0")
                                 } else {
                                     //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
                                     Log.i("TAAAAG", stasus0)
 
 
-                                }
+                                }*/
                                 Spacer(modifier = Modifier.size(20.dp, 20.dp))
+                                Log.i("TAAAAG", "Индекс совпадающего элемента: $indStatus0")
                                 OrderStatusBar(indStatus0 - 1)
                             }
                         }
@@ -409,7 +433,9 @@ fun SpravkaScreen(
                                 .fillMaxSize()
                         )
                         {
-                            Column(modifier = Modifier.fillMaxWidth()) {
+                            Column(
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
                                 Spacer(modifier = Modifier.padding(5.dp))
                                 Row(
                                     Modifier.fillMaxWidth(),
@@ -509,14 +535,15 @@ fun SpravkaScreen(
                                         modifier = Modifier
                                             .fillMaxWidth(.45f),
                                         onClick = {
-                                            orderSpravkaViewModel.postSravka(
-                                                LoadSpravka(
-                                                    types.spravkiList[0].ID,
-                                                    InputSpravka1.toInt()
+                                            orderSpravkaViewModel.viewModelScope.launch {
+                                                // Первый запрос
+                                                val statusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
+                                                    LoadSpravka(
+                                                        types.spravkiList[1].ID,
+                                                        InputSpravka1.toInt()
+                                                    )
                                                 )
-                                            )
-                                            spravkaViewModul.viewModelScope.launch {
-                                                stasus1 = spravkaViewModul.getStatus(2)
+                                                Log.i("StatusAfterOrderSpravka", statusAfterOrderSpravka)
                                             }
                                             for ((i, element) in listStatusSpravka.withIndex()) {
                                                 if (element == stasus1) {
@@ -535,16 +562,25 @@ fun SpravkaScreen(
                                         break
                                     }
                                 }
+                                Log.i("Status1", "Статус: $stasus1")
+                                Log.i("indStatus1", "Элемента: $indStatus1")
                                 if (indStatus1 != -1) {
-                                    Log.i("TAAAAG", "Индекс совпадающего элемента: $indStatus0")
+                                    Log.i("indStatus1", "Элемента: $indStatus1")
                                 } else {
                                     //      Log.i("TAAAAG",referenceHistory.value.referenceHistoryList[0].Status )
                                     Log.i("TAAAAG", stasus0)
-
-
                                 }
                                 Spacer(modifier = Modifier.size(20.dp, 20.dp))
                                 OrderStatusBar(indStatus1 - 1)
+                                if (stasus1 == "Да:Передано в военкомат") {
+                                    Row(
+                                        Modifier.fillMaxSize(),
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
+                                        Text(text = "Передано в военкомат", color = Color.Black)
+                                    }
+                                    Spacer(modifier = Modifier.padding(4.dp))
+                                }
                                 //  OrderStatusBar(0, st)
 
                             }
@@ -553,14 +589,11 @@ fun SpravkaScreen(
                 }
                 item {
                     Spacer(modifier = Modifier.size(10.dp, 5.dp))
-                    //Log.i("TAAAAG",history.referenceHistoryList[0].Date )
-                    // Log.i("TAAAAG",history.referenceHistoryList[] )
                     ExpandableOrderTable(historylist1, "История справок по обучению")
                     Spacer(modifier = Modifier.size(10.dp, 5.dp))
                     ExpandableOrderTable(historylist2, "История справок для военкомата")
                     Spacer(modifier = Modifier.size(10.dp, 5.dp))
                 }
-
             }
         } else {
             LoadingScreen()
@@ -964,6 +997,7 @@ fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String)
                 OrderTable(it)
             }
         }
+        Spacer(modifier = Modifier.padding(4.dp))
             /*stickyHeader {
                 AnimatedVisibility(visible = isVisible) {
                     OrderTableOne()

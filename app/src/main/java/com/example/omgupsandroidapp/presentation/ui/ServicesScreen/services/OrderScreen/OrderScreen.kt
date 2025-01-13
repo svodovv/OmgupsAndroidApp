@@ -16,6 +16,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -81,12 +82,12 @@ fun OrderScreen(
                                     color = MaterialTheme.colorScheme.onBackground
                                 )
 
-                            Divider(
+                            HorizontalDivider(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(
                                         horizontal = 8.dp,
-                                    ), thickness = 1.dp, Color.Black
+                                    ), thickness = 1.dp, color = Color.Black
                             )
                             orderState.value.orderList[index].orderList.forEachIndexed { index, orderName ->
                                 Row(

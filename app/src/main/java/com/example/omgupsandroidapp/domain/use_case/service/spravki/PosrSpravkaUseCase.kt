@@ -2,7 +2,6 @@ package com.example.omgupsandroidapp.domain.use_case.service.spravki
 
 import android.annotation.SuppressLint
 import android.util.Log
-import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 import com.example.omgupsandroidapp.data.repository.ServiceRepositoryImpl
 import com.example.omgupsandroidapp.domain.model.SpravkaPostModel
@@ -17,7 +16,7 @@ class PostSpravkaUseCase @Inject constructor(
 ) {
 
     @SuppressLint("SuspiciousIndentation")
-     fun invoke(sparavka: LoadSpravka) = flow {
+     fun invoke(sparavka: LoadSpravkaDto) = flow {
         try {
             emit(Resource.Loading())
             val spravkaForm = serviceRepositoryImpl.postSpravka(sparavka)
@@ -29,9 +28,7 @@ class PostSpravkaUseCase @Inject constructor(
         }
         catch (e: HttpException){
             emit(Resource.Error(e.localizedMessage ?: "HTTP Exception"))
-            Log.e("GetScholarshipUseCase", "HTTP Exception $e")
+            Log.e("PostSpravkaUseCase", "HTTP Exception $e")
         }
     }
-
-
 }

@@ -7,9 +7,7 @@ import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.schedule.ShedelItem
 import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
-import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
-
 import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.SpravkaResponse
 import com.example.omgupsandroidapp.data.remote.dto.spravki.StatusSpravakaDto
@@ -29,33 +27,33 @@ import retrofit2.http.Query
 
 interface ServiceApi {
 
-    @GET("userapi/academic-plan/get-plans")
+    @GET("userapi/v1/academic-plan/get-plans")
     suspend fun getAcademicPlan(): AcademicPlanDto
 
     //@Headers("Cache-Control: max-age=3600")
-    @GET("student/getstipend")
+    @GET("userapi/v1/stipend/get-stipend")
     suspend fun getScholarship(): ScholarshipDto
 
     //@Headers("Cache-Control: max-age=3600")
-    @GET("student/getorders")
+    @GET("userapi/v1/orders/get-orders")
     suspend fun getOrders(): OrderDto
 
     //@Headers("Cache-Control: max-age=3600")
-    @GET("student/getschedule")
+    @GET("userapi/v1/schedule/get-schedule")
     suspend fun getShudule(): List<ScheduleEntity>
 
-    @POST("userapi/spravka/create")
+    @POST("userapi/v1/spravka/create-spravka")
     suspend fun postSpravka(
         @Body post: LoadSpravkaDto
     ): SpravkaResponse
 
-    @GET("userapi/spravka/get-history")
+    @GET("userapi/v1/spravka/get-history")
     suspend fun getReferenceHistory(@Query("type") id: Int): ReferenceHistoryDto
 
-    @GET("userapi/spravka/get-types")
+    @GET("userapi/v1/spravka/get-types")
     suspend fun getTypesSpravki(): TypeSpravkaDto
 
-    @GET("userapi/spravka/get-status")
+    @GET("userapi/v1/spravka/get-status")
     suspend fun getStatysSpravka(@Query("type") id: Int): StatusSpravakaDto
 
 

@@ -2,36 +2,33 @@ package com.example.omgupsandroidapp.data.remote.dto.spravki
 
 import com.google.gson.annotations.SerializedName
 
-data class LoadSpravka(
+data class LoadSpravkaDto(
     @SerializedName("type")
     val type: String,
     @SerializedName("count")
     val count: Int
 )
 
-data class LoadSpravkaDto (
-    val SpravkaForm : LoadSpravka,
+data class LoadSpravkaModel(
+    val type: String,
+    val count: Int
 )
+
+/*data class LoadSpravkaDto (
+    val SpravkaForm : LoadSpravka,
+)*/
 
 data class SpravkaResponse(
     val status: String
 )
 
-fun LoadSpravka.toDtoLoadSpravka() : LoadSpravkaDto {
+fun LoadSpravkaDto.toDtoLoadSpravka() : LoadSpravkaDto {
     return LoadSpravkaDto(
-        LoadSpravka(
         type = type,
         count = count
-        )
     )
 }
 
-data class LoadSpravkaDtoItem(
-    @SerializedName("type")
-    val type : Int,
-    @SerializedName("count")
-    val count: Int
-)
 /*fun LoadSpravkaDtoItem.toSpravkaPostModel() : LoadSpravka {
     return  LoadSpravka(
         type = type,

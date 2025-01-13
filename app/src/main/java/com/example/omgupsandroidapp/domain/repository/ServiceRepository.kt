@@ -6,7 +6,6 @@ import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.AcademicPlanDto
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
-import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.ReferenceHistoryDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.SpravkaResponse
@@ -22,7 +21,7 @@ import retrofit2.Response
 interface ServiceRepository {
     suspend fun getScholarship(): ScholarshipDto
 
-    suspend fun postSpravka(post: LoadSpravka): SpravkaResponse
+    suspend fun postSpravka(post: LoadSpravkaDto): SpravkaResponse
 
     suspend fun getOrder(): OrderDto
 

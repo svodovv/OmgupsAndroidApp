@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -41,7 +42,7 @@ fun ServiceScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             //.verticalScroll(rememberScrollState())
             .padding(paddingValues)
     ) {
@@ -56,30 +57,35 @@ fun ServiceScreen(
                             navController.navigate(it.route)
                         }
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                    Box(
+                        modifier = Modifier.background(color = MaterialTheme.colorScheme.surfaceVariant)
                     ) {
-                        Box(
+                        Row(
                             modifier = Modifier
-                                .weight(2f)
-                                .padding(start = 16.dp),
-                            contentAlignment = Alignment.CenterStart
+                                .fillMaxSize()
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
                         ) {
-                            Icon(
-                                painter = painterResource(id = it.selectedIcon),
-                                contentDescription = it.serviceName,
+                            Box(
+                                modifier = Modifier
+                                    .weight(2f)
+                                    .padding(start = 16.dp),
+                                contentAlignment = Alignment.CenterStart
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = it.selectedIcon),
+                                    contentDescription = it.serviceName,
+                                )
+                            }
+                            Text(
+                                text = it.serviceName,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.weight(3f),
+                                textAlign = TextAlign.Start,
+                                color = Color.Black
                             )
                         }
-                        Text(
-                            text = it.serviceName,
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.weight(3f),
-                            textAlign = TextAlign.Start
-                        )
                     }
                 }
             }

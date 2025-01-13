@@ -39,6 +39,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -61,7 +62,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
-import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
+import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
@@ -235,7 +236,7 @@ fun SpravkaScreen(
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
                                                 .fillMaxWidth(.25f)
-                                                // .menuAnchor(type, enabled)
+                                                .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                                         )
                                         /*IconButton(onClick = { expanded = true }) {
                                                      Icon(Icons.Default., contentDescription = "Показать меню")
@@ -348,7 +349,7 @@ fun SpravkaScreen(
                                             orderSpravkaViewModel.viewModelScope.launch {
                                                 // Первый запрос
                                                 val statusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
-                                                    LoadSpravka(
+                                                    LoadSpravkaDto(
                                                         types.spravkiList[0].ID,
                                                         InputSpravka0.toInt()
                                                     )
@@ -479,7 +480,7 @@ fun SpravkaScreen(
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
                                                 .fillMaxWidth(.25f)
-                                                .menuAnchor()
+                                                .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                                         )
                                         /*IconButton(onClick = { expanded = true }) {
                                                      Icon(Icons.Default., contentDescription = "Показать меню")
@@ -535,7 +536,7 @@ fun SpravkaScreen(
                                             orderSpravkaViewModel.viewModelScope.launch {
                                                 // Первый запрос
                                                 val statusAfterOrderSpravka = orderSpravkaViewModel.postSravka(
-                                                    LoadSpravka(
+                                                    LoadSpravkaDto(
                                                         types.spravkiList[1].ID,
                                                         InputSpravka1.toInt()
                                                     )
@@ -777,7 +778,6 @@ fun SampleSpravka(
                                 )
                         )*/
                     }
-
                 }
             }
         }
@@ -790,15 +790,10 @@ fun OrderTable(orderStatus: TypeStatusList) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 8.dp, end = 8.dp)
+            .padding(top = 4.dp ,start = 8.dp, end = 8.dp)
     ) {
         TextInLazyColumns(
             columnName = orderStatus.Date,
-            modifier = Modifier.weight(.25f),
-            style = MaterialTheme.typography.bodySmall
-        )
-        TextInLazyColumns(
-            columnName = orderStatus.TypeOrder,
             modifier = Modifier.weight(0.25f),
             style = MaterialTheme.typography.bodySmall
         )
@@ -854,7 +849,6 @@ fun OrderTable(orderStatus: TypeStatusList) {
         }
     }*/
 }
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OrderTableOne() {
     /* Row(
@@ -916,11 +910,6 @@ fun OrderTableOne() {
                     style = MaterialTheme.typography.bodySmall
                 )
                 TextInLazyColumns(
-                    columnName = "Тип",
-                    modifier = Modifier.weight(0.25f),
-                   style = MaterialTheme.typography.bodySmall
-                )
-                TextInLazyColumns(
                     columnName = "Кол-во",
                     modifier = Modifier.weight(0.25f),
                     style = MaterialTheme.typography.bodySmall
@@ -948,14 +937,14 @@ fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String)
     Card(
         modifier = Modifier
             .wrapContentSize()
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            .padding(top = 16.dp, start = 8.dp, end = 8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column {
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = 8.dp, end = 8.dp),
+                        .padding(start = 16.dp, end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = hystoryType)
@@ -968,8 +957,8 @@ fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String)
                     IconButton(onClick = { isVisible = !isVisible }) {
                         Icon(
                             painter = painterResource(
-                                id = if (isVisible) R.drawable.baseline_keyboard_arrow_down_24
-                                else R.drawable.baseline_keyboard_arrow_up_24
+                                id = if (isVisible) R.drawable.baseline_keyboard_arrow_up_24
+                                else R.drawable.baseline_keyboard_arrow_down_24
                             ),
                             contentDescription = stringResource(R.string.arrow_in_order_card),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant

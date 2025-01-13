@@ -1,21 +1,16 @@
  package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravka
+import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 import com.example.omgupsandroidapp.domain.use_case.service.spravki.PostSpravkaUseCase
 import com.omgupsapp.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
 class OrderSpravkaViewModel @Inject constructor(
    private val postSpravkaUseCase: PostSpravkaUseCase
@@ -80,7 +75,7 @@ class OrderSpravkaViewModel @Inject constructor(
             }*/
            return _orderSpravka.value.stasusAfterOrder
     }*/
-       suspend fun postSravka(postSpravka: LoadSpravka): String {
+       suspend fun postSravka(postSpravka: LoadSpravkaDto): String {
            var statusResult = ""
 
            // Используем try-catch для обработки ошибок

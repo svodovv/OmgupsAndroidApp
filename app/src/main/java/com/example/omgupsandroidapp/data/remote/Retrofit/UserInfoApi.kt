@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface UserInfoApi {
 
-    @GET("studentInfo/info/get-info")
+    @GET("student-info/get-info")
     suspend fun getUserInfo(): UserInfoDto
 
     @GET("student-info/get-photo")

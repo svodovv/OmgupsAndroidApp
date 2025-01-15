@@ -80,6 +80,7 @@ class SheduleViewModul @Inject constructor(
                     is Resource.Success -> {
                         _sheduleState.update {
                             it.copy(sheduleList = result.data ?: emptyList())
+                            //it.copy(isLoading = false)
                         }
                     }
 

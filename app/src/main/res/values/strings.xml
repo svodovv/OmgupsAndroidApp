@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">omgupsApp</string>
+    <string name="app_name">Мой ОмГУПС</string>
     <string name="Password">Пароль</string>
     <string name="signIn">Войти</string>
     <string name="login">Логин</string>
     <string name="omgupslogo">omgupsLogo</string>
+    <string name="nodata">nodata</string>
     <string name="ErrorInLoginOrPassword">Неверный логин или пароль</string>
     <string name="LoginOrPasswordIsNull">Пожалуйста, заполните оба поля для входа</string>
     <string name="Settings">Настройки</string>

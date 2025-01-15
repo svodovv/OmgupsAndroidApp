@@ -46,9 +46,11 @@ class AuthRepositoryImpl @Inject constructor(
                 parseTitleInHtmlDoc(it)
             }
 
-            if (title != null && title.contains("lk")) {
-                dataStoreManager.saveLoggedIn(true)
-                return true
+            if (title != null) {
+                if (title != null && title.contains("lk") || title.contains("кабинет")) {
+                    dataStoreManager.saveLoggedIn(true)
+                    return true
+                }
             }
 
 

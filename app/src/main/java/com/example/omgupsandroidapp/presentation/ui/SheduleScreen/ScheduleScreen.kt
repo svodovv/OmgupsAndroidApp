@@ -40,8 +40,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
+import com.example.omgupsandroidapp.presentation.ui.NoData.NoDataScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
 import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul
+import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -72,7 +74,7 @@ fun ScheduleScreen(
     val pagerState = rememberPagerState(pageCount = { 2 })
     val dayOfWeek = listOf("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота")
     val day =  LocalDate.now().dayOfWeek.value
-
+    Log.e("isload", sheduleState.value.isLoading.toString())
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,14 +84,21 @@ fun ScheduleScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.padding(0.dp, 35.dp))
-        Row(modifier = Modifier) {
-            DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
-        }
-        Spacer(modifier = Modifier.padding(0.dp, 2.dp))
         Log.e("htmlContent", sheduleState.value.sheduleList.toString())
         //ServicesTopAppBar(title = "Расписание", navController = navController)
         Log.e("checkWeek()", checkWeek().toString())
-        if (sheduleState.value.sheduleList.isNotEmpty()) {
+        /*if(sheduleState.value.isLoading == false) {
+         Log.e("isload", "попало в фолс"/*sheduleState.value.isLoading.toString()*/)
+            LoadingScreen()
+        } else*/ if (sheduleState.value.sheduleList.isEmpty() && sheduleState.value.isLoading == false){
+            Log.e("isload", "попало в нет данных")
+                // NoDataScreen()
+            LoadingScreen()
+        } else if (sheduleState.value.sheduleList.isNotEmpty()) {
+            Row(modifier = Modifier) {
+                DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
+            }
+            Spacer(modifier = Modifier.padding(0.dp, 2.dp))
             HorizontalPager(
                 state = pagerState,
                 //0key = { sheduleState.value.sheduleList[it].type_of_week },
@@ -281,9 +290,9 @@ fun ScheduleScreen(
                     }
                 }
             }
-
-        } else {
-            LoadingScreen()
+        } else if (sheduleState.value.sheduleList.isEmpty() && sheduleState.value.isLoading){
+            NoDataScreen()
+            Log.e("isloadsheduleList", sheduleState.value.sheduleList.isEmpty().toString())
         }
     }
 }

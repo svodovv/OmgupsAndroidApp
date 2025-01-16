@@ -26,9 +26,9 @@ fun NoDataScreen(){
     ) {
         Box(modifier = Modifier.size(200.dp)) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_no_data),
+                painter = painterResource(id = R.drawable.ic_coming_soon),
                 contentDescription = stringResource(
-                    id = R.string.nodata
+                    id = R.string.comingsoon
                 ),
                // modifier = Modifier,
                 tint = Color.Unspecified

@@ -90,11 +90,11 @@ fun ScheduleScreen(
         /*if(sheduleState.value.isLoading == false) {
          Log.e("isload", "попало в фолс"/*sheduleState.value.isLoading.toString()*/)
             LoadingScreen()
-        } else*/ if (sheduleState.value.sheduleList.isEmpty() && sheduleState.value.isLoading == false){
+        } else*/ /*if (sheduleState.value.sheduleList.isEmpty() && sheduleState.value.isLoading == false){
             Log.e("isload", "попало в нет данных")
                 // NoDataScreen()
             LoadingScreen()
-        } else if (sheduleState.value.sheduleList.isNotEmpty()) {
+        } else */if (sheduleState.value.sheduleList.isNotEmpty()) {
             Row(modifier = Modifier) {
                 DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
             }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.omgupsandroidapp.presentation.ui.NoData.NoDataScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.omgupsapp.presentation.Screen
 
@@ -17,11 +18,5 @@ fun StudentBookScreen(
     navController: NavController, paddingValues: PaddingValues
 ) {
     ServicesTopAppBar(title = "Зачетная книжка", navController = navController)
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "STUDENT BOOK SCREEN")
-    }
+    NoDataScreen()
 }

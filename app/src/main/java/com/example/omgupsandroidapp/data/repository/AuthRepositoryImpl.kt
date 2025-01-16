@@ -47,7 +47,7 @@ class AuthRepositoryImpl @Inject constructor(
             }
 
             if (title != null) {
-                if (/*title != null && title.contains("lk") || */title.contains("кабинет")) {
+                if (title != null && title.contains("lk") || title.contains("ОмГУПС")) {
                     dataStoreManager.saveLoggedIn(true)
                     return true
                 }

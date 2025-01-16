@@ -24,7 +24,7 @@ fun NoDataScreen(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(modifier = Modifier.size(200.dp)) {
+        Box() {
             Icon(
                 painter = painterResource(id = R.drawable.ic_coming_soon),
                 contentDescription = stringResource(

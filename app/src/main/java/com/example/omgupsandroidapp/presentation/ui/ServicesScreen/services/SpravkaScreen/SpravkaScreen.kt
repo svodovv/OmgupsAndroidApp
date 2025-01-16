@@ -763,7 +763,7 @@ fun SampleSpravka(
                                 .background(
                                     if (currentStage < 0) {
                                         Color.Gray
-                                    } else if (index <= currentStage) Color.Green else Color.Gray,
+                                    } else if (index == currentStage) Color.Blue else Color.Gray,
                                     shape = CircleShape
                                 )
                         )

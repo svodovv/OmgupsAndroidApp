@@ -66,7 +66,7 @@ fun ScholarshipScreen(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 var isVisible by remember {
-                    mutableStateOf(true)
+                    mutableStateOf(false)
                 }
                 LazyColumn(modifier = Modifier) {
                     stickyHeader {
@@ -85,8 +85,8 @@ fun ScholarshipScreen(
                             IconButton(onClick = { isVisible = !isVisible }) {
                                 Icon(
                                     painter = painterResource(
-                                        id = if (isVisible) R.drawable.baseline_keyboard_arrow_down_24
-                                        else R.drawable.baseline_keyboard_arrow_up_24
+                                        id = if (isVisible) R.drawable.baseline_keyboard_arrow_up_24
+                                        else R.drawable.baseline_keyboard_arrow_down_24
                                     ),
                                     contentDescription = stringResource(R.string.arrow_in_order_card),
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -98,24 +98,25 @@ fun ScholarshipScreen(
                         AnimatedVisibility(isVisible) {
 
                             Row(
+                                //horizontalArrangement = Arrangement.SpaceAround,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(start = 8.dp, end = 8.dp)
                             ) {
                                 TextInLazyColumn(
                                     columnName = "Период",
-                                    modifier = Modifier.weight(1.5f),
+                                    modifier = Modifier.weight(0.5f),
                                     style = MaterialTheme.typography.bodySmall
                                 )
 
                                 TextInLazyColumn(
                                     columnName = "Курс",
-                                    modifier = Modifier.weight(1.2f),
+                                    modifier = Modifier.weight(0.5f),
                                     style = MaterialTheme.typography.bodySmall
                                 )
                                 TextInLazyColumn(
                                     columnName = "Сумма",
-                                    modifier = Modifier.weight(0.7f),
+                                    modifier = Modifier.weight(0.5f),
                                     style = MaterialTheme.typography.bodySmall
                                 )
                             }
@@ -128,17 +129,18 @@ fun ScholarshipScreen(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(horizontal = 8.dp, vertical = 4.dp),
-                                verticalAlignment = Alignment.CenterVertically
+                                verticalAlignment = Alignment.CenterVertically,
+                              //  horizontalArrangement = Arrangement.SpaceAround
                             ) {
                                 TextInLazyColumn(
-                                    columnName = it.dateInterval, modifier = Modifier.weight(1.5f)
+                                    columnName = it.dateInterval, modifier = Modifier.weight(0.5f)
                                 )
 
                                 TextInLazyColumn(
-                                    columnName = it.year, modifier = Modifier.weight(1.2f)
+                                    columnName = it.year, modifier = Modifier.weight(0.5f)
                                 )
                                 TextInLazyColumn(
-                                    columnName = it.sum, modifier = Modifier.weight(0.7f)
+                                    columnName = it.sum, modifier = Modifier.weight(0.5f)
                                 )
                             }
                         }

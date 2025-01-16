@@ -55,29 +55,33 @@ fun OrderScreen(
             .fillMaxSize()
             .padding(paddingValues)
     ) {
+
         ServicesTopAppBar(title = "Приказы", navController = navController)
         Column(
             Modifier
                 .fillMaxSize()
         ) {
-            Spacer(modifier = Modifier.padding(2.dp))
-            Row(
-                Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(pagerState.pageCount) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) Color.Green else Color.LightGray
-                    Box(
-                        modifier = Modifier
-                            .padding(2.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(12.dp)
-                    )
+            if (pagerState.pageCount > 1) {
+                Spacer(modifier = Modifier.padding(2.dp))
+                Row(
+                    Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally)
+                        .padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    repeat(pagerState.pageCount) { iteration ->
+                        val color =
+                            if (pagerState.currentPage == iteration) Color.Blue else Color.LightGray
+                        Box(
+                            modifier = Modifier
+                                .padding(2.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                                .size(12.dp)
+                        )
+                    }
                 }
             }
            if (orderState.value.orderList.isNotEmpty()) {

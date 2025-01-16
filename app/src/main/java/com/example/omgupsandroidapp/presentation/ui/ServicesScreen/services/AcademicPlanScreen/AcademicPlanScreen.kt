@@ -460,7 +460,9 @@ fun AcademicPlanScreen(
         //horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ServicesTopAppBar(title = "Учебный план", navController = navController)
-
+        if (pagerState.pageCount > 1) {
+            DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
+        }
         if (academicPlanState.value.AcademicPlanList.isNotEmpty()) {
             HorizontalPager(
                 state = pagerState,
@@ -483,7 +485,6 @@ fun AcademicPlanScreen(
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            DynamicRowPage(pagerState.currentPage,pagerState.pageCount)
                             Spacer(modifier = Modifier.padding(2.dp))
                             Text(
                                 text = currentacademicPlan[index].name,
@@ -861,7 +862,7 @@ fun DynamicRowPage(currentStage: Int, maxSize: Int) {
             horizontalArrangement = Arrangement.Center
         ) {
             repeat(boxesCount.value) { iteration ->
-                val color = if (currentStage == iteration) Color.Green else Color.LightGray
+                val color = if (currentStage == iteration) Color.Blue else Color.LightGray
                 Box(
                     modifier = Modifier
                         .padding(2.dp)

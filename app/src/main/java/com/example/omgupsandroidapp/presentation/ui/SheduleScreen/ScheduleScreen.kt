@@ -84,9 +84,9 @@ fun ScheduleScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.padding(0.dp, 35.dp))
-        Log.e("htmlContent", sheduleState.value.sheduleList.toString())
+        //Log.e("htmlContent", sheduleState.value.sheduleList.toString())
         //ServicesTopAppBar(title = "Расписание", navController = navController)
-        Log.e("checkWeek()", checkWeek().toString())
+        //Log.e("checkWeek()", checkWeek().toString())
         /*if(sheduleState.value.isLoading == false) {
          Log.e("isload", "попало в фолс"/*sheduleState.value.isLoading.toString()*/)
             LoadingScreen()
@@ -98,7 +98,6 @@ fun ScheduleScreen(
             Row(modifier = Modifier) {
                 DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
             }
-            Spacer(modifier = Modifier.padding(0.dp, 2.dp))
             HorizontalPager(
                 state = pagerState,
                 //0key = { sheduleState.value.sheduleList[it].type_of_week },
@@ -116,7 +115,7 @@ fun ScheduleScreen(
                 item {
                         Column(
                         ) {
-                            Spacer(modifier = Modifier.padding(5.dp))
+                            //Spacer(modifier = Modifier.padding(5.dp))
 
                             if (checkWeek() == 0 && indexpage == 0) {
                                // allSchedule[].forEach { week ->
@@ -291,8 +290,8 @@ fun ScheduleScreen(
                 }
             }
         } else if (sheduleState.value.sheduleList.isEmpty() && sheduleState.value.isLoading){
-            NoDataScreen()
-            Log.e("isloadsheduleList", sheduleState.value.sheduleList.isEmpty().toString())
+        LoadingScreen()
+            //Log.e("isloadsheduleList", sheduleState.value.sheduleList.isEmpty().toString())
         }
     }
 }

@@ -34,12 +34,6 @@ class ServiceRepositoryImpl @Inject constructor(
     override suspend fun getScholarship(): ScholarshipDto {
         return serviceApi.getScholarship()
     }
-    /*override suspend fun postSpravka(csrfToken: String,type : Int, count : Int): Resource<SpravkaPostModel> {
-        return serviceApi.postSpravka(csrfToken,type,count)
-    }*/
-    /*override suspend fun postSpravka(post: LoadSpravka): Response<LoadSpravkaDto> {
-        return serviceApi.postSpravka(post.toDtoLoadSpravka())
-    }*/
 
     override suspend fun postSpravka(post: LoadSpravkaDto): SpravkaResponse {
         return serviceApi.postSpravka(post.toDtoLoadSpravka())

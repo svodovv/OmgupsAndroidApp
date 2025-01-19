@@ -142,8 +142,8 @@ fun SpravkaScreen(
                 item {
                     Card(
                         modifier = Modifier
-                            .padding(10.dp, 10.dp)
-                            .fillMaxSize()
+                            .padding(8.dp, 8.dp)
+                            //.fillMaxSize()
                         // .weight(0.2f)
                     ) {
                         Box(
@@ -235,7 +235,8 @@ fun SpravkaScreen(
                                             ),
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
-                                                .fillMaxWidth(.25f)
+                                                //.fillMaxWidth(.25f)
+                                                .size(90.dp,55.dp)
                                                 .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                                         )
                                         /*IconButton(onClick = { expanded = true }) {
@@ -251,14 +252,16 @@ fun SpravkaScreen(
                                                 InputSpravka0 = "1"
                                                 expanded_1 = false
                                             },
-                                                text = { Text("1") }
+                                                text = { Text("1") },
+                                                modifier = Modifier.size(90.dp,40.dp)
                                             )
                                             HorizontalDivider()
                                             DropdownMenuItem(onClick = {
                                                 InputSpravka0 = "2"
                                                 expanded_1 = false
                                             },
-                                                text = { Text("2") }
+                                                text = { Text("2") },
+                                                modifier = Modifier.size(90.dp,40.dp)
                                             )
                                         }
                                     }
@@ -344,7 +347,7 @@ fun SpravkaScreen(
                                         Text(text = "Заказать")
                                     }*/
                                     Button(
-                                        modifier = Modifier.fillMaxWidth(.45f),
+                                        modifier = Modifier.size(120.dp,40.dp),
                                         onClick = {
                                             orderSpravkaViewModel.viewModelScope.launch {
                                                 // Первый запрос
@@ -399,7 +402,7 @@ fun SpravkaScreen(
                     }
                     Card(
                         modifier = Modifier
-                            .padding(10.dp, 10.dp)
+                            .padding(8.dp, 8.dp)
                         //.weight(0.2f)
                     ) {
                         Box(
@@ -479,7 +482,7 @@ fun SpravkaScreen(
                                             ),
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
-                                                .fillMaxWidth(.25f)
+                                                .size(90.dp,55.dp)
                                                 .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                                         )
                                         /*IconButton(onClick = { expanded = true }) {
@@ -495,14 +498,16 @@ fun SpravkaScreen(
                                                 InputSpravka1 = "1"
                                                 expanded_2 = false
                                             },
-                                                text = { Text("1") }
+                                                text = { Text("1") },
+                                                modifier = Modifier.size(90.dp,40.dp)
                                             )
                                             HorizontalDivider()
                                             DropdownMenuItem(onClick = {
                                                 InputSpravka1 = "2"
                                                 expanded_2 = false
                                             },
-                                                text = { Text("2") }
+                                                text = { Text("2") },
+                                                modifier = Modifier.size(90.dp,40.dp)
                                             )
                                         }
                                     }
@@ -531,7 +536,7 @@ fun SpravkaScreen(
                                         Text(text = "Заказать")
                                     }*/
                                     Button(
-                                        modifier = Modifier.fillMaxWidth(.45f),
+                                        modifier =  Modifier.size(120.dp,40.dp),
                                         onClick = {
                                             orderSpravkaViewModel.viewModelScope.launch {
                                                 // Первый запрос
@@ -591,9 +596,9 @@ fun SpravkaScreen(
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.size(10.dp, 5.dp))
+                   // Spacer(modifier = Modifier.size(10.dp, 5.dp))
                     ExpandableOrderTable(historylist1, "История справок по обучению")
-                    Spacer(modifier = Modifier.size(10.dp, 5.dp))
+                    //Spacer(modifier = Modifier.size(10.dp, 5.dp))
                     ExpandableOrderTable(historylist2, "История справок для военкомата")
                     Spacer(modifier = Modifier.size(10.dp, 5.dp))
                 }

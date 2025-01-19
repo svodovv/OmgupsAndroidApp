@@ -27,12 +27,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalConfiguration
@@ -75,7 +77,7 @@ fun UserProfileScreen(
                     userPhotoProfileState.let { userPhoto ->
                         userProfileState.userProfile.let { userProfile ->
                             Box(
-                                modifier = Modifier.weight(3f),
+                                modifier = Modifier.weight(4f),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Column(
@@ -148,7 +150,7 @@ fun UserProfileScreen(
                                     )
                                     RowInProfile(
                                         rowName = "№ Приказа:",
-                                        title = userProfile.orderNumber
+                                        title = userProfile.orderNumber.substringBeforeLast("(")
                                     )
 
                                 }
@@ -613,7 +615,7 @@ private fun RowInProfile(
             .fillMaxWidth()
             .padding(4.dp)
     ) {
-        if (dividerIsVisible) Divider(
+        if (dividerIsVisible) HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 0.8.dp,
             color = MaterialTheme.colorScheme.outlineVariant
@@ -623,13 +625,15 @@ private fun RowInProfile(
                 text = rowName,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.weight(1f),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                color = Color.Black
             )
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.weight(1f),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                color = Color.Black
             )
         }
     }

@@ -1,7 +1,9 @@
 package com.omgupsapp.presentation.ui.SheduleScreen
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -24,10 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,17 +38,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
-import com.example.omgupsandroidapp.presentation.ui.NoData.NoDataScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
 import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul
-import kotlinx.coroutines.delay
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
-import java.util.Calendar
 import java.util.Locale
 
 @SuppressLint("CoroutineCreationDuringComposition", "NewApi")
@@ -69,14 +64,14 @@ fun ScheduleScreen(
 
     val nechet = sheduleState.value.sheduleList.filter { it.type_of_week == 0 }
     val chet = sheduleState.value.sheduleList.filter { it.type_of_week == 1 }
-    val mapWeek = mapOf("Нечетная неделя" to nechet,
-        "Четная неделя" to chet)
-    val allSchedule = listOf(mapWeek)
+    //val mapWeek = mapOf("Нечетная неделя" to nechet,
+    //    "Четная неделя" to chet)
+    //val allSchedule = listOf(mapWeek)
     val pagerState = rememberPagerState(pageCount = { 2 })
     val dayOfWeek = listOf("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота")
     val dayOfWeekOnEng = listOf("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY","FRIDAY", "SATURDAY")
     val day =  LocalDate.now().dayOfWeek.value
-    val currentDay = LocalDate.now().dayOfWeek.name
+    val currentDay = LocalDate.now().dayOfWeek
     val daysOfWeekInRussian = mapOf(
         DayOfWeek.MONDAY to "Понедельник",
         DayOfWeek.TUESDAY to "Вторник",
@@ -86,8 +81,14 @@ fun ScheduleScreen(
         DayOfWeek.SATURDAY to "Суббота",
         DayOfWeek.SUNDAY to "Воскресенье"
     )
+    var currentDayInRussian = ""
+    daysOfWeekInRussian.map {
+        if (currentDay == it.key) {
+            currentDayInRussian = it.value
+        }
+    }
     //Log.e("currentDay", currentDay)
-    Log.e("isload", sheduleState.value.isLoading.toString())
+    //Log.e("isload", sheduleState.value.isLoading.toString())
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -129,9 +130,10 @@ fun ScheduleScreen(
                         Column(
                         ) {
                             //Spacer(modifier = Modifier.padding(5.dp))
-
                             if (checkWeek() == 0 && indexpage == 0) {
                                // allSchedule[].forEach { week ->
+                                val currentDays = nechet.filter { it.day_of_week == currentDayInRussian }
+                                createCurrentDayBox(currentDays)
 
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
@@ -167,11 +169,9 @@ fun ScheduleScreen(
                                 }
                                 Spacer(modifier = Modifier.padding(vertical = 45.dp))
                             }else if (checkWeek() == 1 && indexpage == 0){
-                                var currentDays: List<SheduleModel>
-                                daysOfWeekInRussian.map { cd ->
-                                    currentDays = chet.filter { it.day_of_week == cd.value }
-                                    СurrentDay("Сегодня",currentDays,day)
-                                }
+                                val currentDays = chet.filter { it.day_of_week == currentDayInRussian }
+                                createCurrentDayBox(currentDays)
+
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center,
@@ -286,10 +286,198 @@ fun ScheduleScreen(
 }
 
 @Composable
-fun СurrentDay(dayOfWeek: String, schedule: List<SheduleModel>,currentDay: Int){
+fun OnePairInDayShedule(
+    beginTime: String,
+    endingTime: String,
+    scheduleItem: SheduleModel,
+    backlight: Boolean = false
+) {
+    // Получаем текущее время
+    val currentTime = LocalTime.now()
+    // Форматируем время из строк в LocalTime
+    val formatter = DateTimeFormatter.ofPattern("H:mm")
+    val beginLocalTime = LocalTime.parse(beginTime, formatter)
+    val endLocalTime = LocalTime.parse(endingTime, formatter)
 
-        createDayBox(dayOfWeek,schedule,currentDay)
+    // Проверяем, попадает ли текущее время в диапазон
+    val isCurrentPair = currentTime.isAfter(beginLocalTime) && currentTime.isBefore(endLocalTime)
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(10.dp, 10.dp)
+                .fillMaxSize(.25f)
+            .background(if (isCurrentPair && backlight) Color.Green else Color.Transparent, shape = RoundedCornerShape(20)), // Подсветка текущей пары
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row {
+                Text(beginTime)
+            }
+            Row {
+                Text(endingTime)
+            }
+            VerticalDivider(
+                modifier = Modifier
+                    .width(1.dp)
+                    .height(IntrinsicSize.Min), // Ограничиваем высоту делителя
+                thickness = 10.dp,
+                color = Color.Black
+            )
+        }
+        VerticalDivider(
+            Modifier
+                .width(0.dp)
+                .height(38.dp)
+                .border(width = 2.dp, MaterialTheme.colorScheme.primaryContainer)
+        )
+        Column(
+            modifier = Modifier
+                .padding(10.dp, 10.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        shape = RoundedCornerShape(8.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    )
+            ) {
+                Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp, 0.dp))
+            }
+        }
+    }
 }
+
+@Composable
+fun createCurrentDayBox(schedule: List<SheduleModel>) {
+    Column(
+        modifier = Modifier
+            .padding(10.dp, 10.dp)
+            .fillMaxSize(1f)
+            .background(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = RoundedCornerShape(16.dp)
+            )
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(10.dp, 10.dp),
+        ) {
+            Text("Сегодня", fontSize = 20.sp)
+        }
+        for (scheduleItem in schedule) {
+            when (scheduleItem.time) {
+                0 -> OnePairInDayShedule("8:00", "9:35", scheduleItem,backlight = true)
+                1 -> OnePairInDayShedule("9:45", "11:20", scheduleItem,backlight = true)
+                2 -> OnePairInDayShedule("11:30", "13:05", scheduleItem,backlight = true)
+                3 -> OnePairInDayShedule("13:55", "15:30", scheduleItem,backlight = true)
+                4 -> OnePairInDayShedule("15:40", "17:15", scheduleItem,backlight = true)
+            }
+        }
+        Spacer(Modifier.padding(5.dp))
+    }
+}
+
+/*@Composable
+fun createCurrentDayBox(schedule: List<SheduleModel>) {
+
+    Column(
+        modifier = Modifier
+            .padding(10.dp, 10.dp)
+            .fillMaxSize(1f)
+            .background(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = RoundedCornerShape(16.dp)
+            )
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp, 10.dp),
+
+            ) {
+            Text("Сегодня", fontSize = 20.sp)
+        }
+        for (scheduleItem in schedule) {
+            when (scheduleItem.time) {
+                0 -> OnePairInDayShedule("8:00","9:35", scheduleItem)
+
+                1 -> OnePairInDayShedule("9:45","11:20", scheduleItem)
+
+
+                2 -> OnePairInDayShedule("11:30","13:05", scheduleItem)
+
+
+                3 -> OnePairInDayShedule("13:55","15:30", scheduleItem)
+
+
+                4 -> OnePairInDayShedule("15:40","17:15", scheduleItem)
+                /*Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(10.dp, 10.dp)
+                            .fillMaxSize(.25f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Row {
+                            Text("15:40")
+                        }
+                        Row {
+                            Text("17:15")
+                        }
+                        VerticalDivider(
+                            modifier = Modifier
+                                .width(1.dp)
+                                .height(IntrinsicSize.Min), // Ограничиваем высоту делителя
+                            thickness = 10.dp,
+                            color = Color.Black
+                        )
+                    }
+                    VerticalDivider(
+                        Modifier
+                            .width(0.dp)
+                            .height(38.dp)
+                            .border(width = 2.dp, MaterialTheme.colorScheme.primaryContainer)
+                    )
+                    Column(
+                        modifier = Modifier
+                            .padding(10.dp, 10.dp)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    shape = RoundedCornerShape(8.dp),
+                                    color = MaterialTheme.colorScheme.surfaceVariant
+                                )
+                        ) {
+                            Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp,0.dp))
+                        }
+                    }
+                }*/
+            }
+        }
+    }
+}*/
 
 @Composable
 fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>,currentDay: Int) {
@@ -315,18 +503,18 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>,currentDay: Int
         }
         for (scheduleItem in schedule) {
             when (scheduleItem.time) {
-                0 -> OneDayShedule("8:00","9:35", scheduleItem)
+                0 -> OnePairInDayShedule("8:00","9:35", scheduleItem)
 
-                1 -> OneDayShedule("9:45","11:20", scheduleItem)
-
-
-                2 -> OneDayShedule("11:30","13:05", scheduleItem)
+                1 -> OnePairInDayShedule("9:45","11:20", scheduleItem)
 
 
-                3 -> OneDayShedule("13:55","15:30", scheduleItem)
+                2 -> OnePairInDayShedule("11:30","13:05", scheduleItem)
 
 
-                4 -> OneDayShedule("15:40","17:15", scheduleItem)
+                3 -> OnePairInDayShedule("13:55","15:30", scheduleItem)
+
+
+                4 -> OnePairInDayShedule("15:40","17:15", scheduleItem)
                 /*Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -401,8 +589,8 @@ fun TextInLazyColumns(
 
 
 
-@Composable
-fun OneDayShedule(
+/*@Composable
+fun OnePairInDayShedule(
     beginTime : String,
     endingTime: String,
     scheduleItem : SheduleModel,
@@ -419,10 +607,10 @@ fun OneDayShedule(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row {
-                Text("15:40")
+                Text(beginTime)
             }
             Row {
-                Text("17:15")
+                Text(endingTime)
             }
             VerticalDivider(
                 modifier = Modifier
@@ -459,7 +647,7 @@ fun OneDayShedule(
             }
         }
     }
-}
+}*/
 
 /*@Composable
 fun getCurrentDate(currentDay:String,valu: Int): String {

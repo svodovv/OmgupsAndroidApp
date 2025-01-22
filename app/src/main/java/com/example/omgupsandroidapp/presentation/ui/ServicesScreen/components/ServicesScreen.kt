@@ -29,13 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel
+import com.example.omgupsandroidapp.presentation.utils.RuStoreUpDateViewModel
 
 
 @Composable
 fun ServiceScreen(
     navController: NavController,
     paddingValues: PaddingValues,
-    servicesViewModel: ServicesViewModel = hiltViewModel()
+    servicesViewModel: ServicesViewModel = hiltViewModel(),
+    uStoreUpDateViewModel : RuStoreUpDateViewModel = hiltViewModel()
 ) {
     val serviceList = servicesViewModel.serviceList
 
@@ -92,5 +94,4 @@ fun ServiceScreen(
         }
         //Spacer(modifier = Modifier.size(150.dp))
     }
-
 }

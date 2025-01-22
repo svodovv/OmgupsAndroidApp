@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.7"
     }
     packaging {
         resources {
@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.app.update.ktx)
     val roomVersion = "2.6.1"
 
     implementation(libs.androidx.core.ktx)
@@ -123,9 +124,11 @@ dependencies {
 
     implementation( "com.jakewharton.threetenabp:threetenabp:1.3.0")
 
-
     //Coil
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+    //SdkRuStoreUpDate
+    implementation("ru.rustore.sdk:appupdate:7.0.0")
 
 }
 

@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RuStoreUpDateViewModel @Inject constructor() : ViewModel() {
-    lateinit var ruStoreAppUpdateManager: RuStoreAppUpdateManager
+    private lateinit var ruStoreAppUpdateManager: RuStoreAppUpdateManager
     private val _events = MutableSharedFlow<Event>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -47,11 +47,11 @@ class RuStoreUpDateViewModel @Inject constructor() : ViewModel() {
     fun init(context: Context) {
         // В данном примере подобное создание класса сделано для упрощения. В реальных проектах
         // рекомендуеся использовать DI
-        val updateManager = RuStoreAppUpdateManagerFactory.create(context)
         ruStoreAppUpdateManager = RuStoreAppUpdateManagerFactory.create(context)
         ruStoreAppUpdateManager
             .getAppUpdateInfo()
             .addOnSuccessListener { appUpdateInfo ->
+                Log.e("resultCode", appUpdateInfo.toString())
                 if (appUpdateInfo.updateAvailability == UpdateAvailability.UPDATE_AVAILABLE) {
                     ruStoreAppUpdateManager.registerListener(installStateUpdateListener)
                     ruStoreAppUpdateManager

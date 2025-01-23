@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel
 import com.example.omgupsandroidapp.presentation.utils.Event
@@ -51,7 +52,9 @@ fun ServiceScreen(
 ) {
     val serviceList = servicesViewModel.serviceList
     val events by ruStoreUpDateViewModel.events.collectAsState(initial = null)
+    val context = LocalContext.current // Получаем текущий контекст
 
+    // Инициализация ViewModel
 
     LazyColumn(
         modifier = Modifier
@@ -106,10 +109,10 @@ fun ServiceScreen(
             }
         }
         ruStoreUpDateViewModel.viewModelScope.launch {
-            ruStoreUpDateViewModel.ruStoreAppUpdateManager.getAppUpdateInfo()
+            ruStoreUpDateViewModel.init(context)
         }
     }
-    Column(
+   /* Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
@@ -120,10 +123,10 @@ fun ServiceScreen(
 
         //Button(onClick = { viewModel.init(LocalContext.current) }) {
             Text(text = "Проверить обновление")
-       // }
+       }
 
         if (events is Event.UpdateCompleted) {
             Text(text = "Обновление завершено!", color = Color.Green)
         }
-    }
+    }*/
 }

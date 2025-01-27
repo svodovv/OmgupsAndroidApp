@@ -1,7 +1,7 @@
-package com.example.omgupsandroidapp.domain.use_case.service.spravki
+package com.example.omgupsandroidapp.domain.use_case.service.gradebook
 
-import android.annotation.SuppressLint
 import android.util.Log
+import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.toAcademicPlanDtoItem
 import com.example.omgupsandroidapp.data.repository.ServiceRepositoryImpl
 import com.omgupsapp.common.Resource
 import kotlinx.coroutines.flow.flow
@@ -9,21 +9,20 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetReferenceHistoryUseCase @Inject constructor(
+class GradeBookUseCase @Inject constructor(
     private val serviceRepositoryImpl: ServiceRepositoryImpl
 ) {
-    @SuppressLint("SuspiciousIndentation")
-    operator fun invoke(id: Int) = flow {
-        try {
+    operator fun invoke() = flow {
+        try{
             emit(Resource.Loading())
-            val ReferenceHistoryList = serviceRepositoryImpl.getReferenceHistory(id)
-            emit(Resource.Success(ReferenceHistoryList))
+            val gradeBooks = serviceRepositoryImpl.getGradeBook().name.map { it }
+                emit(Resource.Success(gradeBooks))
         } catch (e: IOException) {
             emit(Resource.Error(e.localizedMessage ?: "IO Exception"))
-            Log.e("GetScholarshipUseCase", "IO Exception $e")
+            Log.e("GradeBookUseCase", "IO Exception $e")
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "HTTP Exception"))
-            Log.e("GetScholarshipUseCase", "HTTP Exception $e")
+            Log.e("GradeBookUseCase", "HTTP Exception $e")
         }
     }
 }

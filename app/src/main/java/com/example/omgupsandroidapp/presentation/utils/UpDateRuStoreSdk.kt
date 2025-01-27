@@ -34,10 +34,6 @@ class RuStoreUpDateViewModel @Inject constructor() : ViewModel() {
     val _updateState = MutableStateFlow(UpDateState())
     val updateState = _updateState.asStateFlow()
 
-    /*init {
-        ruStoreAppUpdateManagerGetAppUpdateInfo()
-    }*/
-
     val events = _events.asSharedFlow()
     private val installStateUpdateListener = InstallStateUpdateListener { installState ->
         when (installState.installStatus) {
@@ -76,25 +72,23 @@ class RuStoreUpDateViewModel @Inject constructor() : ViewModel() {
     }
 
     fun init(context: Context) {
-        // В данном примере подобное создание класса сделано для упрощения. В реальных проектах
-        // рекомендуеся использовать DI
         ruStoreAppUpdateManager = RuStoreAppUpdateManagerFactory.create(context)
         ruStoreAppUpdateManager
             .getAppUpdateInfo()
             .addOnSuccessListener { appUpdateInfo ->
-                Log.e("resultCode", appUpdateInfo.toString())
+                Log.i(TAG, appUpdateInfo.updateAvailability.toString())
                 if (appUpdateInfo.updateAvailability == UpdateAvailability.UPDATE_AVAILABLE) {
                     ruStoreAppUpdateManager.registerListener(installStateUpdateListener)
                     ruStoreAppUpdateManager
-                        .startUpdateFlow(appUpdateInfo, AppUpdateOptions.Builder().build())
+                        .startUpdateFlow(appUpdateInfo,AppUpdateOptions.Builder().appUpdateType(AppUpdateType.IMMEDIATE).build())
                         .addOnSuccessListener { resultCode ->
                             Log.e("installStatus", appUpdateInfo.installStatus.toString())
                             if (resultCode == Activity.RESULT_CANCELED) {
                                 // Пользователь отказался от скачивания
                             }
-                            if (appUpdateInfo.installStatus == 1) {
+                           /* if (appUpdateInfo.installStatus == 1) {
                                 completeUpdateRequested()
-                            }
+                            }*/
                         }
                         .addOnFailureListener { throwable ->
                             Log.e(TAG, "startUpdateFlow error", throwable)

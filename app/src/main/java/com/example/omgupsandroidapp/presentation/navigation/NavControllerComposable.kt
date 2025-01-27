@@ -1,24 +1,18 @@
 package com.omgupsapp.presentation.navigation
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.navigation
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.AcademicPlanScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ScholarshipScreen.ScholarshipScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.OrderScreen.OrderScreen
-import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.AcademicPlanScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SpravkaScreen.SpravkaScreen
-import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.StudentBookScreen.StudentBookScreen
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.GradeBook.StudentBookScreen
 import com.example.omgupsandroidapp.presentation.ui.SettingsScreen.copmposable.SettingsScreen
 import com.example.omgupsandroidapp.presentation.ui.SplashScreen.SplashScreen
-import com.example.omgupsandroidapp.presentation.ui.screens.LogoutScreen.LogoutAlertDialog
 import com.omgupsapp.presentation.NavigationGroup
 import com.omgupsapp.presentation.Screen
 import com.omgupsapp.presentation.ui.LoginScreen.components.AuthScreen

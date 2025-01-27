@@ -5,6 +5,7 @@ import com.example.omgupsandroidapp.data.local.Room.Cache.ScheduleEntity
 import com.example.omgupsandroidapp.data.remote.Retrofit.ServiceApi
 import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.AcademicPlanDto
 import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.AcademicPlanDtoItem
+import com.example.omgupsandroidapp.data.remote.dto.gradeBook.ListGradeDto
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
@@ -62,6 +63,11 @@ class ServiceRepositoryImpl @Inject constructor(
     override suspend fun getAcademicPlan(): AcademicPlanDto {
         return serviceApi.getAcademicPlan()
     }
+
+    override suspend fun getGradeBook(): ListGradeDto {
+        return serviceApi.getGradeBooks()
+    }
+
 
     /*private val scheduleDao = dataScheduleDao.dataSchedule()
 

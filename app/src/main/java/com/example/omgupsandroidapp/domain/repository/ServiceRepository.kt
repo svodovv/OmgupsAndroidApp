@@ -3,6 +3,7 @@ package com.example.omgupsandroidapp.domain.repository
 import com.example.omgupsandroidapp.data.local.Room.Cache.ScheduleEntity
 import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.AcademicPlanDto
 import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.AcademicPlanDtoItem
+import com.example.omgupsandroidapp.data.remote.dto.gradeBook.ListGradeDto
 import com.example.omgupsandroidapp.data.remote.dto.order.OrderDto
 import com.example.omgupsandroidapp.data.remote.dto.schedule.SheduleDto
 import com.example.omgupsandroidapp.data.remote.dto.scholarship.ScholarshipDto
@@ -34,6 +35,8 @@ interface ServiceRepository {
     suspend fun  getShudele(): List<ScheduleEntity>
 
     suspend fun getAcademicPlan(): AcademicPlanDto
+
+    suspend fun getGradeBook(): ListGradeDto
 
    // suspend fun  saveSchedule(schedule: SheduleDto)
 }

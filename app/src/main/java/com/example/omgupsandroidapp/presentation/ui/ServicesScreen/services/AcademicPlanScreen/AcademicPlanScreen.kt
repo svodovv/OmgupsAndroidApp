@@ -3,6 +3,7 @@ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Aca
 //import androidx.compose.material3.HorizontalDivider
 //import androidx.compose.material3.VerticalDivider
 import android.util.Log
+import androidx.annotation.AnyThread
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -60,6 +61,7 @@ import com.example.omgupsandroidapp.data.remote.dto.acafemicplan.Discipline
 import com.example.omgupsandroidapp.domain.model.service.AcademicPlanModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
+import com.my.tracker.MyTracker
 import java.sql.Driver
 
 /*@OptIn(ExperimentalFoundationApi::class)
@@ -441,6 +443,8 @@ fun AcademicPlanScreen(
     academicPlanViewModel: AcademicPlanViewModel = hiltViewModel()
 ) {
     ServicesTopAppBar(title = "Учебный план", navController = navController)
+
+    MyTracker.trackEvent("Учебный план")
 
     val academicPlanState = academicPlanViewModel.academicPlanState.collectAsStateWithLifecycle()
     val academicPlan = academicPlanState.value.AcademicPlanList.map {

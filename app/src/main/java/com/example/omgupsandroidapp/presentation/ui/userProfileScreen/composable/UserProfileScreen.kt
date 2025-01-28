@@ -50,6 +50,7 @@ import com.example.omgupsandroidapp.presentation.components.coilImage.CoilImage
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.userProfileScreen.UserProfileViewModel
 import com.example.omgupsandroidapp.presentation.utils.portable
+import com.my.tracker.MyTracker
 import com.omgupsapp.presentation.Screen
 
 @Composable
@@ -62,6 +63,8 @@ fun UserProfileScreen(
     val userPhotoProfileState = userProfileViewModel.userPhotoState.collectAsStateWithLifecycle().value
     val scrollState = rememberScrollState()
     val orientation = LocalConfiguration.current.orientation
+
+    MyTracker.trackEvent("Профиль")
 
     Log.e("htmlContent", userPhotoProfileState.userPhoto.photoUrl)
     when (orientation) {

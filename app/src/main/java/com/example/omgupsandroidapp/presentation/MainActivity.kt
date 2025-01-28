@@ -22,9 +22,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MyTracker.setDebugMode(true)
+
+        MyTracker.setDebugMode(false)
         val trackerParams = MyTracker.getTrackerParams()
         val trackerConfig = MyTracker.getTrackerConfig()
+
         MyTracker.initTracker(SDK_KEY, application)
 
         @SuppressLint("HardwareIds")

@@ -66,6 +66,7 @@ import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
+import com.my.tracker.MyTracker
 import kotlinx.coroutines.launch
 
 
@@ -82,6 +83,8 @@ fun SpravkaScreen(
     orderSpravkaViewModel: OrderSpravkaViewModel = hiltViewModel()
 
 ) {
+
+    MyTracker.trackEvent("Заказ справок")
     var InputSpravka0 by remember { mutableStateOf("0") }
     var InputSpravka1 by remember { mutableStateOf("0") }
     var expanded_1 by remember { mutableStateOf(false) }

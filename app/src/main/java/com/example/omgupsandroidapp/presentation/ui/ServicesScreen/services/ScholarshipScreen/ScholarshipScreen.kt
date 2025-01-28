@@ -39,6 +39,7 @@ import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
+import com.my.tracker.MyTracker
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -49,7 +50,11 @@ fun ScholarshipScreen(
     scholarshipViewModel: ScholarshipViewModel = hiltViewModel()
 ) {
 
+
     val scholarship = scholarshipViewModel.scholarship.collectAsStateWithLifecycle()
+
+    MyTracker.trackEvent("Выплаты")
+
     Column(
         modifier = Modifier
             .fillMaxSize()

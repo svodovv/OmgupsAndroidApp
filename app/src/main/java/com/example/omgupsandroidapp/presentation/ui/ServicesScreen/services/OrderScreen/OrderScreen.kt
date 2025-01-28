@@ -39,6 +39,7 @@ import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
+import com.my.tracker.MyTracker
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -49,6 +50,8 @@ fun OrderScreen(
 ) {
     val orderState = orderViewModel.orderState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { orderState.value.orderList.size })
+
+    MyTracker.trackEvent("Приказы")
 
     Column(
         modifier = Modifier

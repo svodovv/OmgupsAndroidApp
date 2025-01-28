@@ -40,6 +40,7 @@ import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
 import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul
+import com.my.tracker.MyTracker
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -55,6 +56,8 @@ fun ScheduleScreen(
     paddingValues: PaddingValues,
     sheduleViewModul: SheduleViewModul = hiltViewModel()
 ) {
+
+    MyTracker.trackEvent("Расписание")
 
     LaunchedEffect(Unit) {
         sheduleViewModul.getShedule()

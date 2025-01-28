@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.NoData.NoDataScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
+import com.my.tracker.MyTracker
 
 @Composable
 fun StudentBookScreen(
@@ -25,6 +26,7 @@ fun StudentBookScreen(
     gradeBooksViewModel: GradeBooksViewModel = hiltViewModel()
 ) {
     val gradeBooks = gradeBooksViewModel.gradeBookState.collectAsStateWithLifecycle()
+    MyTracker.trackEvent("Зачетная книжка")
     //NoDataScreen()
 
     LazyColumn(

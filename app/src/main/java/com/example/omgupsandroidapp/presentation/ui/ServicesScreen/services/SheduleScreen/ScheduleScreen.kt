@@ -29,8 +29,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -106,8 +104,8 @@ fun ScheduleScreen(
                 Anchors.End at widthPx
             },
             positionalThreshold = { distance: Float -> distance * 0.5f },
-            velocityThreshold = { with(density) { 100.dp.toPx() } },
-            snapAnimationSpec = tween(durationMillis = 300),
+            velocityThreshold = { with(density) { 97.dp.toPx() } },
+            snapAnimationSpec = tween(durationMillis = 200),
             decayAnimationSpec = decayAnimationSpec
         )
     }
@@ -183,22 +181,48 @@ fun ScheduleScreen(
 
         Box(
             modifier = Modifier
-                .size(196.dp, 27.dp)
+                .size(198.dp, 26.dp)
                 .anchoredDraggable(
                     state = state,
                     orientation = Orientation.Horizontal,
                 )
                 .background(Color.LightGray, shape = RoundedCornerShape(50)),
+
         ) {
-            Spacer(modifier = Modifier.padding(1.dp))
-            Box(
-                modifier = Modifier
-                    .offset { IntOffset(state.offset.absoluteValue.roundToInt(), 0) }
-                    .size(98.dp, 23.dp)
-                    .background(MaterialTheme.colorScheme.surfaceVariant,shape = RoundedCornerShape(50))
-            )
+            Row(
+                Modifier.fillMaxSize()
+                    .padding(start = 1.dp, end = 1.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .offset { IntOffset(state.offset.absoluteValue.roundToInt(), 0) }
+                        .size(98.dp, 23.dp)
+                        .background(
+                            MaterialTheme.colorScheme.surfaceVariant,
+                            shape = RoundedCornerShape(50)
+                        )
+                ){
+                    Row(
+                        Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    )
+                    {
+                        if (checkWeek() == 0 && pagerState.currentPage == 0) {
+                            Text("НЕЧЕТНАЯ", color = MaterialTheme.colorScheme.primary)
+                        } else if (checkWeek() == 0 && pagerState.currentPage == 1) {
+                            Text("ЧЕТНАЯ", color = MaterialTheme.colorScheme.primary)
+                        } else if (checkWeek() == 1 && pagerState.currentPage == 0) {
+                            Text("ЧЕТНАЯ", color = MaterialTheme.colorScheme.primary)
+                        } else if (checkWeek() == 1 && pagerState.currentPage == 1) {
+                            Text("НЕЧЕТНАЯ", color = MaterialTheme.colorScheme.primary)
+                        }
+                    }
+                }
+            }
         }
-            Row(modifier = Modifier) {
+            /*Row(modifier = Modifier) {
                 /*Box(
                     modifier = Modifier
                         .width(width)
@@ -215,8 +239,8 @@ fun ScheduleScreen(
                             .background(Color.DarkGray)
                     )
                 }*/
-                DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
-            }
+                //DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
+            }*/
             HorizontalPager(
                 state = pagerState,
                 //0key = { sheduleState.value.sheduleList[it].type_of_week },
@@ -240,7 +264,7 @@ fun ScheduleScreen(
                                 val currentDays = nechet.filter { it.day_of_week == currentDayInRussian }
                                 createCurrentDayBox(currentDays)
 
-                                Row(
+                                /*Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center,
                                     modifier = Modifier
@@ -248,7 +272,7 @@ fun ScheduleScreen(
                                         .padding(20.dp, 0.dp)
                                 ) {
                                     Text("Нечетная неделя", fontSize = 25.sp)
-                                }
+                                }*/
                                 dayOfWeek.map { dayWeek ->
                                     val days = nechet.filter { it.day_of_week == dayWeek }
                                     Row {
@@ -257,7 +281,7 @@ fun ScheduleScreen(
                                 }
                                 Spacer(modifier = Modifier.padding(vertical = 45.dp))
                             }else if ( checkWeek() == 0 && indexpage == 1){
-                                Row(
+                               /* Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center,
                                     modifier = Modifier
@@ -265,7 +289,7 @@ fun ScheduleScreen(
                                         .padding(20.dp, 0.dp)
                                 ) {
                                     Text("Четная неделя", fontSize = 25.sp)
-                                }
+                                }*/
                                 dayOfWeek.map { dayWeek ->
                                     val days = chet.filter { it.day_of_week == dayWeek }
                                     Row {
@@ -277,7 +301,7 @@ fun ScheduleScreen(
                                 val currentDays = chet.filter { it.day_of_week == currentDayInRussian }
                                 createCurrentDayBox(currentDays)
 
-                                Row(
+                                /*Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center,
                                     modifier = Modifier
@@ -285,7 +309,7 @@ fun ScheduleScreen(
                                         .padding(20.dp, 0.dp)
                                 ) {
                                     Text("Четная неделя", fontSize = 25.sp)
-                                }
+                                }*/
                                 dayOfWeek.map { dayWeek ->
                                     val days = chet.filter { it.day_of_week == dayWeek }
                                     Row {
@@ -294,7 +318,7 @@ fun ScheduleScreen(
                                 }
                                 Spacer(modifier = Modifier.padding(vertical = 45.dp))
                             }else if (checkWeek() == 1 && indexpage == 1){
-                                Row(
+                                /*Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center,
                                     modifier = Modifier
@@ -302,7 +326,7 @@ fun ScheduleScreen(
                                         .padding(20.dp, 0.dp)
                                 ) {
                                     Text("Нечетная неделя", fontSize = 25.sp)
-                                }
+                                }*/
                                 dayOfWeek.map { dayWeek ->
                                     val days = nechet.filter { it.day_of_week == dayWeek }
                                     Row {
@@ -470,10 +494,12 @@ fun createCurrentDayBox(schedule: List<SheduleModel>) {
         modifier = Modifier
             .padding(10.dp, 10.dp)
             .fillMaxSize(1f)
+            .border(4.dp, color = Color(0xFFA6C6FA), shape = RoundedCornerShape(16.dp))
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(16.dp)
             )
+
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -793,17 +819,17 @@ fun getCurrentDate(currentDay:String,valu: Int): String {
 fun getCurrentDate(currentDay:String, valu: Long): String {
     var dayresult = ""
 
-    val dtf = DateTimeFormatter.ofPattern("dd.MM.EEEE")
+    val dtf = DateTimeFormatter.ofPattern("dd.MM ")
     val now = LocalDate.now()// Текущая дата
 
     when (currentDay) {
-        "Понедельник" -> dayresult = now.minusDays(valu).plusDays(1).format(dtf).toString()
-        "Вторник" -> dayresult = now.minusDays(valu).plusDays(2).format(dtf).toString()
-        "Среда"  -> dayresult = now.minusDays(valu).plusDays(3).format(dtf).toString()
-        "Четверг" -> dayresult = now.minusDays(valu).plusDays(4).format(dtf).toString()
-        "Пятница" -> dayresult = now.minusDays(valu).plusDays(5).format(dtf).toString()
-        "Суббота" -> dayresult = now.minusDays(valu).plusDays(6).format(dtf).toString()
-        "Воскресенье" -> dayresult = now.minusDays(valu).plusDays(7).format(dtf).toString()
+        "Понедельник" -> dayresult = now.minusDays(valu).plusDays(1).format(dtf).toString() + "Понедельник"
+        "Вторник" -> dayresult = now.minusDays(valu).plusDays(2).format(dtf).toString() + "Вторник"
+        "Среда"  -> dayresult = now.minusDays(valu).plusDays(3).format(dtf).toString() + "Среда"
+        "Четверг" -> dayresult = now.minusDays(valu).plusDays(4).format(dtf).toString() + "Четверг"
+        "Пятница" -> dayresult = now.minusDays(valu).plusDays(5).format(dtf).toString() + "Пятница"
+        "Суббота" -> dayresult = now.minusDays(valu).plusDays(6).format(dtf).toString() + "Суббота"
+        "Воскресенье" -> dayresult = now.minusDays(valu).plusDays(7).format(dtf).toString() + "Воскресенье"
     }
     return dayresult
 

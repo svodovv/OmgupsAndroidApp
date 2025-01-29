@@ -1,11 +1,17 @@
 package com.omgupsapp.presentation.ui.SheduleScreen
 
 import android.annotation.SuppressLint
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.rememberSplineBasedDecay
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.AnchoredDraggableState
+import androidx.compose.foundation.gestures.DraggableAnchors
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.anchoredDraggable
+import androidx.compose.foundation.gestures.animateTo
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,22 +21,32 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,7 +55,8 @@ import androidx.navigation.NavController
 import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
-import com.example.omgupsandroidapp.presentation.ui.SheduleScreen.SheduleViewModul
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SheduleScreen.SheduleViewModul
 import com.my.tracker.MyTracker
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -48,8 +65,16 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.Locale
+import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
-@SuppressLint("CoroutineCreationDuringComposition", "NewApi")
+enum class Anchors {
+    Start,
+    End
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@SuppressLint("CoroutineCreationDuringComposition", "NewApi", "RememberReturnType")
 @Composable
 fun ScheduleScreen(
     navController: NavController,
@@ -57,10 +82,34 @@ fun ScheduleScreen(
     sheduleViewModul: SheduleViewModul = hiltViewModel()
 ) {
 
+    ServicesTopAppBar(title = "Расписание", navController = navController)
     MyTracker.trackEvent("Расписание")
 
     LaunchedEffect(Unit) {
         sheduleViewModul.getShedule()
+    }
+
+    val width = 196.dp
+    val squareSize = 98.dp
+
+    //val sizePx = with(LocalDensity.current) { squareSize.toPx() }
+    val density = LocalDensity.current
+    val parentBoxWidth = 98.dp
+    val boxSize = 196.dp
+    val widthPx = with(density) {(parentBoxWidth - boxSize).toPx() }
+    val decayAnimationSpec = rememberSplineBasedDecay<Float>()
+    val state = remember {
+        AnchoredDraggableState(
+            initialValue = Anchors.Start,
+            anchors = DraggableAnchors {
+                Anchors.Start at 0f
+                Anchors.End at widthPx
+            },
+            positionalThreshold = { distance: Float -> distance * 0.5f },
+            velocityThreshold = { with(density) { 100.dp.toPx() } },
+            snapAnimationSpec = tween(durationMillis = 300),
+            decayAnimationSpec = decayAnimationSpec
+        )
     }
 
     val sheduleState = sheduleViewModul.sheduleState.collectAsStateWithLifecycle()
@@ -112,7 +161,60 @@ fun ScheduleScreen(
                 // NoDataScreen()
             LoadingScreen()
         } else */if (sheduleState.value.sheduleList.isNotEmpty()) {
+        val pagerState = rememberPagerState(pageCount = { 2 })
+
+        // Синхронизация состояний пейджера и переключателя
+        LaunchedEffect(pagerState.currentPage) {
+            val targetAnchor = when (pagerState.currentPage) {
+                0 -> Anchors.Start
+                1 -> Anchors.End
+                else -> Anchors.Start
+            }
+            state.animateTo(targetAnchor)
+        }
+
+        LaunchedEffect(state.currentValue) {
+            val targetPage = when (state.currentValue) {
+                Anchors.Start -> 0
+                Anchors.End -> 1
+            }
+            pagerState.animateScrollToPage(targetPage)
+        }
+
+        Box(
+            modifier = Modifier
+                .size(196.dp, 27.dp)
+                .anchoredDraggable(
+                    state = state,
+                    orientation = Orientation.Horizontal,
+                )
+                .background(Color.LightGray, shape = RoundedCornerShape(50)),
+        ) {
+            Spacer(modifier = Modifier.padding(1.dp))
+            Box(
+                modifier = Modifier
+                    .offset { IntOffset(state.offset.absoluteValue.roundToInt(), 0) }
+                    .size(98.dp, 23.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant,shape = RoundedCornerShape(50))
+            )
+        }
             Row(modifier = Modifier) {
+                /*Box(
+                    modifier = Modifier
+                        .width(width)
+                        .anchoredDraggable(
+                            state = state,
+                            orientation = Orientation.Horizontal
+                        )
+                        .background(Color.LightGray)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .offset { IntOffset(state.offset.absoluteValue.roundToInt(), 0) }
+                            .size(squareSize)
+                            .background(Color.DarkGray)
+                    )
+                }*/
                 DynamicRowPage(pagerState.currentPage, pagerState.pageCount)
             }
             HorizontalPager(
@@ -312,7 +414,10 @@ fun OnePairInDayShedule(
             modifier = Modifier
                 .padding(10.dp, 10.dp)
                 .fillMaxSize(.25f)
-            .background(if (isCurrentPair && backlight) Color.Green else Color.Transparent, shape = RoundedCornerShape(20)), // Подсветка текущей пары
+                .background(
+                    if (isCurrentPair && backlight) Color.Green else Color.Transparent,
+                    shape = RoundedCornerShape(20)
+                ), // Подсветка текущей пары
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

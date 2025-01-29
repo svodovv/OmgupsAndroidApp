@@ -1,25 +1,16 @@
-package com.example.omgupsandroidapp.presentation.ui.SheduleScreen
+package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SheduleScreen
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.omgupsandroidapp.data.local.Room.Cache.ScheduleSaveRepository
-import com.example.omgupsandroidapp.data.remote.dto.schedule.ShedelItem
-import com.example.omgupsandroidapp.data.schedule.ScheduleRepository
 import com.example.omgupsandroidapp.domain.use_case.service.schedule.GetSheduleUseCase
 import com.omgupsapp.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 import javax.inject.Inject
 
 @HiltViewModel

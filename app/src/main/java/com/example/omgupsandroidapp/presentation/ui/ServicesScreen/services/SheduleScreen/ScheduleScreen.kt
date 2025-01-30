@@ -424,7 +424,7 @@ fun OnePairInDayShedule(
     backlight: Boolean = false
 ) {
     // Получаем текущее время
-    val currentTime = LocalTime.now()
+    val currentTime = LocalTime.of(8,10)
     // Форматируем время из строк в LocalTime
     val formatter = DateTimeFormatter.ofPattern("H:mm")
     val beginLocalTime = LocalTime.parse(beginTime, formatter)

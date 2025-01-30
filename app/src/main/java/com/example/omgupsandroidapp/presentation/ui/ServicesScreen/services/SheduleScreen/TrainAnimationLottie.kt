@@ -1,9 +1,12 @@
 package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SheduleScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.room.util.TableInfo
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -35,13 +40,25 @@ fun TrainAnimationLottie(modifier: Modifier = Modifier) {
 
     Box(
         modifier = modifier
-            .size(55.dp),
+            .size(70.dp),
            // .padding(end = 12.dp),
         contentAlignment = Alignment.CenterEnd
     ) {
-        LottieAnimation(
-            composition = composition,
-            progress = { progress.progress },)
-            //Modifier.size(50.dp)
+        Column(
+            Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Row(
+                modifier = Modifier.padding(bottom = 4.dp)
+            ) {
+                LottieAnimation(
+                    composition = composition,
+                    progress = { progress.progress },
+                    alignment = Alignment.BottomStart
+                )
+                //Modifier.size(50.dp).background(Color.LightGray)
+            }
+        }
     }
 }

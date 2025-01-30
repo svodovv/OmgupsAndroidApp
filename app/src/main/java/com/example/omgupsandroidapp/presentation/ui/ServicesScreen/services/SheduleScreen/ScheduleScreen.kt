@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -55,6 +56,7 @@ import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SheduleScreen.SheduleViewModul
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SheduleScreen.TrainAnimationLottie
 import com.my.tracker.MyTracker
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -436,12 +438,8 @@ fun OnePairInDayShedule(
     ) {
         Column(
             modifier = Modifier
-                .padding(10.dp, 10.dp)
-                .fillMaxSize(.25f)
-                .background(
-                    if (isCurrentPair && backlight) Color.Green else Color.Transparent,
-                    shape = RoundedCornerShape(20)
-                ), // Подсветка текущей пары
+                .padding(15.dp, 5.dp)
+                .fillMaxSize(.15f),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -470,6 +468,39 @@ fun OnePairInDayShedule(
                 .padding(10.dp, 10.dp)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        color = if (isCurrentPair && backlight) Color(0xFFA6C6FA) else Color.Transparent,
+                        shape = RoundedCornerShape(20)
+                    ),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text(
+                    text = scheduleItem.subj,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .align(Alignment.CenterStart)
+                )
+                if (isCurrentPair && backlight) {
+                    TrainAnimationLottie(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .fillMaxHeight()
+                    )
+                }
+            }
+        }
+
+
+        /*Column(
+            modifier = Modifier
+                .padding(10.dp, 10.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
@@ -477,14 +508,21 @@ fun OnePairInDayShedule(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(
+                    /*.background(
                         shape = RoundedCornerShape(8.dp),
                         color = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    )*/
+                    .background(
+                        if (isCurrentPair && backlight) Color(0xFFA6C6FA) else Color.Transparent,
+                        shape = RoundedCornerShape(20)
+                    ), // Подсветка текущей пары
             ) {
                 Text(scheduleItem.subj, color = Color.Black, modifier = Modifier.padding(5.dp, 0.dp))
+                if (isCurrentPair && backlight) {
+                    TrainAnimationLottie()
+                }
             }
-        }
+        }*/
     }
 }
 

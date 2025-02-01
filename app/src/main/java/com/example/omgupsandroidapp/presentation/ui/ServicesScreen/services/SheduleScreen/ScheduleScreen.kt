@@ -478,6 +478,15 @@ fun OnePairInDayShedule(
                     ),
                 contentAlignment = Alignment.CenterStart
             ) {
+
+                if (isCurrentPair && backlight) {
+                    TrainAnimationLottie(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .fillMaxHeight()
+                            .background(Color.Transparent)
+                    )
+                }
                 Text(
                     text = scheduleItem.subj,
                     color = Color.Black,
@@ -485,13 +494,7 @@ fun OnePairInDayShedule(
                         .padding(start = 8.dp)
                         .align(Alignment.CenterStart)
                 )
-                if (isCurrentPair && backlight) {
-                    TrainAnimationLottie(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .fillMaxHeight()
-                    )
-                }
+
             }
         }
 

@@ -6,3 +6,7 @@ data class ListGradeDtoItem(
     val form: String,
     val grades: List<Grade>
 )
+
+data class ListGradeDto(
+    val name: List<ListGradeDtoItem>
+)

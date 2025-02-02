@@ -18,7 +18,7 @@ fun SplashScreen(
     val splashScreenState = splashScreenViewModel.splashScreenState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = splashScreenState.value.isUserSignIn) {
-        delay(1000)
+        delay(3000)
         splashScreenState.value.isUserSignIn?.let {
             if (it) {
                 navController.navigate(NavigationGroup.HomeScreens.route) {

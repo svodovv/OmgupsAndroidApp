@@ -7,14 +7,14 @@ plugins {
 
 android {
     namespace = "com.example.omgupsandroidapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "tech.omgups.mobileapp"
         minSdk = 27
-        targetSdk = 34
-        versionCode = 2
-        versionName = "1.0.1"
+        targetSdk = 35
+        versionCode = 4
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -53,6 +53,7 @@ android {
 
 dependencies {
     implementation(libs.app.update.ktx)
+    //implementation(libs.androidx.compose.material)
     val roomVersion = "2.6.1"
 
     implementation(libs.androidx.core.ktx)
@@ -68,6 +69,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation ("androidx.navigation:navigation-compose:2.7.0")
     implementation ("com.google.accompanist:accompanist-flowlayout:0.17.0")
+    implementation("androidx.compose.material:material:1.8.0-alpha08")
+    implementation ("androidx.compose.material:material-icons-extended:1.7.7")
 
     //collectAsStateWithLifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
@@ -91,6 +94,7 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
+
 
 
     // Retrofit
@@ -129,6 +133,9 @@ dependencies {
 
     //SdkRuStoreUpDate
     implementation("ru.rustore.sdk:appupdate:7.0.0")
+
+    //MyTracer
+    implementation ("com.my.tracker:mytracker-sdk:3.3.+")
 
 }
 

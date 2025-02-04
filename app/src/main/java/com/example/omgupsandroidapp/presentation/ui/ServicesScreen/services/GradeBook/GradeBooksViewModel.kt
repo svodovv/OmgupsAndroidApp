@@ -20,9 +20,9 @@ class GradeBooksViewModel @Inject constructor(
     private val _gradeBookState = MutableStateFlow(GradeBookState())
     val gradeBookState = _gradeBookState.asStateFlow()
 
-    init {
+   /* init {
         getGradeBook()
-    }
+    }*/
 
     private fun getGradeBook() {
         getGradeBookUseCase.invoke().onEach { result ->

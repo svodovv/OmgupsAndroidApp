@@ -22,6 +22,11 @@ class SheduleViewModul @Inject constructor(
     private val _sheduleState = MutableStateFlow(SheduleState())
 
      val sheduleState = _sheduleState.asStateFlow()
+
+    init {
+        getShedule()
+    }
+
    /* private val _sheduleState = MutableStateFlow<List<ShedelItem>>(emptyList())
     val sheduleState = _sheduleState.asStateFlow()
     //val dbSchedule = dataScheduleRepo.saveFromResponse().asLiveData()

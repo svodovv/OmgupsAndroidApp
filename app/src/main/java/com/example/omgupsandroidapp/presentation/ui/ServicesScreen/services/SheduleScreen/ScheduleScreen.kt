@@ -82,12 +82,9 @@ fun ScheduleScreen(
     sheduleViewModul: SheduleViewModul = hiltViewModel()
 ) {
 
-    ServicesTopAppBar(title = "Расписание", navController = navController)
+   // ServicesTopAppBar(title = "Расписание", navController = navController)
     MyTracker.trackEvent("Расписание")
 
-    LaunchedEffect(Unit) {
-        sheduleViewModul.getShedule()
-    }
 
     val width = 196.dp
     val squareSize = 98.dp

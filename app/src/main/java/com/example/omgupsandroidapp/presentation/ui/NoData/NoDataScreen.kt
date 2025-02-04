@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.omgupsandroidapp.R
 
 @Composable
-fun NoDataScreen(){
+fun NoDataScreen(idDrawable : Int){
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -26,7 +26,7 @@ fun NoDataScreen(){
     ) {
         Box() {
             Icon(
-                painter = painterResource(id = R.drawable.ic_coming_soon),
+                painter = painterResource(id = idDrawable),
                 contentDescription = stringResource(
                     id = R.string.comingsoon
                 ),

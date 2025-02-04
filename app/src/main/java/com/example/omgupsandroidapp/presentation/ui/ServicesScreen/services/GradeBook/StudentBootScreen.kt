@@ -3,6 +3,7 @@ package com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.Gra
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.presentation.ui.NoData.NoDataScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.my.tracker.MyTracker
@@ -23,21 +25,30 @@ import com.my.tracker.MyTracker
 @Composable
 fun StudentBookScreen(
     navController: NavController, paddingValues: PaddingValues,
-    gradeBooksViewModel: GradeBooksViewModel = hiltViewModel()
+   // gradeBooksViewModel: GradeBooksViewModel = hiltViewModel()
 ) {
-    val gradeBooks = gradeBooksViewModel.gradeBookState.collectAsStateWithLifecycle()
+   // val gradeBooks = gradeBooksViewModel.gradeBookState.collectAsStateWithLifecycle()
     MyTracker.trackEvent("Зачетная книжка")
     //NoDataScreen()
-
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .padding(paddingValues),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .padding(paddingValues)
     ) {
-        Log.i("gradeBookList", gradeBooks.value.toString())
+        ServicesTopAppBar(title = "Зачетная книжка", navController = navController)
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primaryContainer),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+
+            item {
+                NoDataScreen(R.drawable.ic_coming_soon)
+            }
+            /*Log.i("gradeBookList", gradeBooks.value.toString())
         gradeBooks.value.gradeBookList.map {
             item {
                 Row(
@@ -47,8 +58,9 @@ fun StudentBookScreen(
                     Text(text = it.form)
                 }
             }
-        }
+        }*/
 
+        }
     }
 
 }

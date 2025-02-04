@@ -44,7 +44,7 @@
         </activity-alias>
 
         <activity-alias
-            android:name=".MainActivityAlias1"
+            android:name=".MainActivityAlias2"
             android:enabled="false"
             android:exported="true"
             android:icon="@drawable/ic_launcher_foreground_new"

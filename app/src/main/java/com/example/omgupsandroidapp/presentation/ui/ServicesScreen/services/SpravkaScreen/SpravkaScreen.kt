@@ -65,6 +65,7 @@ import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.data.remote.dto.spravki.LoadSpravkaDto
 import com.example.omgupsandroidapp.data.remote.dto.spravki.TypeStatusList
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
+import com.example.omgupsandroidapp.presentation.ui.NoData.NoDataScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.my.tracker.MyTracker
 import kotlinx.coroutines.launch
@@ -239,7 +240,7 @@ fun SpravkaScreen(
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
                                                 //.fillMaxWidth(.25f)
-                                                .size(90.dp,55.dp)
+                                                .size(90.dp, 55.dp)
                                                 .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                                         )
                                         /*IconButton(onClick = { expanded = true }) {
@@ -485,7 +486,7 @@ fun SpravkaScreen(
                                             ),
                                             modifier = Modifier
                                                 .background(color = MaterialTheme.colorScheme.surfaceVariant)
-                                                .size(90.dp,55.dp)
+                                                .size(90.dp, 55.dp)
                                                 .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                                         )
                                         /*IconButton(onClick = { expanded = true }) {
@@ -600,9 +601,10 @@ fun SpravkaScreen(
                 }
                 item {
                    // Spacer(modifier = Modifier.size(10.dp, 5.dp))
-                    ExpandableOrderTable(historylist1, "История справок по обучению")
+                    Log.i("referenceHistoryViewModel", referenceHistoryViewModel.referenceHistoryState.value.error)
+                    ExpandableOrderTable(historylist1, "История справок по обучению",referenceHistoryViewModel.referenceHistoryState.value.error)
                     //Spacer(modifier = Modifier.size(10.dp, 5.dp))
-                    ExpandableOrderTable(historylist2, "История справок для военкомата")
+                   // ExpandableOrderTable(historylist2, "История справок для военкомата")
                     Spacer(modifier = Modifier.size(10.dp, 5.dp))
                 }
             }
@@ -798,7 +800,7 @@ fun OrderTable(orderStatus: TypeStatusList) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 4.dp ,start = 8.dp, end = 8.dp)
+            .padding(top = 4.dp, start = 8.dp, end = 8.dp)
     ) {
         TextInLazyColumns(
             columnName = orderStatus.Date,
@@ -940,7 +942,7 @@ fun OrderTableOne() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String) {
+fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String, HttpStatus: String) {
     var isVisible by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -972,43 +974,18 @@ fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String)
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-
-                    /*Icon(
-                        imageVector = if (expanded)
-                            Icons.Default.KeyboardArrowDown
-                        else
-                            Icons.Default.KeyboardArrowUp,
-                        contentDescription = "Expand/Collapse"
-                    )*/
                 }
-               /* if (isVisible) {
-                    OrderTableOne()
-                    orderStatus.map {
-                        OrderTable(it)
-                    }
-                }*/
-            OrderTableOne()
-
+                OrderTableOne()
             }
-        orderStatus.map {
-        AnimatedVisibility(visible = isVisible) {
-            //Spacer(modifier = Modifier.padding(20.dp)
-                //Spacer(modifier = Modifier.padding(20.dp))
-
-                OrderTable(it)
-            }
-        }
-        Spacer(modifier = Modifier.padding(4.dp))
-            /*stickyHeader {
+        if (HttpStatus == "HTTP 404 Not Found") {
+            NoDataScreen(idDrawable = R.drawable.ic_no_data)
+        }else
+            orderStatus.map {
                 AnimatedVisibility(visible = isVisible) {
-                    OrderTableOne()
-                    orderStatus.map {
-                        OrderTable(it)
-                    }
+                    OrderTable(it)
                 }
-            }*/
-
-
+            }
+        Spacer(modifier = Modifier.padding(4.dp))
     }
 }
 

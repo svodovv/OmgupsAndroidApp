@@ -71,13 +71,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
 import com.example.omgupsandroidapp.presentation.ui.screens.LoginScreen.components.OmgupsIcon
-import com.example.omgupsandroidapp.presentation.ui.screens.LoginScreen.components.OmgupsIconFon
 import com.omgupsapp.presentation.NavigationGroup
 import com.omgupsapp.presentation.Screen
 import com.omgupsapp.presentation.ui.LoginScreen.AuthViewModel
 
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel(),
@@ -287,7 +285,7 @@ fun AuthScreen(
                         viewModel.userStateAuth()
                         showError = false
                     },
-                    //visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         val image = if (passwordVisibility)
                             Icons.Filled.Visibility
@@ -308,7 +306,7 @@ fun AuthScreen(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done
                     ),
-                    visualTransformation = PasswordVisualTransformation(),
+                    //visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 35.dp),

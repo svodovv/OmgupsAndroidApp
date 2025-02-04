@@ -93,7 +93,7 @@ fun ScheduleScreen(
     val density = LocalDensity.current
     val parentBoxWidth = 98.dp
     val boxSize = 196.dp
-    val widthPx = with(density) {(parentBoxWidth - boxSize).toPx() }
+    val widthPx = with(density) {(boxSize- parentBoxWidth).toPx() }
     val decayAnimationSpec = rememberSplineBasedDecay<Float>()
     val state = remember {
         AnchoredDraggableState(
@@ -195,7 +195,7 @@ fun ScheduleScreen(
             ) {
                 Box(
                     modifier = Modifier
-                        .offset { IntOffset(state.offset.absoluteValue.roundToInt(), 0) }
+                        .offset { IntOffset(state.offset.roundToInt(), 0) }
                         .size(98.dp, 23.dp)
                         .background(
                             MaterialTheme.colorScheme.surfaceVariant,

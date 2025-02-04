@@ -978,7 +978,9 @@ fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String,
                 OrderTableOne()
             }
         if (HttpStatus == "HTTP 404 Not Found") {
-            NoDataScreen(idDrawable = R.drawable.ic_no_data)
+            AnimatedVisibility(visible = isVisible) {
+                NoDataScreen(idDrawable = R.drawable.ic_no_data)
+            }
         }else
             orderStatus.map {
                 AnimatedVisibility(visible = isVisible) {

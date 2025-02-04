@@ -258,7 +258,7 @@ fun UserProfileScreen(
                                     )
                                     RowInProfile(
                                         rowName = "№ Приказа:",
-                                        title = userProfile.orderNumber
+                                        title = userProfile.orderNumber.substringBeforeLast("(")
                                     )
                                     Spacer(modifier = Modifier.padding(30.dp))
                                 }

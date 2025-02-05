@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AlertDialogDefaults
@@ -71,6 +73,7 @@ fun SettingsScreen(
                 .align(CenterHorizontally)
         )
         Column(modifier = Modifier.fillMaxSize()) {
+            ChangeIconApp()
             Row (
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
@@ -88,7 +91,6 @@ fun SettingsScreen(
                         style = MaterialTheme.typography.displayMedium
                     )
                 }
-                ChangeIconApp()
                 if (openDialog.value){
                     Dialog(
                         onDismissRequest = { openDialog.value = false }
@@ -199,36 +201,61 @@ fun SettingsScreen(
 @Composable
 fun ChangeIconApp() {
     val context = LocalContext.current
-    var currentIcon by remember { mutableStateOf(1) }
+    var currentIcon by remember { mutableStateOf(2) }
+    var deletIcon by remember { mutableStateOf(1) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row {
-            Column {
-                Box{
-                    R.drawable.ic_launcher_foreground_classik
-                }
-            }
-            Column {
-                Box{
+        Row(
+            Modifier.size(300.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        contentDescription = stringResource(
+                            id = R.string.omgupslogo
+                        ),
+                        tint = Color.Transparent
+                    )
                 }
-            }
+                Button(onClick = {
+                    deletIcon = 2
+                    currentIcon = 1
+                    changeIcon(context,currentIcon,deletIcon)
+                }) {
+                    Text("Классик")
+                }
+
+
+                Box{
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_launcher_foreground_new),
+                            contentDescription = stringResource(
+                                id = R.string.omgupslogo
+                            ),
+                            tint = Color.Transparent
+                        )
+                    }
+                }
+                Button(onClick = {
+                    deletIcon = 1
+                    currentIcon = 2
+                    changeIcon(context,currentIcon,deletIcon)
+                }) {
+                    Text("Новая")
+                }
+
         }
-        Button(onClick = {
-            changeIcon(context, if (currentIcon == 1) 2 else 1)
-            currentIcon = if (currentIcon == 1) 2 else 1
-        }) {
-            Text("Сменить иконку")
-        }
-    }
+
 }
 
-private fun changeIcon(context: android.content.Context, iconNumber: Int) {
+private fun changeIcon(context: android.content.Context, iconNumber: Int,curNumber: Int) {
     val packageManager = context.packageManager
 
     // Отключаем текущий activity-alias
     packageManager.setComponentEnabledSetting(
-        ComponentName(context, "com.example.yourapp.MainActivityAlias$iconNumber"),
+        ComponentName(context, "com.example.yourapp.MainActivityAlias$curNumber"),
         PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
         PackageManager.DONT_KILL_APP
     )

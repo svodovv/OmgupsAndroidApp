@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        MyTracker.setDebugMode(false)
+        MyTracker.setDebugMode(true)
         val trackerParams = MyTracker.getTrackerParams()
         val trackerConfig = MyTracker.getTrackerConfig()
 

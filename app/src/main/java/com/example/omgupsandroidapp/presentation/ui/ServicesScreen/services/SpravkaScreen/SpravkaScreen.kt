@@ -861,50 +861,6 @@ fun OrderTable(orderStatus: TypeStatusList) {
 }
 @Composable
 fun OrderTableOne() {
-    /* Row(
-        modifier = Modifier
-            .padding(10.dp)
-            .fillMaxSize(),
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-
-        Text("Дата", textAlign = TextAlign.Center)
-        Text("Тип", textAlign = TextAlign.Center)
-        Text("Кол во", textAlign = TextAlign.Center)
-        Text("Статус", textAlign = TextAlign.Center)
-
-        /*Column (
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(horizontalArrangement = Arrangement.Center) {
-                Text("Дата", textAlign = TextAlign.Center)
-            }
-
-        }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(horizontalArrangement = Arrangement.Center) {
-                Text("       Тип", textAlign = TextAlign.Center)
-            }
-
-        }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(horizontalArrangement = Arrangement.Center) {
-                Text("    Кол-во", textAlign = TextAlign.Center)
-            }
-
-        }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(horizontalArrangement = Arrangement.Center) {
-                Text("Статус", textAlign = TextAlign.Center)
-            }
-        }*/
-    }*/
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -930,13 +886,6 @@ fun OrderTableOne() {
                     style = MaterialTheme.typography.bodySmall
                 )
             }
-        /*HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            thickness = 1.dp,
-            color = Color.Black
-        )*/
     }
 }
 

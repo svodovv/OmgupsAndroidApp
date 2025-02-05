@@ -44,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -489,7 +490,9 @@ fun OnePairInDayShedule(
                     color = Color.Black,
                     modifier = Modifier
                         .padding(start = 8.dp)
-                        .align(Alignment.CenterStart)
+                        .align(Alignment.CenterStart),
+                    //fontWeight = FontWeight.W600,
+                    //fontSize = 16.sp
                 )
 
             }
@@ -545,7 +548,8 @@ fun createCurrentDayBox(schedule: List<SheduleModel>) {
                 .fillMaxSize()
                 .padding(10.dp, 10.dp),
         ) {
-            Text("Сегодня", fontSize = 20.sp)
+            Text("Сегодня" + LocalDate.now().format(DateTimeFormatter.ofPattern(" dd.MM")),
+                fontSize = 20.sp,fontWeight = FontWeight.W700,color = Color(0xFF414C53))
         }
         for (scheduleItem in schedule) {
             when (scheduleItem.time) {
@@ -668,10 +672,9 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>,currentDay: Int
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp, 10.dp),
-
             ) {
 
-            Text(getCurrentDate(dayOfWeek,currentDay.toLong()), fontSize = 20.sp)
+            Text(getCurrentDate(dayOfWeek,currentDay.toLong()), fontSize = 20.sp, fontWeight = FontWeight.W700, color = Color(0xFF414C53))
         }
         for (scheduleItem in schedule) {
             when (scheduleItem.time) {

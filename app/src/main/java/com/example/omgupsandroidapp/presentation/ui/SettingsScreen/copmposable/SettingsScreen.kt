@@ -73,7 +73,7 @@ fun SettingsScreen(
                 .align(CenterHorizontally)
         )
         Column(modifier = Modifier.fillMaxSize()) {
-            ChangeIconApp()
+            //ChangeIconApp()
             Row (
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
@@ -198,7 +198,7 @@ fun SettingsScreen(
 }
 
 
-@Composable
+/*@Composable
 fun ChangeIconApp() {
     val context = LocalContext.current
     var currentIcon by remember { mutableStateOf(2) }
@@ -248,25 +248,25 @@ fun ChangeIconApp() {
 
         }
 
-}
+}*/
 
-private fun changeIcon(context: android.content.Context, iconNumber: Int,curNumber: Int) {
+/*private fun changeIcon(context: android.content.Context, iconNumber: Int,curNumber: Int) {
     val packageManager = context.packageManager
 
     // Отключаем текущий activity-alias
     packageManager.setComponentEnabledSetting(
-        ComponentName(context, "com.example.yourapp.MainActivityAlias$curNumber"),
+        ComponentName(context, "tech.omgups.mobileapp.MainActivityAlias$curNumber"),
         PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
         PackageManager.DONT_KILL_APP
     )
 
     // Включаем новый activity-alias
     packageManager.setComponentEnabledSetting(
-        ComponentName(context, "com.example.yourapp.MainActivityAlias$iconNumber"),
+        ComponentName(context, "tech.omgups.mobileapp.MainActivityAlias$iconNumber"),
         PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
         PackageManager.DONT_KILL_APP
     )
-}
+}*/
 
 
 

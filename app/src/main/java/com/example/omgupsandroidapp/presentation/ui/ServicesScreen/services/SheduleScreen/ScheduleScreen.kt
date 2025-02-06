@@ -52,8 +52,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.domain.model.service.SheduleModel
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
+import com.example.omgupsandroidapp.presentation.ui.NoData.NoDataScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.AcademicPlanScreen.DynamicRowPage
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.SheduleScreen.SheduleViewModul
@@ -147,7 +149,6 @@ fun ScheduleScreen(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.padding(0.dp, 35.dp))
         //Log.e("htmlContent", sheduleState.value.sheduleList.toString())
         //ServicesTopAppBar(title = "Расписание", navController = navController)
         //Log.e("checkWeek()", checkWeek().toString())
@@ -158,7 +159,11 @@ fun ScheduleScreen(
             Log.e("isload", "попало в нет данных")
                 // NoDataScreen()
             LoadingScreen()
-        } else */if (sheduleState.value.sheduleList.isNotEmpty()) {
+        } else */
+        if (sheduleState.value.error == "HTTP 404 Not Found"){
+            NoDataScreen(R.drawable.ic_no_data)
+        } else if (sheduleState.value.sheduleList.isNotEmpty()) {
+            Spacer(modifier = Modifier.padding(0.dp, 35.dp))
         val pagerState = rememberPagerState(pageCount = { 2 })
 
         // Синхронизация состояний пейджера и переключателя

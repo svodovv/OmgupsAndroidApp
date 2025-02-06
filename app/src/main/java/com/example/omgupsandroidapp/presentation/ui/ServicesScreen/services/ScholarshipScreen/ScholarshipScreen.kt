@@ -38,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.R
 import com.example.omgupsandroidapp.presentation.ui.LoadingScreen.LoadingScreen
+import com.example.omgupsandroidapp.presentation.ui.NoData.NoDataScreen
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.services.ServicesTopAppBar
 import com.my.tracker.MyTracker
 
@@ -62,7 +63,9 @@ fun ScholarshipScreen(
             .padding(paddingValues)
     ) {
         ServicesTopAppBar(title = "Выплаты", navController = navController)
-
+        if (scholarship.value.error == "HTTP 404 Not Found"){
+            NoDataScreen(R.drawable.ic_no_data)
+        } else
         if (scholarship.value.scholarshipList.isNotEmpty()) {
             Card(
                 modifier = Modifier

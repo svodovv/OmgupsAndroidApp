@@ -601,10 +601,11 @@ fun SpravkaScreen(
                 }
                 item {
                    // Spacer(modifier = Modifier.size(10.dp, 5.dp))
-                    Log.i("referenceHistoryViewModel", referenceHistoryViewModel.referenceHistoryState.value.error)
-                    ExpandableOrderTable(historylist1, "История справок по обучению",referenceHistoryViewModel.referenceHistoryState.value.error)
+                    ExpandableOrderTable(historylist1, "История справок по обучению"
+                        ,referenceHistoryViewModel.referenceHistoryState.value.errorType1)
                     //Spacer(modifier = Modifier.size(10.dp, 5.dp))
-                   // ExpandableOrderTable(historylist2, "История справок для военкомата")
+                    ExpandableOrderTable(historylist2, "История справок для военкомата"
+                        ,referenceHistoryViewModel.referenceHistoryState.value.errorType2)
                     Spacer(modifier = Modifier.size(10.dp, 5.dp))
                 }
             }

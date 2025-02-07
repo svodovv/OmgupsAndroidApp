@@ -66,7 +66,6 @@ fun UserProfileScreen(
 
     MyTracker.trackEvent("Профиль")
 
-    Log.e("htmlContent", userPhotoProfileState.userPhoto.photoUrl)
     when (orientation) {
         Configuration.ORIENTATION_PORTRAIT -> {
             Column(

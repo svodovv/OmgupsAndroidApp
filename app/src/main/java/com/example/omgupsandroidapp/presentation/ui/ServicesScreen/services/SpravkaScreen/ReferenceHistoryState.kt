@@ -6,5 +6,6 @@ data class ReferenceHistoryState (
     val referenceHistoryList0: List<TypeStatusList> = emptyList(),
     val referenceHistoryList1: List<TypeStatusList> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String = ""
+    val errorType1: String = "",
+    val errorType2: String = ""
 )

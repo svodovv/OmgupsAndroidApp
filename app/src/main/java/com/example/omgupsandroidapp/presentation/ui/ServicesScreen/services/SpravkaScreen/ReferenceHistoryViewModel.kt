@@ -51,10 +51,12 @@ class ReferenceHistoryViewModel @Inject constructor(
 
                 is Resource.Error -> {
                     _referenceHistoryState.update {
-                        it.copy(
-                            error = result.message
-                                ?: "Ошибка соединения, это может быть вызванно активным VPN сервисом"
-                        )
+                        when (id){
+                            1 -> it.copy(errorType1 = result.message
+                                ?: "Ошибка соединения, это может быть вызванно активным VPN сервисом")
+                            else -> it.copy(errorType2 = result.message
+                                ?: "Ошибка соединения, это может быть вызванно активным VPN сервисом")
+                        }
                     }
                 }
             }

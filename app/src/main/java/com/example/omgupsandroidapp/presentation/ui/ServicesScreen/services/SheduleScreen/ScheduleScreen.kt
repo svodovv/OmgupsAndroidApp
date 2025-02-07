@@ -748,6 +748,7 @@ fun createDayBox(dayOfWeek: String, schedule: List<SheduleModel>,currentDay: Int
                 }*/
             }
         }
+        Spacer(Modifier.padding(5.dp))
     }
 }
 

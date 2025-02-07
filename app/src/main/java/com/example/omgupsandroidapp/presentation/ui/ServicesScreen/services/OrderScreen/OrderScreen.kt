@@ -31,8 +31,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -71,7 +73,7 @@ fun OrderScreen(
                         .wrapContentHeight()
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally)
-                        .padding(bottom = 8.dp),
+                        .padding(top = 4.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     repeat(pagerState.pageCount) { iteration ->
@@ -79,7 +81,7 @@ fun OrderScreen(
                             if (pagerState.currentPage == iteration) Color.Blue else Color.LightGray
                         Box(
                             modifier = Modifier
-                                .padding(2.dp)
+                                .padding(start = 2.dp, end = 2.dp)
                                 .clip(CircleShape)
                                 .background(color)
                                 .size(12.dp)
@@ -101,20 +103,22 @@ fun OrderScreen(
                         Card(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(16.dp),
+                                .padding(8.dp),
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                         ) {
                             Column(modifier = Modifier.fillMaxWidth()) {
                                 Text(
                                     text = orderState.value.orderList[index].orderTitle,
-                                    style = MaterialTheme.typography.titleMedium,
+                                    //style = MaterialTheme.typography.titleMedium,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.W600,
                                     modifier = Modifier
-                                        .padding(16.dp),
-                                    maxLines = 2,
-                                    minLines = 2,
-                                    color = MaterialTheme.colorScheme.onBackground
+                                        .padding(bottom = 8.dp, start = 16.dp, end = 16.dp, top = 16.dp),
+                                    maxLines = 4,
+                                    minLines = 1,
+                                    color = MaterialTheme.colorScheme.onBackground,
+                                    textAlign = TextAlign.Center
                                 )
-
                                 HorizontalDivider(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -132,14 +136,14 @@ fun OrderScreen(
                                     ) {
                                         Text(
                                             text = "${index + 1}.",
-                                            style = MaterialTheme.typography.bodyLarge,
+                                            //style = MaterialTheme.typography.bodyLarge,
                                             textAlign = TextAlign.Center,
                                             modifier = Modifier.weight(1f),
                                             color = MaterialTheme.colorScheme.onBackground
                                         )
                                         Text(
                                             text = orderName,
-                                            style = MaterialTheme.typography.bodyLarge,
+                                            //style = MaterialTheme.typography.bodyLarge,
                                             textAlign = TextAlign.Start,
                                             modifier = Modifier.weight(11f),
                                             color = MaterialTheme.colorScheme.onBackground

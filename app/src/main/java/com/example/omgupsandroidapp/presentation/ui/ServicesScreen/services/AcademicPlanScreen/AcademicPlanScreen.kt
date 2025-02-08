@@ -484,12 +484,11 @@ fun AcademicPlanScreen(
                     item {
                         Column(
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(4.dp)
                                 .fillMaxSize(),
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Spacer(modifier = Modifier.padding(2.dp))
                             Text(
                                 text = currentacademicPlan[index].name,
                                 modifier = Modifier.padding(bottom = 8.dp),
@@ -856,13 +855,14 @@ fun DynamicRowPage(currentStage: Int, maxSize: Int) {
 
         }
     }*/
-    Column {
+    Column(Modifier
+        .padding( top = 4.dp)) {
         Row(
             Modifier
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .padding(bottom = 8.dp),
+                .padding(vertical = 4.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             repeat(boxesCount.value) { iteration ->

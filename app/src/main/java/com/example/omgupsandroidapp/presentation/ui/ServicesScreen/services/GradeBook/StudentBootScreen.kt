@@ -25,7 +25,7 @@ import com.my.tracker.MyTracker
 @Composable
 fun StudentBookScreen(
     navController: NavController, paddingValues: PaddingValues,
-   // gradeBooksViewModel: GradeBooksViewModel = hiltViewModel()
+    gradeBooksViewModel: GradeBooksViewModel = hiltViewModel()
 ) {
    // val gradeBooks = gradeBooksViewModel.gradeBookState.collectAsStateWithLifecycle()
     MyTracker.trackEvent("Зачетная книжка")

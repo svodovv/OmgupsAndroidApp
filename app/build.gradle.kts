@@ -13,8 +13,8 @@ android {
         applicationId = "tech.omgups.mobileapp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.0.4"
+        versionCode = 7
+        versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -136,6 +136,12 @@ dependencies {
 
     //MyTracer
     implementation ("com.my.tracker:mytracker-sdk:3.3.+")
+
+    //implementation ("androidx.core:core-splashscreen:1.0.0")
+
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
+
 
 }
 

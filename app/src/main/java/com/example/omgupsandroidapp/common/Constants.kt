@@ -2,5 +2,6 @@ package com.omgupsapp.common
 
 object Constants {
     const val BASE_URL = "https://lk.omgups.ru"//"https://lk.omgups.ru"
-    const val SDK_KEY = "43102810638416945067"
+    const val SDK_KEY = ""
+
 }

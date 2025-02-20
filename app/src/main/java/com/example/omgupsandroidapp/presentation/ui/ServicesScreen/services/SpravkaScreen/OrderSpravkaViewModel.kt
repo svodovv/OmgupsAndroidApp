@@ -75,6 +75,10 @@ class OrderSpravkaViewModel @Inject constructor(
             }*/
            return _orderSpravka.value.stasusAfterOrder
     }*/
+
+
+        //Загрузка справок на сервер 01.01.2025 Иванов И.И (номер доработки),
+        //postSpravka объект класса LoadSpravkaDto
        suspend fun postSravka(postSpravka: LoadSpravkaDto): String {
            var statusResult = ""
 

@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.InstallStateUpdatedListener
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class UpDateGoogleApi @Inject constructor() : ViewModel() {
 
     private lateinit var updateLauncher: ActivityResultLauncher<IntentSenderRequest>
-    /*private lateinit var appUpdateManager : AppUpdateManagerFactory*/
+    private lateinit var appUpdateManager : AppUpdateManager
 
     val listener = InstallStateUpdatedListener { state ->
         // (Optional) Provide a download progress bar.
@@ -50,10 +51,18 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
         }
     }
 
-    /*override fun onCleared() {
+    override fun onCleared() {
         super.onCleared()
-        appUpdateManager.
-    }*/
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
+            if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS){
+                appUpdateManager.startUpdateFlowForResult(
+                    info,
+                    updateLauncher,
+                    AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                )
+            }
+        }
+    }
 
     fun initUpDateFromGooglePlay(context: Context){
         val appUpdateManager = AppUpdateManagerFactory.create(context)
@@ -64,7 +73,6 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
                 if (appUpdateInfo.updateAvailability()
                     == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
                 ) {
-                    // If an in-app update is already running, resume the update.
                     appUpdateManager.startUpdateFlowForResult(
                         appUpdateInfo,
                         updateLauncher,

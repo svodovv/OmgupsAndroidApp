@@ -50,6 +50,7 @@ import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel
 import com.example.omgupsandroidapp.presentation.utils.Event
 import com.example.omgupsandroidapp.presentation.utils.RuStoreUpDateViewModel
+import com.example.omgupsandroidapp.presentation.utils.UpDateGoogleApi
 import kotlinx.coroutines.launch
 
 
@@ -59,17 +60,20 @@ fun ServiceScreen(
     navController: NavController,
     paddingValues: PaddingValues,
     servicesViewModel: ServicesViewModel = hiltViewModel(),
-    ruStoreUpDateViewModel : RuStoreUpDateViewModel = hiltViewModel()
-) {
+    ruStoreUpDateViewModel : RuStoreUpDateViewModel = hiltViewModel(),
+    googlePlayUpDateViewModel : UpDateGoogleApi = hiltViewModel()
+ ) {
     val serviceList = servicesViewModel.serviceList
     val events by ruStoreUpDateViewModel.events.collectAsState(initial = null)
     val context = LocalContext.current // Получаем текущий контекст
     val upDateState = ruStoreUpDateViewModel.updateState.collectAsStateWithLifecycle()
+    val upDateStateGoogleApi = googlePlayUpDateViewModel
 
 
 
     // Инициализация ViewModel
     ruStoreUpDateViewModel.ruStoreAppUpdateManagerGetAppUpdateInfo(context)
+    googlePlayUpDateViewModel.googleAppUpdateManagerGetAppUpdateInfo(context)
 
 
 

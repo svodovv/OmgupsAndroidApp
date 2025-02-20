@@ -134,6 +134,7 @@ fun SpravkaScreen(
     {
         ServicesTopAppBar(title = "Заказать справку", navController = navController)
 
+
         if (spravki.value.spravkiList.isNotEmpty() &&
             statusSpravki.value.spravkiStatus0.isNotEmpty() &&
             statusSpravki.value.spravkiStatus1.isNotEmpty()) {
@@ -890,7 +891,6 @@ fun OrderTableOne() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExpandableOrderTable(orderStatus: List<TypeStatusList>, hystoryType: String, HttpStatus: String) {
     var isVisible by remember { mutableStateOf(false) }

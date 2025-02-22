@@ -5,3 +5,8 @@ data class UpDateState(
     val upDateState : Int = 0,
     val completeUpdate : Int = 0
 )
+
+data class UpDateStateGoogle(
+    val upDateState : Int = 0,
+    val completeUpdate : Int = 0
+)

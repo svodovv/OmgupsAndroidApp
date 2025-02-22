@@ -13,7 +13,7 @@ android {
         applicationId = "tech.omgups.mobileapp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 7
+        versionCode = 4
         versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

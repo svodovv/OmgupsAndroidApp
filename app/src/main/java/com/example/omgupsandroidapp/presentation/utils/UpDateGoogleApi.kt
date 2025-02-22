@@ -7,6 +7,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModel
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.components.UpDateState
+import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.components.UpDateStateGoogle
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -17,6 +19,9 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import ru.rustore.sdk.appupdate.manager.factory.RuStoreAppUpdateManagerFactory
 import javax.inject.Inject
 
@@ -25,6 +30,9 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
 
     private lateinit var updateLauncher: ActivityResultLauncher<IntentSenderRequest>
     private lateinit var appUpdateManager : AppUpdateManager
+
+    val _updateStateGoodle = MutableStateFlow(UpDateStateGoogle())
+    val updateStateGoodle = _updateStateGoodle.asStateFlow()
 
     val listener = InstallStateUpdatedListener { state ->
         // (Optional) Provide a download progress bar.
@@ -46,14 +54,20 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
                 // instead, pass in AppUpdateType.FLEXIBLE
                 && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
             ) {
-                // Request the update.
+                _updateStateGoodle.update {
+                    UpDateStateGoogle().copy(
+                        upDateState = 2
+                    )
+                }
             }
         }
     }
 
     override fun onCleared() {
         super.onCleared()
-        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
+        appUpdateManager.unregisterListener(listener)
+
+        /*appUpdateInfo.addOnSuccessListener { info ->
             if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS){
                 appUpdateManager.startUpdateFlowForResult(
                     info,
@@ -61,7 +75,7 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
                     AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
                 )
             }
-        }
+        }*/
     }
 
     fun initUpDateFromGooglePlay(context: Context){

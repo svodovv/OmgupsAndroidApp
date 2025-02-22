@@ -67,15 +67,11 @@ fun ServiceScreen(
     val events by ruStoreUpDateViewModel.events.collectAsState(initial = null)
     val context = LocalContext.current // Получаем текущий контекст
     val upDateState = ruStoreUpDateViewModel.updateState.collectAsStateWithLifecycle()
-    val upDateStateGoogleApi = googlePlayUpDateViewModel
-
-
+    val upDateStateGoogleApi = googlePlayUpDateViewModel.updateStateGoodle.collectAsStateWithLifecycle()
 
     // Инициализация ViewModel
     ruStoreUpDateViewModel.ruStoreAppUpdateManagerGetAppUpdateInfo(context)
     googlePlayUpDateViewModel.googleAppUpdateManagerGetAppUpdateInfo(context)
-
-
 
     LazyColumn(
         modifier = Modifier
@@ -129,7 +125,7 @@ fun ServiceScreen(
         }
         item {
             Log.i("upDateInfo", ruStoreUpDateViewModel.updateState.value.toString())
-        if (upDateState.value.upDateState == 2) {
+            if (upDateState.value.upDateState == 2) {
                 Card(
                     modifier = Modifier
                         .padding(8.dp)
@@ -164,6 +160,55 @@ fun ServiceScreen(
                                     onClick = {
                                         ruStoreUpDateViewModel.viewModelScope.launch {
                                             ruStoreUpDateViewModel.init(context)
+                                        }
+                                    },
+                                ) {
+                                    Text(text = "Обновить приложение", color = Color.White)
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        item {
+             Log.i("upDateInfoGoogle", upDateStateGoogleApi.value.upDateState.toString())
+            if (upDateStateGoogleApi.value.upDateState == 2) {
+                Card(
+                    modifier = Modifier
+                        .padding(8.dp)
+                    ///.weight(1f)
+                ) {
+                    Box(
+                        modifier = Modifier.background(color = MaterialTheme.colorScheme.surfaceVariant)
+                    ) {
+                        Column {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(top = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(text = "Сделайте его лучше", color = Color.Black)
+                            }
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Button(
+                                    modifier = Modifier
+                                        .weight(2f)
+                                        .padding(start = 16.dp, end = 16.dp),
+                                    shape = RoundedCornerShape(15.dp),
+                                    //.background(color = Color.Green),
+                                    onClick = {
+                                        googlePlayUpDateViewModel.viewModelScope.launch {
+                                            googlePlayUpDateViewModel.initUpDateFromGooglePlay(context)
                                         }
                                     },
                                 ) {

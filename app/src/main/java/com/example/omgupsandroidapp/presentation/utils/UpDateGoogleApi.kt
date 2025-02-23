@@ -1,16 +1,14 @@
 package com.example.omgupsandroidapp.presentation.utils
 
-import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.util.Log
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModel
-import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.components.UpDateState
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.components.UpDateStateGoogle
-import com.google.android.gms.tasks.Task
-import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
@@ -22,7 +20,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import ru.rustore.sdk.appupdate.manager.factory.RuStoreAppUpdateManagerFactory
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +27,7 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
 
     private lateinit var updateLauncher: ActivityResultLauncher<IntentSenderRequest>
     private lateinit var appUpdateManager : AppUpdateManager
+    private val upDateType = AppUpdateType.IMMEDIATE
 
     val _updateStateGoodle = MutableStateFlow(UpDateStateGoogle())
     val updateStateGoodle = _updateStateGoodle.asStateFlow()
@@ -49,6 +47,7 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            Log.e(TAG, appUpdateInfo.updateAvailability().toString())
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                 // This example applies an immediate update. To apply a flexible update
                 // instead, pass in AppUpdateType.FLEXIBLE
@@ -62,7 +61,9 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
             }
         }
     }
-
+    companion object {
+        private const val TAG = "MainViewModelGoogleApi"
+    }
     override fun onCleared() {
         super.onCleared()
         appUpdateManager.unregisterListener(listener)
@@ -80,7 +81,7 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
 
     fun initUpDateFromGooglePlay(context: Context){
         val appUpdateManager = AppUpdateManagerFactory.create(context)
-        val appUpdateInfo = appUpdateManager.getAppUpdateInfo()
+        val appUpdateInf = appUpdateManager.getAppUpdateInfo()
         appUpdateManager
             .appUpdateInfo
             .addOnSuccessListener { appUpdateInfo ->
@@ -91,6 +92,7 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
                         appUpdateInfo,
                         updateLauncher,
                         AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build())
+
                 }
             }
     }

@@ -49,6 +49,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewModel
 import com.example.omgupsandroidapp.presentation.utils.Event
+import com.example.omgupsandroidapp.presentation.utils.InAppUpDateGoogle
 import com.example.omgupsandroidapp.presentation.utils.RuStoreUpDateViewModel
 import com.example.omgupsandroidapp.presentation.utils.UpDateGoogleApi
 import kotlinx.coroutines.launch
@@ -61,17 +62,19 @@ fun ServiceScreen(
     paddingValues: PaddingValues,
     servicesViewModel: ServicesViewModel = hiltViewModel(),
     ruStoreUpDateViewModel : RuStoreUpDateViewModel = hiltViewModel(),
-    googlePlayUpDateViewModel : UpDateGoogleApi = hiltViewModel()
+    inAppUpDateGoogle: InAppUpDateGoogle
+    //googlePlayUpDateViewModel : UpDateGoogleApi = hiltViewModel()
  ) {
     val serviceList = servicesViewModel.serviceList
     val events by ruStoreUpDateViewModel.events.collectAsState(initial = null)
     val context = LocalContext.current // Получаем текущий контекст
     val upDateState = ruStoreUpDateViewModel.updateState.collectAsStateWithLifecycle()
-    val upDateStateGoogleApi = googlePlayUpDateViewModel.updateStateGoodle.collectAsStateWithLifecycle()
+    //val upDateStateGoogleApi = googlePlayUpDateViewModel.updateStateGoodle.collectAsStateWithLifecycle()
 
     // Инициализация ViewModel
+    val inAppUpdateRequest = regis
     ruStoreUpDateViewModel.ruStoreAppUpdateManagerGetAppUpdateInfo(context)
-    googlePlayUpDateViewModel.googleAppUpdateManagerGetAppUpdateInfo(context)
+    inAppUpDateGoogle.checkResumeUpdate()
 
     LazyColumn(
         modifier = Modifier

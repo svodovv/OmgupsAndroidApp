@@ -23,10 +23,12 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class UpDateGoogleApi @Inject constructor() : ViewModel() {
+class UpDateGoogleApi @Inject constructor(private val context: Context) : ViewModel() {
 
-    private lateinit var updateLauncher: ActivityResultLauncher<IntentSenderRequest>
-    private lateinit var appUpdateManager : AppUpdateManager
+    private val updateLauncher = registerUpdateLauncher()
+    private val appUpdateManager: AppUpdateManager by lazy {
+        AppUpdateManagerFactory.create(context)
+    }
     private val upDateType = AppUpdateType.IMMEDIATE
 
     val _updateStateGoodle = MutableStateFlow(UpDateStateGoogle())
@@ -41,6 +43,20 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
         }
         // Log state or install the update.
     }
+
+    /*private fun registerUpdateLauncher(): ActivityResultLauncher<IntentSenderRequest> {
+        return ActivityResultLauncherRegistry.register(
+            "updateLauncherKey",
+            ActivityResultContracts.StartIntentSenderForResult()
+        ) { result ->
+            // Обработка результата обновления
+            if (result.resultCode == RESULT_OK) {
+                Log.d(TAG, "Update successful!")
+            } else {
+                Log.e(TAG, "Update failed: ${result.resultCode}")
+            }
+        }
+    }*/
 
     fun googleAppUpdateManagerGetAppUpdateInfo(context: Context) {
         val appUpdateManager = AppUpdateManagerFactory.create(context)
@@ -61,9 +77,11 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
             }
         }
     }
+
     companion object {
         private const val TAG = "MainViewModelGoogleApi"
     }
+
     override fun onCleared() {
         super.onCleared()
         appUpdateManager.unregisterListener(listener)
@@ -81,19 +99,14 @@ class UpDateGoogleApi @Inject constructor() : ViewModel() {
 
     fun initUpDateFromGooglePlay(context: Context){
         val appUpdateManager = AppUpdateManagerFactory.create(context)
-        val appUpdateInf = appUpdateManager.getAppUpdateInfo()
         appUpdateManager
             .appUpdateInfo
             .addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.updateAvailability()
-                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
-                ) {
                     appUpdateManager.startUpdateFlowForResult(
                         appUpdateInfo,
                         updateLauncher,
-                        AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build())
-
-                }
+                        AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                    )
             }
     }
 

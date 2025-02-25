@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
-@HiltViewModel
+/*@HiltViewModel
 class UpDateGoogleApi @Inject constructor(private val context: Context) : ViewModel() {
 
     private val updateLauncher = registerUpdateLauncher()
@@ -110,4 +110,4 @@ class UpDateGoogleApi @Inject constructor(private val context: Context) : ViewMo
             }
     }
 
-}
+}*/

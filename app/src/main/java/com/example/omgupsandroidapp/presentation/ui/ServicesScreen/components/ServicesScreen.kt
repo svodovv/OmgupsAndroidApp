@@ -1,8 +1,11 @@
 package com.omgupsapp.presentation.ui.homeScreen.components
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.collection.intFloatMapOf
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -51,7 +54,6 @@ import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.ServicesViewM
 import com.example.omgupsandroidapp.presentation.utils.Event
 import com.example.omgupsandroidapp.presentation.utils.InAppUpDateGoogle
 import com.example.omgupsandroidapp.presentation.utils.RuStoreUpDateViewModel
-import com.example.omgupsandroidapp.presentation.utils.UpDateGoogleApi
 import kotlinx.coroutines.launch
 
 
@@ -62,19 +64,34 @@ fun ServiceScreen(
     paddingValues: PaddingValues,
     servicesViewModel: ServicesViewModel = hiltViewModel(),
     ruStoreUpDateViewModel : RuStoreUpDateViewModel = hiltViewModel(),
-    inAppUpDateGoogle: InAppUpDateGoogle
     //googlePlayUpDateViewModel : UpDateGoogleApi = hiltViewModel()
  ) {
     val serviceList = servicesViewModel.serviceList
     val events by ruStoreUpDateViewModel.events.collectAsState(initial = null)
     val context = LocalContext.current // Получаем текущий контекст
     val upDateState = ruStoreUpDateViewModel.updateState.collectAsStateWithLifecycle()
-    //val upDateStateGoogleApi = googlePlayUpDateViewModel.updateStateGoodle.collectAsStateWithLifecycle()
-
+    val activityResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { result ->
+            if (result.resultCode == RESULT_OK) {
+                Log.i("InAppUpDateGoogle", "Update started successfully")
+            } else {
+                Log.e("InAppUpDateGoogle", "Update failed or was canceled")
+            }
+        }
+    )
+    val inAppUpDateGoogle = remember {
+        InAppUpDateGoogle(context, activityResultLauncher)
+    }
+    val upDateStateGoogleApi = inAppUpDateGoogle.updateStateGoodle.collectAsStateWithLifecycle()
+    LaunchedEffect(Unit) {
+        inAppUpDateGoogle.checkImmediateUpdate(activityResultLauncher)
+    }
+    /*val inAppUpDateGoogle = remember {
+        InAppUpDateGoogle(context, activityResultLauncher)
+    }*/
     // Инициализация ViewModel
-    val inAppUpdateRequest = regis
     ruStoreUpDateViewModel.ruStoreAppUpdateManagerGetAppUpdateInfo(context)
-    inAppUpDateGoogle.checkResumeUpdate()
 
     LazyColumn(
         modifier = Modifier
@@ -127,8 +144,8 @@ fun ServiceScreen(
             }
         }
         item {
-            Log.i("upDateInfo", ruStoreUpDateViewModel.updateState.value.toString())
-            if (upDateState.value.upDateState == 2) {
+            ///Log.i("upDateInfo", ruStoreUpDateViewModel.updateState.value.toString())
+            if (upDateState.value.upDateState == 2 && upDateStateGoogleApi.value.upDateState == 0) {
                 Card(
                     modifier = Modifier
                         .padding(8.dp)
@@ -175,9 +192,10 @@ fun ServiceScreen(
                 }
             }
         }
+
         item {
-             Log.i("upDateInfoGoogle", upDateStateGoogleApi.value.upDateState.toString())
-            if (upDateStateGoogleApi.value.upDateState == 2) {
+            ///Log.i("upDateInfo", ruStoreUpDateViewModel.updateState.value.toString())
+            if (upDateState.value.upDateState == 0 && upDateStateGoogleApi.value.upDateState == 2) {
                 Card(
                     modifier = Modifier
                         .padding(8.dp)
@@ -210,8 +228,8 @@ fun ServiceScreen(
                                     shape = RoundedCornerShape(15.dp),
                                     //.background(color = Color.Green),
                                     onClick = {
-                                        googlePlayUpDateViewModel.viewModelScope.launch {
-                                            googlePlayUpDateViewModel.initUpDateFromGooglePlay(context)
+                                        ruStoreUpDateViewModel.viewModelScope.launch {
+                                            ruStoreUpDateViewModel.init(context)
                                         }
                                     },
                                 ) {
@@ -224,23 +242,52 @@ fun ServiceScreen(
                 }
             }
         }
-    }
 
-   /* Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        //Text(text = "Статус обновления: $downloadProgress%")
-
-        //Button(onClick = { viewModel.init(LocalContext.current) }) {
-            Text(text = "Проверить обновление")
-       }
-
-        if (events is Event.UpdateCompleted) {
-            Text(text = "Обновление завершено!", color = Color.Green)
+        item {
+             //Log.i("upDateInfoGoogle", upDateStateGoogleApi.value.upDateState.toString())
+            if (upDateStateGoogleApi.value.upDateState == 2 && upDateState.value.upDateState == 2 ) {
+                Card(
+                    modifier = Modifier
+                        .padding(8.dp)
+                    ///.weight(1f)
+                ) {
+                    Box(
+                        modifier = Modifier.background(color = MaterialTheme.colorScheme.surfaceVariant)
+                    ) {
+                        Column {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(top = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(text = "Сделайте его лучше", color = Color.Black)
+                            }
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Button(
+                                    modifier = Modifier
+                                        .weight(2f)
+                                        .padding(start = 16.dp, end = 16.dp),
+                                    shape = RoundedCornerShape(15.dp),
+                                    //.background(color = Color.Green),
+                                    onClick = {
+                                        inAppUpDateGoogle.checkResumeUpdate(activityResultLauncher)
+                                    },
+                                ) {
+                                    Text(text = "Обновить приложение", color = Color.White)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-    }*/
+    }
 }

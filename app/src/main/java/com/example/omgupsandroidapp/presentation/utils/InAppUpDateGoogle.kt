@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
-import androidx.room.Update
 import com.example.omgupsandroidapp.presentation.ui.ServicesScreen.components.UpDateStateGoogle
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -15,7 +14,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class InAppUpDateGoogle(val context: Context) {
+class InAppUpDateGoogle(
+    val context: Context,
+    private val activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
 
     private val appUpdateManager = AppUpdateManagerFactory.create(context)
 
@@ -47,7 +48,10 @@ class InAppUpDateGoogle(val context: Context) {
     ) {
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability()== UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS){
+            if (
+                appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+                || appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                ){
                 starUpdate(
                     appUpdateInfo,
                     activityResultLauncher,
@@ -59,7 +63,7 @@ class InAppUpDateGoogle(val context: Context) {
         }
     }
 
-    private fun starUpdate(
+     private fun starUpdate(
         appUpdateInfo: AppUpdateInfo,
         activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>,
         appUpdateType: Int

@@ -13,25 +13,26 @@ import retrofit2.http.POST
 
 
 interface AuthApi {
-    @GET("/user/sign-in/login")
-    suspend fun getHtmlAuthPage(): Response<String>
+    /*@GET("/user/sign-in/login")
+   // suspend fun getHtmlAuthPage(): Response<String>
 
     @FormUrlEncoded
-    @POST("/user/sign-in/login")
-
+    @POST("/user/sign-in/login")*/
+    @FormUrlEncoded
+    @POST("userapi/v2/login/sign-in")
     suspend fun authentication(
-        @Field("_csrf") csrfToken: String,
+        //@Field("_csrf") csrfToken: String,
         @Field("LoginForm[identity]") login: String,
         @Field("LoginForm[password]") password: String,
         @Field("LoginForm[rememberMe]") rememberMe: String,
     ): Response<String>
 
 
-    @FormUrlEncoded
+    /*@FormUrlEncoded
     @POST("userapi/v2/login/sign-in")
     suspend fun authFieldPost(
         @Body post: AuthFields
-    ): AuthResponse
+    ): Response<String>*/
 
 
 }

@@ -9,7 +9,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetCsrfTokenUseCase @Inject constructor(
+/*class GetCsrfTokenUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
     operator fun invoke(): Flow<Resource<Boolean>> = flow {
@@ -27,4 +27,4 @@ class GetCsrfTokenUseCase @Inject constructor(
             Log.e("csrfToken", e.localizedMessage ?: "Error csrfToken IO in GetCsrfTokenUSeCase")
         }
     }
-}
+}*/

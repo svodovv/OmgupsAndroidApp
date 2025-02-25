@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.omgupsandroidapp.presentation.ui.LoginScreen.AuthenticationState
 import com.omgupsapp.common.Resource
-import com.omgupsapp.domain.use_case.login.GetCsrfTokenUseCase
 import com.omgupsapp.domain.use_case.login.AuthenticationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val getCsrfTokenUseCase: GetCsrfTokenUseCase,
+    //private val getCsrfTokenUseCase: GetCsrfTokenUseCase,
     private val authenticationUseCase: AuthenticationUseCase
 ) : ViewModel() {
 
@@ -26,7 +25,7 @@ class AuthViewModel @Inject constructor(
     val stateAuthentication: State<AuthenticationState> = _stateAuthentication
 
 
-    init {
+    /*init {
         getToken()
     }
 
@@ -46,7 +45,7 @@ class AuthViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
-    }
+    }*/
 
     fun userAuthenticated() {
         authenticationUseCase(

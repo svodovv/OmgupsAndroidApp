@@ -13,7 +13,7 @@ import okhttp3.Response
 import javax.inject.Inject
 
 class OnlineInterceptor  @Inject constructor(
-    private val logOutRepositoryImpl: AuthRepositoryImpl
+    //private val logOutRepositoryImpl: AuthRepositoryImpl
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 

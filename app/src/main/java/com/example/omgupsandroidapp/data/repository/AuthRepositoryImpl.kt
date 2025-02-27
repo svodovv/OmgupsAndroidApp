@@ -2,6 +2,7 @@ package com.omgupsapp.data.repository
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.omgupsandroidapp.data.remote.dto.authDto.AuthFields
 import com.omgupsapp.data.local.DataStore.DataStoreManager
 import com.omgupsapp.data.remote.Retrofit.AuthApi
 import com.omgupsapp.domain.repository.AuthRepository
@@ -9,7 +10,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class AuthRepositoryImpl @Inject constructor(
-
     private val api: AuthApi,
     private val dataStoreManager: DataStoreManager
 ) : AuthRepository {
@@ -18,7 +18,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     /*override suspend fun tokenExists(): Boolean {
         //val response = api.getHtmlAuthPage()
-        val response = api.authFieldPost()
+        val response = api.getHtmlAuthPage()
         return if (response.isSuccessful) {
             csrfToken = response.body()?.let {
                 parseMetaDataInHtmlDoc(it, "csrf-token")
@@ -35,7 +35,13 @@ class AuthRepositoryImpl @Inject constructor(
         login: String,
         password: String,
     ): Boolean {
-        val response = api.authentication(login,password, 1.toString())
+        Log.i("AuthFields", "Response: ${AuthFields(login,password, 1)}")
+        val response = api.authFieldPost(AuthFields(login,password, 1))
+        if (response.isSuccessful) {
+            Log.d("API", "Response: ${response.body()}")
+        } else {
+            Log.i("API", "Error: ${response.errorBody()?.string()}")
+        }
            /* //csrfToken = csrfToken!!,
             login = login,
             password = password,
@@ -43,7 +49,8 @@ class AuthRepositoryImpl @Inject constructor(
         )*/
         if (response.isSuccessful){
             dataStoreManager.saveLoggedIn(true)
-            val title = response.body()?.let {
+            return true
+            /*val title = response.body()?.let {
                 parseTitleInHtmlDoc(it)
             }
 
@@ -52,7 +59,7 @@ class AuthRepositoryImpl @Inject constructor(
                     dataStoreManager.saveLoggedIn(true)
                     return true
                 }
-            }
+            }*/
 
 
 

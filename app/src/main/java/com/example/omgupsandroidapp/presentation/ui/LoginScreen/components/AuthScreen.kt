@@ -81,7 +81,7 @@ fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    val stateToken = viewModel.stateToken.value
+    //val stateToken = viewModel.stateToken.value
     val stateAuthentication = viewModel.stateAuthentication.value
 
     var showError by remember { mutableStateOf(false) }
@@ -98,7 +98,7 @@ fun AuthScreen(
         }
     }
 
-    if (stateToken.csrfToken) {
+    //if (stateToken.csrfToken) {
     if (stateAuthentication.isLoading && !showError) {
 
         Box(
@@ -455,7 +455,7 @@ fun AuthScreen(
             }
         }
     }
-    }else if (stateToken.isLoading) {
+    /*}else if (stateToken.isLoading) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -483,7 +483,7 @@ fun AuthScreen(
                 Screen.AuthScreen.route
             )
         }
-    }
+    }*/
 }
 
 data class TextFieldState(

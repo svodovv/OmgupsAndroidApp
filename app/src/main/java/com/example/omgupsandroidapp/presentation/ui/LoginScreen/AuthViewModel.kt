@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.omgupsandroidapp.presentation.ui.LoginScreen.AuthenticationState
 import com.omgupsapp.common.Resource
 import com.omgupsapp.domain.use_case.login.AuthenticationUseCase
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,11 +26,11 @@ class AuthViewModel @Inject constructor(
     val stateAuthentication: State<AuthenticationState> = _stateAuthentication
 
 
-    /*init {
+  /*  init {
         getToken()
-    }
+    }*/
 
-    private fun getToken() {
+    /*private fun getToken() {
         getCsrfTokenUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
@@ -57,12 +58,10 @@ class AuthViewModel @Inject constructor(
                     _stateAuthentication.value =
                         _stateAuthentication.value.copy(userAuthenticated = result.data)
                 }
-
                 is Resource.Error -> {
                     _stateAuthentication.value =
                         _stateAuthentication.value.copy(error = "Error in authenticated user")
                 }
-
                 is Resource.Loading -> {
                     _stateAuthentication.value = _stateAuthentication.value.copy(isLoading = true)
                 }

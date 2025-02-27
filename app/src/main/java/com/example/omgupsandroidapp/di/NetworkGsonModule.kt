@@ -15,6 +15,7 @@ import com.example.omgupsandroidapp.data.remote.Retrofit.UserInfoApi
 import com.google.gson.Gson
 import com.omgupsapp.common.Constants
 import com.omgupsapp.common.Constants.BASE_URL
+import com.omgupsapp.data.remote.Retrofit.AuthApi
 import com.omgupsapp.di.NetworkScalarsModule
 import dagger.Module
 import dagger.Provides
@@ -578,6 +579,12 @@ object NetworkGsonModule {
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthApi(@Named("gson") retrofit: Retrofit): AuthApi {
+        return retrofit.create(AuthApi::class.java)
     }
 
     @Provides

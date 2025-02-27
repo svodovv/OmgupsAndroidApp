@@ -390,11 +390,11 @@ object NetworkScalarsModule {
             .build()
     }
 
-    @Provides
+   /* @Provides
     @Singleton
     fun authApi(@Named("scalars") retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
-    }
+    }*/
 
     @Provides
     @Singleton

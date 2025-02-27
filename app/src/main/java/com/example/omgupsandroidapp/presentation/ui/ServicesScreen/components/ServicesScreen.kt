@@ -228,9 +228,7 @@ fun ServiceScreen(
                                     shape = RoundedCornerShape(15.dp),
                                     //.background(color = Color.Green),
                                     onClick = {
-                                        ruStoreUpDateViewModel.viewModelScope.launch {
-                                            ruStoreUpDateViewModel.init(context)
-                                        }
+                                        inAppUpDateGoogle.checkResumeUpdate(activityResultLauncher)
                                     },
                                 ) {
                                     Text(text = "Обновить приложение", color = Color.White)

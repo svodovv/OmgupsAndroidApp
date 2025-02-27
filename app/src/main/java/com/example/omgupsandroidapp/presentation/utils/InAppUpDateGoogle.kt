@@ -10,6 +10,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import dagger.hilt.android.ActivityRetainedLifecycle.OnClearedListener
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -28,7 +29,7 @@ class InAppUpDateGoogle(
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
             val isAvailable =
-                appUpdateInfo.updateAvailability()== UpdateAvailability.UPDATE_AVAILABLE
+                appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
             val isAllowed = appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
             if(isAvailable){
                 _updateStateGoodle.update {
@@ -39,6 +40,7 @@ class InAppUpDateGoogle(
             }
         }
     }
+
     companion object {
         private const val TAG = "InAppUpDateGoogle"
     }
@@ -52,6 +54,7 @@ class InAppUpDateGoogle(
                 appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
                 || appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                 ){
+                //Log.i(TAG,appUpdateInfo.updateAvailability().toString())
                 starUpdate(
                     appUpdateInfo,
                     activityResultLauncher,
@@ -71,7 +74,7 @@ class InAppUpDateGoogle(
         appUpdateManager.startUpdateFlowForResult(
             appUpdateInfo,
             activityResultLauncher,
-            AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+            AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).setAllowAssetPackDeletion(false).build()
         )
     }
 

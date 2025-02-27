@@ -13,8 +13,8 @@ android {
         applicationId = "tech.omgups.mobileapp"
         minSdk = 27
         targetSdk = 34
-        versionCode = 4
-        versionName = "1.0.5"
+        versionCode = 23
+        versionName = "1.0.23"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
